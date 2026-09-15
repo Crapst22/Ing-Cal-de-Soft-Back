@@ -1,0 +1,2622 @@
+yarn run v1.22.22
+$ jest
+FAIL src/modules/gestion-usuario/usuario/dto/__tests__/create-usuario.dto.spec.ts
+  ● CreateUsuarioDto › Validación del campo denominacion › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/usuario/dto/__tests__/create-usuario.dto.spec.ts:133:7)
+
+FAIL src/modules/gestion-usuario/auth/dto/__tests__/register.dto.spec.ts
+  ● RegistrarUsuarioDto › Validación del campo denominacion › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/dto/__tests__/register.dto.spec.ts:399:7)
+
+FAIL src/modules/gestion-productos/marca/application/services/marca.service.spec.ts
+  ● Test suite failed to run
+
+    Your test suite must contain at least one test.
+
+      at onResult (node_modules/@jest/core/build/TestScheduler.js:133:18)
+      at node_modules/@jest/core/build/TestScheduler.js:254:19
+      at node_modules/emittery/index.js:363:13
+          at Array.map (<anonymous>)
+      at Emittery.emit (node_modules/emittery/index.js:361:23)
+
+FAIL src/modules/gestion-usuario/auth/dto/__tests__/login.dto.spec.ts
+  ● LoginDto › Validación del campo mail › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/dto/__tests__/login.dto.spec.ts:144:7)
+
+  ● LoginDto › Validación del campo contrasena › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/dto/__tests__/login.dto.spec.ts:216:7)
+
+FAIL src/modules/gestion-productos/producto/dto/__tests__/create-producto.dto.spec.ts
+  ● CreateProductoDto › Validación del campo denominacion › debería fallar si denominacion no es un string
+
+    TypeError: value.trim is not a function
+
+      14 |
+      15 | export class CreateProductoDto {
+    > 16 |   @Transform(({ value }) => value.trim().toLowerCase())
+         |                                   ^
+      17 |   @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string
+      18 |   @IsNotEmpty({ message: 'La denominación no puede estar vacía.' }) // Valida que no esté vacía
+      19 |   @MaxLength(255, { message: 'La denominación no puede estar vacía.' })
+
+      at Object.trim [as transformFn] (src/modules/gestion-productos/producto/dto/create-producto.dto.ts:16:35)
+      at node_modules/src/TransformOperationExecutor.ts:412:24
+          at Array.forEach (<anonymous>)
+      at TransformOperationExecutor.applyCustomTransformations (node_modules/src/TransformOperationExecutor.ts:411:15)
+      at TransformOperationExecutor.transform (node_modules/src/TransformOperationExecutor.ts:334:33)
+      at ClassTransformer.plainToInstance (node_modules/src/ClassTransformer.ts:77:21)
+      at plainToClass (node_modules/src/index.ts:71:27)
+      at DtoValidatorHelper.validateDto (src/modules/common/test-helpers/dto-validator.helper.ts:15:37)
+      at DtoValidatorHelper.validateDto [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:53:31)
+      at Object.<anonymous> (src/modules/gestion-productos/producto/dto/__tests__/create-producto.dto.spec.ts:186:32)
+
+PASS src/modules/gestion-usuario/auth/dto/login-test.dto.spec.ts
+FAIL src/modules/gutil/domicilio/dto/__tests__/create-domicilio.dto.spec.ts
+  ● CreateDomicilioDto › Validación del campo direccion › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gutil/domicilio/dto/__tests__/create-domicilio.dto.spec.ts:101:7)
+
+PASS src/modules/gestion-usuario/auth/dto/cambiar-contrasena-test.dto.spec.ts
+FAIL src/modules/common/dto/__tests__/pagination.dto.spec.ts
+  ● PaginationDto › Validación con errores › debería fallar con valores booleanos
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+       97 |
+       98 |       const errors = await DtoValidatorHelper.validateDto(PaginationDto, data);
+    >  99 |       expect(errors.length).toBeGreaterThan(0);
+          |                             ^
+      100 |     });
+      101 |
+      102 |     it('debería fallar con objetos', async () => {
+
+      at Object.<anonymous> (src/modules/common/dto/__tests__/pagination.dto.spec.ts:99:29)
+
+  ● PaginationDto › Validación con errores › debería fallar con null
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      127 |
+      128 |       const errors = await DtoValidatorHelper.validateDto(PaginationDto, data);
+    > 129 |       expect(errors.length).toBeGreaterThan(0);
+          |                             ^
+      130 |     });
+      131 |   });
+      132 |
+
+      at Object.<anonymous> (src/modules/common/dto/__tests__/pagination.dto.spec.ts:129:29)
+
+PASS src/modules/common/pipes/normalize-denominations-search.pipe.spec.ts
+FAIL src/modules/organizacion/cliente/dto/__tests__/create-cliente.dto.spec.ts
+  ● CreateClienteDto › Validación del campo denominacion › debería fallar si denominacion no es un string
+
+    TypeError: value.trim is not a function
+
+      16 |
+      17 | export class CreateClienteDto implements CondicionIvaValidable {
+    > 18 |   @Transform(({ value }) => value.trim().toLowerCase())
+         |                                   ^
+      19 |   @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string
+      20 |   @IsNotEmpty({ message: 'La denominación no puede estar vacía.' }) // Valida que no esté vacía
+      21 |   @MaxLength(255, { message: 'La denominación no puede estar vacía.' })
+
+      at Object.trim [as transformFn] (src/modules/organizacion/cliente/dto/create-cliente.dto.ts:18:35)
+      at node_modules/src/TransformOperationExecutor.ts:412:24
+          at Array.forEach (<anonymous>)
+      at TransformOperationExecutor.applyCustomTransformations (node_modules/src/TransformOperationExecutor.ts:411:15)
+      at TransformOperationExecutor.transform (node_modules/src/TransformOperationExecutor.ts:334:33)
+      at ClassTransformer.plainToInstance (node_modules/src/ClassTransformer.ts:77:21)
+      at plainToClass (node_modules/src/index.ts:71:27)
+      at DtoValidatorHelper.validateDto (src/modules/common/test-helpers/dto-validator.helper.ts:15:37)
+      at DtoValidatorHelper.validateDto [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:53:31)
+      at Object.<anonymous> (src/modules/organizacion/cliente/dto/__tests__/create-cliente.dto.spec.ts:136:32)
+
+  ● CreateClienteDto › Validación del campo domicilio › debería fallar si domicilio está incompleto
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      327 |         data,
+      328 |       );
+    > 329 |       expect(errors.length).toBeGreaterThan(0);
+          |                             ^
+      330 |     });
+      331 |
+      332 |     it('debería validar domicilio completo', async () => {
+
+      at Object.<anonymous> (src/modules/organizacion/cliente/dto/__tests__/create-cliente.dto.spec.ts:329:29)
+
+FAIL src/modules/common/dto/__tests__/denominacion.dto.spec.ts
+  ● DenominacionDto › Validación con errores › debería fallar con null cuando se envía explícitamente
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/__tests__/denominacion.dto.spec.ts:123:7)
+
+FAIL src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts
+  ● PaginationWithDenominacionDto › Validación del campo skip › debería fallar si skip es boolean
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts:162:7)
+
+  ● PaginationWithDenominacionDto › Validación del campo incluirEliminados › debería fallar con string que no sea "true"
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts:397:7)
+
+  ● PaginationWithDenominacionDto › Validación del campo incluirEliminados › debería fallar con número
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts:409:7)
+
+FAIL src/modules/gutil/alicuota-iva/application/controllers/alicuota-iva.controller.spec.ts
+  ● Test suite failed to run
+
+    [96msrc/modules/gutil/alicuota-iva/application/controllers/alicuota-iva.controller.spec.ts[0m:[93m3[0m:[93m36[0m - [91merror[0m[90m TS2307: [0mCannot find module '../../alicuota-iva.service' or its corresponding type declarations.
+
+    [7m3[0m import { AlicuotaIvaService } from '../../alicuota-iva.service';
+    [7m [0m [91m                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/modules/gutil/provincia/application/controllers/provincia.controller.spec.ts
+  ● Test suite failed to run
+
+    [96msrc/modules/gutil/provincia/application/controllers/provincia.controller.spec.ts[0m:[93m3[0m:[93m34[0m - [91merror[0m[90m TS2307: [0mCannot find module '../services/provincia.serviceervice' or its corresponding type declarations.
+
+    [7m3[0m import { ProvinciaService } from '../services/provincia.serviceervice';
+    [7m [0m [91m                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+PASS src/modules/organizacion/proveedor-operacion/proveedor-operacion.controller.spec.ts
+PASS src/modules/organizacion/cliente-operacion/cliente-operacion.controller.spec.ts
+PASS src/modules/gestion-productos/producto-operacion/producto-operacion.controller.spec.ts
+PASS src/app.controller.spec.ts
+PASS src/modules/organizacion/empresa-operacion/empresa-operacion.controller.spec.ts
+PASS src/modules/gestion-sistema/auditoria/auditoria.controller.spec.ts
+(node:28283) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts
+  ● MarcaController - Decorators › debería llamar al servicio con los parámetros correctos
+
+    TypeError: this.service.findBy is not a function
+
+      52 |       `Buscando ${this.ENTITY_NAME} con denominación: ${denominacion}`,
+      53 |     );
+    > 54 |     return this.service.findBy(denominacion, skip, take, incluirEliminados);
+         |                         ^
+      55 |   }
+      56 |
+      57 |   @Get(':id')
+
+      at MarcaController.findBy [as findByDenominacionFiltered] (src/modules/gestion-productos/marca/application/controllers/marca.controller.ts:54:25)
+      at Object.<anonymous> (src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts:81:39)
+
+  ● MarcaController - Decorators › debería usar cadena vacía si denominacion no está definido
+
+    TypeError: this.service.findBy is not a function
+
+      52 |       `Buscando ${this.ENTITY_NAME} con denominación: ${denominacion}`,
+      53 |     );
+    > 54 |     return this.service.findBy(denominacion, skip, take, incluirEliminados);
+         |                         ^
+      55 |   }
+      56 |
+      57 |   @Get(':id')
+
+      at MarcaController.findBy [as findByDenominacionFiltered] (src/modules/gestion-productos/marca/application/controllers/marca.controller.ts:54:25)
+      at Object.<anonymous> (src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts:92:39)
+
+  ● MarcaController - Decorators › debería propagar errores si el service falla
+
+    TypeError: this.service.findBy is not a function
+
+      52 |       `Buscando ${this.ENTITY_NAME} con denominación: ${denominacion}`,
+      53 |     );
+    > 54 |     return this.service.findBy(denominacion, skip, take, incluirEliminados);
+         |                         ^
+      55 |   }
+      56 |
+      57 |   @Get(':id')
+
+      at MarcaController.findBy [as findByDenominacionFiltered] (src/modules/gestion-productos/marca/application/controllers/marca.controller.ts:54:25)
+      at Object.<anonymous> (src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts:102:18)
+
+FAIL src/modules/organizacion/cliente/application/controllers/cliente.controller.spec.ts
+  ● Test suite failed to run
+
+    [96msrc/modules/organizacion/cliente/application/controllers/cliente.controller.spec.ts[0m:[93m3[0m:[93m32[0m - [91merror[0m[90m TS2307: [0mCannot find module './cliente.service' or its corresponding type declarations.
+
+    [7m3[0m import { ClienteService } from './cliente.service';
+    [7m [0m [91m                               ~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/modules/gutil/condicion-iva/application/controllers/condicion-iva.controller.spec.ts
+  ● CondicionIvaController › should be defined
+
+    Nest can't resolve dependencies of the CondicionIvaService (?). Please make sure that the argument "ICondicionIvaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ICondicionIvaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ICondicionIvaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ICondicionIvaRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [CondicionIvaController],
+      11 |       providers: [CondicionIvaService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/condicion-iva/application/controllers/condicion-iva.controller.spec.ts:9:35)
+
+(node:28286) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/modules/organizacion/personal/application/controllers/personal.controller.spec.ts
+  ● PersonalController › should be defined
+
+    Nest can't resolve dependencies of the PersonalService (?, UsuarioService). Please make sure that the argument "IPersonalRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IPersonalRepository" is a provider, is it part of the current RootTestModule?
+    - If "IPersonalRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IPersonalRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [PersonalController],
+      11 |       providers: [PersonalService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/personal/application/controllers/personal.controller.spec.ts:9:35)
+
+(node:28281) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/modules/organizacion/empresa/application/controllers/empresa.controller.spec.ts
+  ● EmpresaController › should be defined
+
+    Nest can't resolve dependencies of the EmpresaService (?, CondicionIvaService). Please make sure that the argument "IEmpresaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IEmpresaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IEmpresaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IEmpresaRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [EmpresaController],
+      11 |       providers: [EmpresaService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/empresa/application/controllers/empresa.controller.spec.ts:9:35)
+
+FAIL src/modules/gestion-usuario/usuario/application/controllers/usuario.controller.spec.ts
+  ● UsuarioController › should be defined
+
+    Nest can't resolve dependencies of the UsuarioService (?, RolService). Please make sure that the argument "IUsuarioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IUsuarioRepository" is a provider, is it part of the current RootTestModule?
+    - If "IUsuarioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IUsuarioRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [UsuarioController],
+      11 |       providers: [UsuarioService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/usuario/application/controllers/usuario.controller.spec.ts:9:35)
+
+FAIL src/modules/gutil/localidad/application/controllers/localidad.controller.spec.ts
+  ● LocalidadController › should be defined
+
+    Nest can't resolve dependencies of the LocalidadService (?, ProvinciaService). Please make sure that the argument "ILocalidadRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILocalidadRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILocalidadRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILocalidadRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [LocalidadController],
+      11 |       providers: [LocalidadService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/localidad/application/controllers/localidad.controller.spec.ts:9:35)
+
+PASS src/modules/common/files/files.controller.spec.ts
+FAIL src/modules/gestion-sistema/configuracion-sistema/application/services/configuracion-sistema.service.spec.ts
+  ● ConfiguracionSistemaService › should be defined
+
+    Nest can't resolve dependencies of the ConfiguracionSistemaService (?). Please make sure that the argument "IConfiguracionSistemaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IConfiguracionSistemaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IConfiguracionSistemaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IConfiguracionSistemaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [ConfiguracionSistemaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-sistema/configuracion-sistema/application/services/configuracion-sistema.service.spec.ts:8:35)
+
+PASS src/modules/gestion-productos/producto-operacion/producto-operacion.service.spec.ts
+PASS src/modules/organizacion/empresa-operacion/empresa-operacion.service.spec.ts
+FAIL src/modules/gutil/condicion-iva/application/services/condicion-iva.service.spec.ts
+  ● CondicionIvaService › should be defined
+
+    Nest can't resolve dependencies of the CondicionIvaService (?). Please make sure that the argument "ICondicionIvaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ICondicionIvaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ICondicionIvaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ICondicionIvaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [CondicionIvaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/condicion-iva/application/services/condicion-iva.service.spec.ts:8:35)
+
+PASS src/modules/organizacion/cliente-operacion/cliente-operacion.service.spec.ts
+FAIL src/modules/gestion-productos/linea/application/controllers/linea.controller.spec.ts
+  ● LineaController › should be defined
+
+    Nest can't resolve dependencies of the LineaService (?, PoliticaEliminacionLinea, UsuarioService). Please make sure that the argument "ILineaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILineaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILineaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILineaRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [LineaController],
+      11 |       providers: [LineaService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/linea/application/controllers/linea.controller.spec.ts:9:35)
+
+FAIL src/modules/gutil/provincia/application/services/provincia.service.spec.ts
+  ● ProvinciaService › should be defined
+
+    Nest can't resolve dependencies of the ProvinciaService (?). Please make sure that the argument "IProvinciaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IProvinciaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IProvinciaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IProvinciaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [ProvinciaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/provincia/application/services/provincia.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/rol/application/controllers/rol.controller.spec.ts
+  ● RolController › should be defined
+
+    Nest can't resolve dependencies of the RolService (?). Please make sure that the argument "IRolRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IRolRepository" is a provider, is it part of the current RootTestModule?
+    - If "IRolRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IRolRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [RolController],
+      11 |       providers: [RolService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/rol/application/controllers/rol.controller.spec.ts:9:35)
+
+FAIL src/modules/gutil/alicuota-iva/application/services/alicuota-iva.service.spec.ts
+  ● AlicuotaIvaService › should be defined
+
+    Nest can't resolve dependencies of the AlicuotaIvaService (?, UsuarioService). Please make sure that the argument "IAlicuotaIvaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IAlicuotaIvaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IAlicuotaIvaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IAlicuotaIvaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [AlicuotaIvaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/alicuota-iva/application/services/alicuota-iva.service.spec.ts:8:35)
+
+PASS src/modules/gestion-sistema/auditoria/auditoria.service.spec.ts
+FAIL src/modules/gutil/localidad/application/services/localidad.service.spec.ts
+  ● LocalidadService › should be defined
+
+    Nest can't resolve dependencies of the LocalidadService (?, ProvinciaService). Please make sure that the argument "ILocalidadRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILocalidadRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILocalidadRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILocalidadRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [LocalidadService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/localidad/application/services/localidad.service.spec.ts:8:35)
+
+(node:28287) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+PASS src/modules/gestion-documentos/busquedas/busquedas.service.spec.ts
+FAIL src/modules/gutil/domicilio/domicilio.controller.spec.ts
+  ● DomicilioController › should be defined
+
+    Nest can't resolve dependencies of the DomicilioService (?, LocalidadRepository). Please make sure that the argument "DomicilioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "DomicilioRepository" is a provider, is it part of the current RootTestModule?
+    - If "DomicilioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "DomicilioRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [DomicilioController],
+      11 |       providers: [DomicilioService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/domicilio/domicilio.controller.spec.ts:9:35)
+
+FAIL src/modules/gestion-usuario/auth/application/controllers/auth.controller.spec.ts
+  ● AuthController › should be defined
+
+    Nest can't resolve dependencies of the AuthService (?, UsuarioService, ConfigService). Please make sure that the argument JwtService at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If JwtService is a provider, is it part of the current RootTestModule?
+    - If JwtService is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing JwtService */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [AuthController],
+      11 |       providers: [AuthService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/application/controllers/auth.controller.spec.ts:9:35)
+
+FAIL src/modules/organizacion/empresa/application/services/empresa.service.spec.ts
+  ● EmpresaService › should be defined
+
+    Nest can't resolve dependencies of the EmpresaService (?, CondicionIvaService). Please make sure that the argument "IEmpresaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IEmpresaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IEmpresaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IEmpresaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [EmpresaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/empresa/application/services/empresa.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/usuario/application/services/usuario.service.spec.ts
+  ● UsuarioService › should be defined
+
+    Nest can't resolve dependencies of the UsuarioService (?, RolService). Please make sure that the argument "IUsuarioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IUsuarioRepository" is a provider, is it part of the current RootTestModule?
+    - If "IUsuarioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IUsuarioRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [UsuarioService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/usuario/application/services/usuario.service.spec.ts:8:35)
+
+PASS src/modules/common/files/files.service.spec.ts
+(node:28285) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/modules/organizacion/personal/application/services/personal.service.spec.ts
+  ● PersonalService › should be defined
+
+    Nest can't resolve dependencies of the PersonalService (?, UsuarioService). Please make sure that the argument "IPersonalRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IPersonalRepository" is a provider, is it part of the current RootTestModule?
+    - If "IPersonalRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IPersonalRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [PersonalService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/personal/application/services/personal.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/auth/application/services/auth.service.spec.ts
+  ● AuthService › should be defined
+
+    Nest can't resolve dependencies of the AuthService (?, UsuarioService, ConfigService). Please make sure that the argument JwtService at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If JwtService is a provider, is it part of the current RootTestModule?
+    - If JwtService is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing JwtService */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [AuthService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/application/services/auth.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/rol/application/services/rol.service.spec.ts
+  ● RolService › should be defined
+
+    Nest can't resolve dependencies of the RolService (?). Please make sure that the argument "IRolRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IRolRepository" is a provider, is it part of the current RootTestModule?
+    - If "IRolRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IRolRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [RolService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/rol/application/services/rol.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-productos/producto/application/services/producto.service.spec.ts
+  ● ProductoService › should be defined
+
+    Nest can't resolve dependencies of the ProductoService (?, LineaService, MarcaService, ProveedorService, UsuarioService, ProductoIntrinsicValidationService, ProductoValidationService, ProductoRelatedEntitiesValidator, ProductoUniquenessValidator, UsuarioValidator, ProductoDeletePolicy). Please make sure that the argument "IProductoRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IProductoRepository" is a provider, is it part of the current RootTestModule?
+    - If "IProductoRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IProductoRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [ProductoService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/producto/application/services/producto.service.spec.ts:8:35)
+
+(node:28288) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:28282) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/modules/gestion-productos/linea/application/services/linea.service.spec.ts
+  ● LineaService › should be defined
+
+    Nest can't resolve dependencies of the LineaService (?, PoliticaEliminacionLinea, UsuarioService). Please make sure that the argument "ILineaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILineaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILineaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILineaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [LineaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/linea/application/services/linea.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-productos/producto/application/controllers/producto.controller.spec.ts
+  ● ProductoController › should be defined
+
+    Nest can't resolve dependencies of the ProductoService (?, LineaService, MarcaService, ProveedorService, UsuarioService, ProductoIntrinsicValidationService, ProductoValidationService, ProductoRelatedEntitiesValidator, ProductoUniquenessValidator, UsuarioValidator, ProductoDeletePolicy). Please make sure that the argument "IProductoRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IProductoRepository" is a provider, is it part of the current RootTestModule?
+    - If "IProductoRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IProductoRepository" */ ]
+      })
+
+       8 |
+       9 |   beforeEach(async () => {
+    > 10 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      11 |       controllers: [ProductoController],
+      12 |       providers: [ProductoService],
+      13 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/producto/application/controllers/producto.controller.spec.ts:10:35)
+
+FAIL src/modules/gutil/domicilio/domicilio.service.spec.ts
+  ● DomicilioService › should be defined
+
+    Nest can't resolve dependencies of the DomicilioService (?, LocalidadRepository). Please make sure that the argument "DomicilioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "DomicilioRepository" is a provider, is it part of the current RootTestModule?
+    - If "DomicilioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "DomicilioRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [DomicilioService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/domicilio/domicilio.service.spec.ts:8:35)
+
+
+        Failed to write coverage reports:
+        ERROR: Error: EACCES: permission denied, open '/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/coverage/coverage-final.json'
+        STACK: Error: EACCES: permission denied, open '/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/coverage/coverage-final.json'
+    at Object.openSync (node:fs:560:18)
+    at FileWriter.writeFile (/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/node_modules/istanbul-lib-report/lib/file-writer.js:185:41)
+    at JsonReport.onStart (/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/node_modules/istanbul-reports/lib/json/index.js:17:45)
+    at Visitor.value (/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/node_modules/istanbul-lib-report/lib/tree.js:38:38)
+    at ReportTree.visit (/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/node_modules/istanbul-lib-report/lib/tree.js:126:17)
+    at JsonReport.execute (/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/node_modules/istanbul-lib-report/lib/report-base.js:12:44)
+    at /Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/node_modules/@jest/reporters/build/CoverageReporter.js:188:12
+    at Array.forEach (<anonymous>)
+    at CoverageReporter.onRunComplete (/Users/zaca/Documents/IyC_Proy/Ing-Cal-de-Soft-Back/proyecto/node_modules/@jest/reporters/build/CoverageReporter.js:178:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      
+Summary of all failing tests
+FAIL src/modules/gestion-usuario/usuario/dto/__tests__/create-usuario.dto.spec.ts
+  ● CreateUsuarioDto › Validación del campo denominacion › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/usuario/dto/__tests__/create-usuario.dto.spec.ts:133:7)
+
+FAIL src/modules/gestion-usuario/auth/dto/__tests__/register.dto.spec.ts
+  ● RegistrarUsuarioDto › Validación del campo denominacion › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/dto/__tests__/register.dto.spec.ts:399:7)
+
+FAIL src/modules/gestion-productos/marca/application/services/marca.service.spec.ts
+  ● Test suite failed to run
+
+    Your test suite must contain at least one test.
+
+      at onResult (node_modules/@jest/core/build/TestScheduler.js:133:18)
+      at node_modules/@jest/core/build/TestScheduler.js:254:19
+      at node_modules/emittery/index.js:363:13
+          at Array.map (<anonymous>)
+      at Emittery.emit (node_modules/emittery/index.js:361:23)
+
+FAIL src/modules/gestion-usuario/auth/dto/__tests__/login.dto.spec.ts
+  ● LoginDto › Validación del campo mail › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/dto/__tests__/login.dto.spec.ts:144:7)
+
+  ● LoginDto › Validación del campo contrasena › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/dto/__tests__/login.dto.spec.ts:216:7)
+
+FAIL src/modules/gestion-productos/producto/dto/__tests__/create-producto.dto.spec.ts
+  ● CreateProductoDto › Validación del campo denominacion › debería fallar si denominacion no es un string
+
+    TypeError: value.trim is not a function
+
+      14 |
+      15 | export class CreateProductoDto {
+    > 16 |   @Transform(({ value }) => value.trim().toLowerCase())
+         |                                   ^
+      17 |   @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string
+      18 |   @IsNotEmpty({ message: 'La denominación no puede estar vacía.' }) // Valida que no esté vacía
+      19 |   @MaxLength(255, { message: 'La denominación no puede estar vacía.' })
+
+      at Object.trim [as transformFn] (src/modules/gestion-productos/producto/dto/create-producto.dto.ts:16:35)
+      at node_modules/src/TransformOperationExecutor.ts:412:24
+          at Array.forEach (<anonymous>)
+      at TransformOperationExecutor.applyCustomTransformations (node_modules/src/TransformOperationExecutor.ts:411:15)
+      at TransformOperationExecutor.transform (node_modules/src/TransformOperationExecutor.ts:334:33)
+      at ClassTransformer.plainToInstance (node_modules/src/ClassTransformer.ts:77:21)
+      at plainToClass (node_modules/src/index.ts:71:27)
+      at DtoValidatorHelper.validateDto (src/modules/common/test-helpers/dto-validator.helper.ts:15:37)
+      at DtoValidatorHelper.validateDto [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:53:31)
+      at Object.<anonymous> (src/modules/gestion-productos/producto/dto/__tests__/create-producto.dto.spec.ts:186:32)
+
+FAIL src/modules/gutil/domicilio/dto/__tests__/create-domicilio.dto.spec.ts
+  ● CreateDomicilioDto › Validación del campo direccion › debería fallar con solo espacios en blanco
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/gutil/domicilio/dto/__tests__/create-domicilio.dto.spec.ts:101:7)
+
+FAIL src/modules/common/dto/__tests__/pagination.dto.spec.ts
+  ● PaginationDto › Validación con errores › debería fallar con valores booleanos
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+       97 |
+       98 |       const errors = await DtoValidatorHelper.validateDto(PaginationDto, data);
+    >  99 |       expect(errors.length).toBeGreaterThan(0);
+          |                             ^
+      100 |     });
+      101 |
+      102 |     it('debería fallar con objetos', async () => {
+
+      at Object.<anonymous> (src/modules/common/dto/__tests__/pagination.dto.spec.ts:99:29)
+
+  ● PaginationDto › Validación con errores › debería fallar con null
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      127 |
+      128 |       const errors = await DtoValidatorHelper.validateDto(PaginationDto, data);
+    > 129 |       expect(errors.length).toBeGreaterThan(0);
+          |                             ^
+      130 |     });
+      131 |   });
+      132 |
+
+      at Object.<anonymous> (src/modules/common/dto/__tests__/pagination.dto.spec.ts:129:29)
+
+FAIL src/modules/organizacion/cliente/dto/__tests__/create-cliente.dto.spec.ts
+  ● CreateClienteDto › Validación del campo denominacion › debería fallar si denominacion no es un string
+
+    TypeError: value.trim is not a function
+
+      16 |
+      17 | export class CreateClienteDto implements CondicionIvaValidable {
+    > 18 |   @Transform(({ value }) => value.trim().toLowerCase())
+         |                                   ^
+      19 |   @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string
+      20 |   @IsNotEmpty({ message: 'La denominación no puede estar vacía.' }) // Valida que no esté vacía
+      21 |   @MaxLength(255, { message: 'La denominación no puede estar vacía.' })
+
+      at Object.trim [as transformFn] (src/modules/organizacion/cliente/dto/create-cliente.dto.ts:18:35)
+      at node_modules/src/TransformOperationExecutor.ts:412:24
+          at Array.forEach (<anonymous>)
+      at TransformOperationExecutor.applyCustomTransformations (node_modules/src/TransformOperationExecutor.ts:411:15)
+      at TransformOperationExecutor.transform (node_modules/src/TransformOperationExecutor.ts:334:33)
+      at ClassTransformer.plainToInstance (node_modules/src/ClassTransformer.ts:77:21)
+      at plainToClass (node_modules/src/index.ts:71:27)
+      at DtoValidatorHelper.validateDto (src/modules/common/test-helpers/dto-validator.helper.ts:15:37)
+      at DtoValidatorHelper.validateDto [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:53:31)
+      at Object.<anonymous> (src/modules/organizacion/cliente/dto/__tests__/create-cliente.dto.spec.ts:136:32)
+
+  ● CreateClienteDto › Validación del campo domicilio › debería fallar si domicilio está incompleto
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      327 |         data,
+      328 |       );
+    > 329 |       expect(errors.length).toBeGreaterThan(0);
+          |                             ^
+      330 |     });
+      331 |
+      332 |     it('debería validar domicilio completo', async () => {
+
+      at Object.<anonymous> (src/modules/organizacion/cliente/dto/__tests__/create-cliente.dto.spec.ts:329:29)
+
+FAIL src/modules/common/dto/__tests__/denominacion.dto.spec.ts
+  ● DenominacionDto › Validación con errores › debería fallar con null cuando se envía explícitamente
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/__tests__/denominacion.dto.spec.ts:123:7)
+
+FAIL src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts
+  ● PaginationWithDenominacionDto › Validación del campo skip › debería fallar si skip es boolean
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts:162:7)
+
+  ● PaginationWithDenominacionDto › Validación del campo incluirEliminados › debería fallar con string que no sea "true"
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts:397:7)
+
+  ● PaginationWithDenominacionDto › Validación del campo incluirEliminados › debería fallar con número
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      54 |     const fieldError = errors.find((error) => error.property === fieldName);
+      55 |
+    > 56 |     expect(fieldError).toBeDefined();
+         |                        ^
+      57 |
+      58 |     if (expectedMessage && fieldError) {
+      59 |       const messages = fieldError.constraints
+
+      at DtoValidatorHelper.toBeDefined [as expectFieldError] (src/modules/common/test-helpers/dto-validator.helper.ts:56:24)
+      at Object.<anonymous> (src/modules/common/dto/busquedas/__tests__/pagination-with-denominacion.dto.spec.ts:409:7)
+
+FAIL src/modules/gutil/alicuota-iva/application/controllers/alicuota-iva.controller.spec.ts
+  ● Test suite failed to run
+
+    [96msrc/modules/gutil/alicuota-iva/application/controllers/alicuota-iva.controller.spec.ts[0m:[93m3[0m:[93m36[0m - [91merror[0m[90m TS2307: [0mCannot find module '../../alicuota-iva.service' or its corresponding type declarations.
+
+    [7m3[0m import { AlicuotaIvaService } from '../../alicuota-iva.service';
+    [7m [0m [91m                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/modules/gutil/provincia/application/controllers/provincia.controller.spec.ts
+  ● Test suite failed to run
+
+    [96msrc/modules/gutil/provincia/application/controllers/provincia.controller.spec.ts[0m:[93m3[0m:[93m34[0m - [91merror[0m[90m TS2307: [0mCannot find module '../services/provincia.serviceervice' or its corresponding type declarations.
+
+    [7m3[0m import { ProvinciaService } from '../services/provincia.serviceervice';
+    [7m [0m [91m                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts
+  ● MarcaController - Decorators › debería llamar al servicio con los parámetros correctos
+
+    TypeError: this.service.findBy is not a function
+
+      52 |       `Buscando ${this.ENTITY_NAME} con denominación: ${denominacion}`,
+      53 |     );
+    > 54 |     return this.service.findBy(denominacion, skip, take, incluirEliminados);
+         |                         ^
+      55 |   }
+      56 |
+      57 |   @Get(':id')
+
+      at MarcaController.findBy [as findByDenominacionFiltered] (src/modules/gestion-productos/marca/application/controllers/marca.controller.ts:54:25)
+      at Object.<anonymous> (src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts:81:39)
+
+  ● MarcaController - Decorators › debería usar cadena vacía si denominacion no está definido
+
+    TypeError: this.service.findBy is not a function
+
+      52 |       `Buscando ${this.ENTITY_NAME} con denominación: ${denominacion}`,
+      53 |     );
+    > 54 |     return this.service.findBy(denominacion, skip, take, incluirEliminados);
+         |                         ^
+      55 |   }
+      56 |
+      57 |   @Get(':id')
+
+      at MarcaController.findBy [as findByDenominacionFiltered] (src/modules/gestion-productos/marca/application/controllers/marca.controller.ts:54:25)
+      at Object.<anonymous> (src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts:92:39)
+
+  ● MarcaController - Decorators › debería propagar errores si el service falla
+
+    TypeError: this.service.findBy is not a function
+
+      52 |       `Buscando ${this.ENTITY_NAME} con denominación: ${denominacion}`,
+      53 |     );
+    > 54 |     return this.service.findBy(denominacion, skip, take, incluirEliminados);
+         |                         ^
+      55 |   }
+      56 |
+      57 |   @Get(':id')
+
+      at MarcaController.findBy [as findByDenominacionFiltered] (src/modules/gestion-productos/marca/application/controllers/marca.controller.ts:54:25)
+      at Object.<anonymous> (src/modules/gestion-productos/marca/application/controllers/marca.controller.spec.ts:102:18)
+
+FAIL src/modules/organizacion/cliente/application/controllers/cliente.controller.spec.ts
+  ● Test suite failed to run
+
+    [96msrc/modules/organizacion/cliente/application/controllers/cliente.controller.spec.ts[0m:[93m3[0m:[93m32[0m - [91merror[0m[90m TS2307: [0mCannot find module './cliente.service' or its corresponding type declarations.
+
+    [7m3[0m import { ClienteService } from './cliente.service';
+    [7m [0m [91m                               ~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/modules/gutil/condicion-iva/application/controllers/condicion-iva.controller.spec.ts
+  ● CondicionIvaController › should be defined
+
+    Nest can't resolve dependencies of the CondicionIvaService (?). Please make sure that the argument "ICondicionIvaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ICondicionIvaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ICondicionIvaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ICondicionIvaRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [CondicionIvaController],
+      11 |       providers: [CondicionIvaService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/condicion-iva/application/controllers/condicion-iva.controller.spec.ts:9:35)
+
+FAIL src/modules/organizacion/personal/application/controllers/personal.controller.spec.ts
+  ● PersonalController › should be defined
+
+    Nest can't resolve dependencies of the PersonalService (?, UsuarioService). Please make sure that the argument "IPersonalRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IPersonalRepository" is a provider, is it part of the current RootTestModule?
+    - If "IPersonalRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IPersonalRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [PersonalController],
+      11 |       providers: [PersonalService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/personal/application/controllers/personal.controller.spec.ts:9:35)
+
+FAIL src/modules/organizacion/empresa/application/controllers/empresa.controller.spec.ts
+  ● EmpresaController › should be defined
+
+    Nest can't resolve dependencies of the EmpresaService (?, CondicionIvaService). Please make sure that the argument "IEmpresaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IEmpresaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IEmpresaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IEmpresaRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [EmpresaController],
+      11 |       providers: [EmpresaService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/empresa/application/controllers/empresa.controller.spec.ts:9:35)
+
+FAIL src/modules/gestion-usuario/usuario/application/controllers/usuario.controller.spec.ts
+  ● UsuarioController › should be defined
+
+    Nest can't resolve dependencies of the UsuarioService (?, RolService). Please make sure that the argument "IUsuarioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IUsuarioRepository" is a provider, is it part of the current RootTestModule?
+    - If "IUsuarioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IUsuarioRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [UsuarioController],
+      11 |       providers: [UsuarioService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/usuario/application/controllers/usuario.controller.spec.ts:9:35)
+
+FAIL src/modules/gutil/localidad/application/controllers/localidad.controller.spec.ts
+  ● LocalidadController › should be defined
+
+    Nest can't resolve dependencies of the LocalidadService (?, ProvinciaService). Please make sure that the argument "ILocalidadRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILocalidadRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILocalidadRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILocalidadRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [LocalidadController],
+      11 |       providers: [LocalidadService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/localidad/application/controllers/localidad.controller.spec.ts:9:35)
+
+FAIL src/modules/gestion-sistema/configuracion-sistema/application/services/configuracion-sistema.service.spec.ts
+  ● ConfiguracionSistemaService › should be defined
+
+    Nest can't resolve dependencies of the ConfiguracionSistemaService (?). Please make sure that the argument "IConfiguracionSistemaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IConfiguracionSistemaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IConfiguracionSistemaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IConfiguracionSistemaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [ConfiguracionSistemaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-sistema/configuracion-sistema/application/services/configuracion-sistema.service.spec.ts:8:35)
+
+FAIL src/modules/gutil/condicion-iva/application/services/condicion-iva.service.spec.ts
+  ● CondicionIvaService › should be defined
+
+    Nest can't resolve dependencies of the CondicionIvaService (?). Please make sure that the argument "ICondicionIvaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ICondicionIvaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ICondicionIvaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ICondicionIvaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [CondicionIvaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/condicion-iva/application/services/condicion-iva.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-productos/linea/application/controllers/linea.controller.spec.ts
+  ● LineaController › should be defined
+
+    Nest can't resolve dependencies of the LineaService (?, PoliticaEliminacionLinea, UsuarioService). Please make sure that the argument "ILineaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILineaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILineaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILineaRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [LineaController],
+      11 |       providers: [LineaService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/linea/application/controllers/linea.controller.spec.ts:9:35)
+
+FAIL src/modules/gutil/provincia/application/services/provincia.service.spec.ts
+  ● ProvinciaService › should be defined
+
+    Nest can't resolve dependencies of the ProvinciaService (?). Please make sure that the argument "IProvinciaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IProvinciaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IProvinciaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IProvinciaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [ProvinciaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/provincia/application/services/provincia.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/rol/application/controllers/rol.controller.spec.ts
+  ● RolController › should be defined
+
+    Nest can't resolve dependencies of the RolService (?). Please make sure that the argument "IRolRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IRolRepository" is a provider, is it part of the current RootTestModule?
+    - If "IRolRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IRolRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [RolController],
+      11 |       providers: [RolService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/rol/application/controllers/rol.controller.spec.ts:9:35)
+
+FAIL src/modules/gutil/alicuota-iva/application/services/alicuota-iva.service.spec.ts
+  ● AlicuotaIvaService › should be defined
+
+    Nest can't resolve dependencies of the AlicuotaIvaService (?, UsuarioService). Please make sure that the argument "IAlicuotaIvaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IAlicuotaIvaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IAlicuotaIvaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IAlicuotaIvaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [AlicuotaIvaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/alicuota-iva/application/services/alicuota-iva.service.spec.ts:8:35)
+
+FAIL src/modules/gutil/localidad/application/services/localidad.service.spec.ts
+  ● LocalidadService › should be defined
+
+    Nest can't resolve dependencies of the LocalidadService (?, ProvinciaService). Please make sure that the argument "ILocalidadRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILocalidadRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILocalidadRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILocalidadRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [LocalidadService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/localidad/application/services/localidad.service.spec.ts:8:35)
+
+FAIL src/modules/gutil/domicilio/domicilio.controller.spec.ts
+  ● DomicilioController › should be defined
+
+    Nest can't resolve dependencies of the DomicilioService (?, LocalidadRepository). Please make sure that the argument "DomicilioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "DomicilioRepository" is a provider, is it part of the current RootTestModule?
+    - If "DomicilioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "DomicilioRepository" */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [DomicilioController],
+      11 |       providers: [DomicilioService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/domicilio/domicilio.controller.spec.ts:9:35)
+
+FAIL src/modules/gestion-usuario/auth/application/controllers/auth.controller.spec.ts
+  ● AuthController › should be defined
+
+    Nest can't resolve dependencies of the AuthService (?, UsuarioService, ConfigService). Please make sure that the argument JwtService at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If JwtService is a provider, is it part of the current RootTestModule?
+    - If JwtService is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing JwtService */ ]
+      })
+
+       7 |
+       8 |   beforeEach(async () => {
+    >  9 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      10 |       controllers: [AuthController],
+      11 |       providers: [AuthService],
+      12 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/application/controllers/auth.controller.spec.ts:9:35)
+
+FAIL src/modules/organizacion/empresa/application/services/empresa.service.spec.ts
+  ● EmpresaService › should be defined
+
+    Nest can't resolve dependencies of the EmpresaService (?, CondicionIvaService). Please make sure that the argument "IEmpresaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IEmpresaRepository" is a provider, is it part of the current RootTestModule?
+    - If "IEmpresaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IEmpresaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [EmpresaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/empresa/application/services/empresa.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/usuario/application/services/usuario.service.spec.ts
+  ● UsuarioService › should be defined
+
+    Nest can't resolve dependencies of the UsuarioService (?, RolService). Please make sure that the argument "IUsuarioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IUsuarioRepository" is a provider, is it part of the current RootTestModule?
+    - If "IUsuarioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IUsuarioRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [UsuarioService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/usuario/application/services/usuario.service.spec.ts:8:35)
+
+FAIL src/modules/organizacion/personal/application/services/personal.service.spec.ts
+  ● PersonalService › should be defined
+
+    Nest can't resolve dependencies of the PersonalService (?, UsuarioService). Please make sure that the argument "IPersonalRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IPersonalRepository" is a provider, is it part of the current RootTestModule?
+    - If "IPersonalRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IPersonalRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [PersonalService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/organizacion/personal/application/services/personal.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/auth/application/services/auth.service.spec.ts
+  ● AuthService › should be defined
+
+    Nest can't resolve dependencies of the AuthService (?, UsuarioService, ConfigService). Please make sure that the argument JwtService at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If JwtService is a provider, is it part of the current RootTestModule?
+    - If JwtService is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing JwtService */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [AuthService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/auth/application/services/auth.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-usuario/rol/application/services/rol.service.spec.ts
+  ● RolService › should be defined
+
+    Nest can't resolve dependencies of the RolService (?). Please make sure that the argument "IRolRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IRolRepository" is a provider, is it part of the current RootTestModule?
+    - If "IRolRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IRolRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [RolService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-usuario/rol/application/services/rol.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-productos/producto/application/services/producto.service.spec.ts
+  ● ProductoService › should be defined
+
+    Nest can't resolve dependencies of the ProductoService (?, LineaService, MarcaService, ProveedorService, UsuarioService, ProductoIntrinsicValidationService, ProductoValidationService, ProductoRelatedEntitiesValidator, ProductoUniquenessValidator, UsuarioValidator, ProductoDeletePolicy). Please make sure that the argument "IProductoRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IProductoRepository" is a provider, is it part of the current RootTestModule?
+    - If "IProductoRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IProductoRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [ProductoService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/producto/application/services/producto.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-productos/linea/application/services/linea.service.spec.ts
+  ● LineaService › should be defined
+
+    Nest can't resolve dependencies of the LineaService (?, PoliticaEliminacionLinea, UsuarioService). Please make sure that the argument "ILineaRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "ILineaRepository" is a provider, is it part of the current RootTestModule?
+    - If "ILineaRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "ILineaRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [LineaService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/linea/application/services/linea.service.spec.ts:8:35)
+
+FAIL src/modules/gestion-productos/producto/application/controllers/producto.controller.spec.ts
+  ● ProductoController › should be defined
+
+    Nest can't resolve dependencies of the ProductoService (?, LineaService, MarcaService, ProveedorService, UsuarioService, ProductoIntrinsicValidationService, ProductoValidationService, ProductoRelatedEntitiesValidator, ProductoUniquenessValidator, UsuarioValidator, ProductoDeletePolicy). Please make sure that the argument "IProductoRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "IProductoRepository" is a provider, is it part of the current RootTestModule?
+    - If "IProductoRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "IProductoRepository" */ ]
+      })
+
+       8 |
+       9 |   beforeEach(async () => {
+    > 10 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+      11 |       controllers: [ProductoController],
+      12 |       providers: [ProductoService],
+      13 |     }).compile();
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gestion-productos/producto/application/controllers/producto.controller.spec.ts:10:35)
+
+FAIL src/modules/gutil/domicilio/domicilio.service.spec.ts
+  ● DomicilioService › should be defined
+
+    Nest can't resolve dependencies of the DomicilioService (?, LocalidadRepository). Please make sure that the argument "DomicilioRepository" at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - Is RootTestModule a valid NestJS module?
+    - If "DomicilioRepository" is a provider, is it part of the current RootTestModule?
+    - If "DomicilioRepository" is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing "DomicilioRepository" */ ]
+      })
+
+       6 |
+       7 |   beforeEach(async () => {
+    >  8 |     const module: TestingModule = await Test.createTestingModule({
+         |                                   ^
+       9 |       providers: [DomicilioService],
+      10 |     }).compile();
+      11 |
+
+      at TestingInjector.lookupComponentInParentModules (node_modules/@nestjs/core/injector/injector.js:262:19)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/core/injector/injector.js:215:33)
+      at TestingInjector.resolveComponentInstance (node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (node_modules/@nestjs/core/injector/injector.js:129:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (node_modules/@nestjs/core/injector/injector.js:144:27)
+      at TestingInjector.loadInstance (node_modules/@nestjs/core/injector/injector.js:70:13)
+      at TestingInjector.loadProvider (node_modules/@nestjs/core/injector/injector.js:98:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 3)
+      at TestingInstanceLoader.createInstancesOfProviders (node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 1)
+      at TestingInstanceLoader.createInstances (node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (src/modules/gutil/domicilio/domicilio.service.spec.ts:8:35)
+
+
+Test Suites: 37 failed, 16 passed, 53 total
+Tests:       40 failed, 262 passed, 302 total
+Snapshots:   0 total
+Time:        12.195 s
+Ran all test suites.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

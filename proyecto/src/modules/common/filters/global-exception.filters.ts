@@ -70,8 +70,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     }
 
     // Información adicional si es HttpException
-    if (exception instanceof HttpException) {
-      const exceptionResponse = exception.getResponse();
+    const exceptionResponse =
+      exception instanceof HttpException ? exception.getResponse() : null;
+
+    if (exceptionResponse) {
       this.logger.error('🔍 HTTP EXCEPTION RESPONSE:');
       this.logger.error(JSON.stringify(exceptionResponse, null, 2));
       this.logger.error('───────────────────────────────────────────────────────');
@@ -79,12 +81,22 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     
     this.logger.error('═══════════════════════════════════════════════════════');
 
+    // 🔧 Extraer el mensaje real: primero de getResponse().message (donde
+    // viven los mensajes de class-validator y de las excepciones manuales),
+    // y solo si no existe, caer al exception.message genérico.
+    const message =
+      exceptionResponse &&
+      typeof exceptionResponse === 'object' &&
+      'message' in exceptionResponse
+        ? (exceptionResponse as any).message
+        : exception?.message || 'Internal Server Error';
+
     // Respuesta al cliente
     const errorResponse = {
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: exception?.message || 'Internal Server Error',
+      message,
       ...(process.env.NODE_ENV === 'development' && { 
         stack: exception?.stack,
         details: exception?.response 

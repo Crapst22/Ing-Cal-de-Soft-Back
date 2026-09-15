@@ -4,6 +4,7 @@ import {
   Injectable,
   Logger,
   NotFoundException,
+  NotImplementedException,
 } from '@nestjs/common';
 import { ensureNotSistemaEntity } from 'src/modules/common/utils/atrituto-sistema';
 import { UsuarioService } from 'src/modules/gestion-usuario/usuario/application/services/usuario.service';
@@ -17,6 +18,7 @@ import { MarcaMapper } from '../../mappers/marca.mapper';
 import { PoliticaEliminacionMarca } from '../../domain/services/politica-eliminacion-marca.service';
 
 import { Marca } from '../../domain/entities/marca.entity';
+import { Not } from 'typeorm/find-options/operator/Not.js';
 
 @Injectable()
 export class MarcaService {
@@ -188,6 +190,6 @@ export class MarcaService {
   }
 
   async findByDenominacionFiltered(findByDenominacionFiltered: any) {
-    throw new Error('Method not implemented.');
+    throw new NotImplementedException('Búsqueda filtrada de Marca aún no implementada.');
   }
 }

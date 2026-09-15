@@ -31,7 +31,6 @@ export class AuthController {
 
   @Post('login-con-google')
   async loginConGoogle(@Body() body: { token: string; empresaId: number }): Promise<any> {
-    console.log(' Proceso de login con Google iniciado', body);
     return this.authService.loginConGoogle(body.token, body.empresaId);
   }
 

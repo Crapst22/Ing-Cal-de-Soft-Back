@@ -11,13 +11,14 @@ export class ProvinciaRepository implements IProvinciaRepository {
 
     constructor(private readonly persistenceService: ProvinciaPersistenceAdapter) { }
 
-    private readonly ENTITY_NAME = 'Provinciaa';
+    private readonly ENTITY_NAME = 'Provincia';
 
     async create(data: CreateProvinciaDto): Promise<Provincia> {
         try {
             return await this.persistenceService.create(data);
         } catch (error) {
-            this.logger.error(`Error al crear ${this.ENTITY_NAME}: ${error.message}`);
+            const message = error instanceof Error ? error.message : String(error);
+            this.logger.error(`Error al crear ${this.ENTITY_NAME}: ${message}`);
             throw new DatabaseConnectionException('No se pudo crear la entidad en la base de datos.');
         }
     }

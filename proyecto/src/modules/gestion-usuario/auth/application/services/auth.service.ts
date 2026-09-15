@@ -96,13 +96,13 @@ export class AuthService {
 
   async loginConGoogle(token: string, empresaId: number): Promise<any> {
     const clientId = this.configService.get<string>('GOOGLE_CLIENT_ID');
-    console.log('🔵 GOOGLE_CLIENT_ID:', clientId);
+  
     const client = new OAuth2Client(clientId);
-    console.log('🔵 CLIENTE:', client);
+    
 
     let email;
     let name;
-    // Verificamos el token con Google
+    
     try {
       const ticket = await client.verifyIdToken({
         idToken: token,
@@ -112,9 +112,7 @@ export class AuthService {
       const payload = ticket.getPayload();
       email = payload?.email;
       name = payload?.name;
-      console.log('🟢 Payload de Google:', payload);
-
-      // ... resto del código
+     
     } catch (error) {
       console.error('🔴 Error al verificar el token de Google:', error);
       throw new UnauthorizedException('Token de Google inválido o expirado');
@@ -122,11 +120,11 @@ export class AuthService {
 
     // Buscar usuario por email
     let usuario = await this.usuarioService.findByMail(email);
-    console.log('🟢 Usuario encontrado:', usuario);
+    
 
-    // Si no existe, lo creamos automáticamente
+   
     if (!usuario) {
-      console.log('🟠 Usuario no existe, se va a crear uno nuevo');
+      
 
       const registrarUsuarioDto: RegistrarUsuarioDto = {
         mail: email,
@@ -134,7 +132,7 @@ export class AuthService {
         rolId: 2, // Asignar un rol por defecto, por ejemplo "Empleado"
         denominacion: name,
       };
-      console.log('🟠 Registrar Usuario DTO:', registrarUsuarioDto);
+     
 
       usuario = await this.registrarUsuario(registrarUsuarioDto);
     }
@@ -201,9 +199,7 @@ export class AuthService {
         },
       });
 
-      console.log(this.configService.get('EMAIL_USER'));
-      console.log(this.configService.get('EMAIL_PASS'));
-      console.log('Enviando correo a:', destinatario);
+      
 
       const info = await transporter.sendMail({
         from: `"Sistema de Recuperación" <${this.configService.get('EMAIL_USER')}>`,
