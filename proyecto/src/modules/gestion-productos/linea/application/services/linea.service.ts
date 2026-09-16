@@ -16,6 +16,7 @@ import { UpdateLineaDto } from '../../dto/update-linea.dto';
 import { LineaDto } from '../../dto/linea.dto';
 import { LineaMapper } from '../../mappers/linea.mapper';
 import { PoliticaEliminacionLinea } from '../../domain/services/politica-eliminacion-linea.service';
+import { SuperLineaService } from '../../../superlinea/application/services/superlinea.service';
 import { Linea } from '../../domain/entities/linea.entity';
 
 @Injectable()
@@ -28,6 +29,8 @@ export class LineaService {
     @Inject(forwardRef(() => PoliticaEliminacionLinea))
     private readonly validacionesService: PoliticaEliminacionLinea,
     private readonly usuarioService: UsuarioService,
+    @Inject(forwardRef(() => SuperLineaService))
+    private readonly superLineaService: SuperLineaService,
 
   ) { }
 
@@ -39,6 +42,9 @@ export class LineaService {
     );
     await this.checkDenominacionExists(dto.denominacion, 0);
 
+    if (dto.superLineaId) {
+      await this.superLineaService.findDtoById(dto.superLineaId);
+    }
 
     const entity = await this.repository.create(dto);
 
@@ -59,6 +65,9 @@ export class LineaService {
     if (dto.denominacion)
       await this.checkDenominacionExists(dto.denominacion, id);
 
+    if (dto.superLineaId) {
+      await this.superLineaService.findDtoById(dto.superLineaId);
+    }
 
     const entity = await this.repository.update(id, dto);
     return MessageFrontUtils.createSimple(

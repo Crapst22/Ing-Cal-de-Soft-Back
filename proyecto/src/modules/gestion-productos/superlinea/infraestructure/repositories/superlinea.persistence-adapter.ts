@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DatabaseConnectionException } from 'src/modules/common/exceptions/database-connection.exception';
 import { EntityNotFoundException } from 'src/modules/common/exceptions/entity-notFound-exceptions';
 import { Repository, DataSource } from 'typeorm';
-import { CreateLineaDto } from '../../dto/create-linea.dto';
-import { Linea } from '../../domain/entities/linea.entity';
-import { ILineaRepository } from '../../domain/interfaces/linea.repository.interface';
-import { UpdateLineaDto } from '../../dto/update-linea.dto';
+import { CreateSuperLineaDto } from '../../dto/create-superlinea.dto';
+import { SuperLinea } from '../../domain/entities/superlinea.entity';
+import { ISuperLineaRepository } from '../../domain/interfaces/superlinea.repository.interface';
+import { UpdateSuperLineaDto } from '../../dto/update-superlinea.dto';
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Transactional } from 'src/modules/common/decorators/transactional.decoratos';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
@@ -17,17 +17,17 @@ import { BasePersistenceAdapter } from 'src/modules/common/persistence/base-pers
 import { handleDatabaseError } from 'src/modules/common/query-builders/database-error.helper';
 
 @Injectable()
-export class LineaPersistenceAdapter
-  extends BasePersistenceAdapter<Linea>
-  implements ILineaRepository
+export class SuperLineaPersistenceAdapter
+  extends BasePersistenceAdapter<SuperLinea>
+  implements ISuperLineaRepository
 {
-  private readonly logger = new Logger(LineaPersistenceAdapter.name);
+  private readonly logger = new Logger(SuperLineaPersistenceAdapter.name);
 
-  protected readonly ALIAS = 'linea';
+  protected readonly ALIAS = 'superLinea';
 
   constructor(
-    @InjectRepository(Linea)
-    repository: Repository<Linea>,
+    @InjectRepository(SuperLinea)
+    repository: Repository<SuperLinea>,
 
     private readonly dataSource: DataSource,
     @Inject('UnitOfWork') public readonly uow: IUnitOfWork,
@@ -36,22 +36,17 @@ export class LineaPersistenceAdapter
   }
 
   @Transactional()
-  async create(data: CreateLineaDto): Promise<Linea> {
-    const repo = this.uow.getRepository(Linea);
+  async create(data: CreateSuperLineaDto): Promise<SuperLinea> {
+    const repo = this.uow.getRepository(SuperLinea);
 
     try {
-      // Creamos la entidad sin sublíneas
       const nuevaEntity = repo.create({
         denominacion: data.denominacion,
-        utilizaStockMinimo: data.utilizaStockMinimo,
-        stockMinimo: data.stockMinimo,
-        superLineaId: data.superLineaId,
         usuarioCreatedId: data.usuarioCreatedId,
         observacion: data.observacion,
       });
 
       const entityGuardada = await repo.save(nuevaEntity);
-
 
       return entityGuardada;
     } catch (error) {
@@ -63,39 +58,32 @@ export class LineaPersistenceAdapter
   }
 
   @Transactional()
-  async update(
-    id: number,
-    data: UpdateLineaDto,
-  ): Promise<Linea> {
-    const repo = this.uow.getRepository(Linea);
+  async update(id: number, data: UpdateSuperLineaDto): Promise<SuperLinea> {
+    const repo = this.uow.getRepository(SuperLinea);
 
     const entity = await repo.findOne({
-      where: { id }
+      where: { id },
     });
 
     if (!entity) {
-      throw new NotFoundException(`Línea con ID ${id} no encontrada`);
+      throw new NotFoundException(`Super línea con ID ${id} no encontrada`);
     }
 
-    // Actualizar datos simples
     entity.denominacion = data.denominacion ?? entity.denominacion;
-    entity.utilizaStockMinimo = data.utilizaStockMinimo;
-    entity.stockMinimo = data.stockMinimo ?? 0;
-    entity.superLineaId = data.superLineaId ?? entity.superLineaId;
+    entity.observacion = data.observacion ?? entity.observacion;
     entity.usuarioCreatedId = data.usuarioCreatedId;
 
-    // Guardar entidad antes de procesar sublíneas (opcional según lógica de negocio)
     const entityActualizada = await repo.save(entity);
 
     return entityActualizada;
   }
 
-  async findOne(id: number): Promise<Linea | null> {
+  async findOne(id: number): Promise<SuperLinea | null> {
     try {
       const entity = await this.repository
-        .createQueryBuilder('linea')
-        .where('linea.id = :id', { id })
-        .andWhere('linea.deletedAt IS NULL')
+        .createQueryBuilder('superLinea')
+        .where('superLinea.id = :id', { id })
+        .andWhere('superLinea.deletedAt IS NULL')
         .getOne();
 
       this.logger.warn(`Entidad obtenida: ${JSON.stringify(entity)}`);
@@ -116,7 +104,7 @@ export class LineaPersistenceAdapter
     }
   }
 
-  async findAllListado(): Promise<Linea[]> {
+  async findAllListado(): Promise<SuperLinea[]> {
     try {
       const query = this.baseQuery();
       QueryBuilderHelper.applyOrder(query, this.ALIAS, 'denominacion', 'ASC');
@@ -126,12 +114,12 @@ export class LineaPersistenceAdapter
     }
   }
 
-  async findByDenominacion(denominacion: string): Promise<Linea | null> {
+  async findByDenominacion(denominacion: string): Promise<SuperLinea | null> {
     try {
       const entity = await this.repository
-        .createQueryBuilder('linea')
-        .where('linea.denominacion = :denominacion', { denominacion })
-        .andWhere('linea.deletedAt IS NULL')
+        .createQueryBuilder('superLinea')
+        .where('superLinea.denominacion = :denominacion', { denominacion })
+        .andWhere('superLinea.deletedAt IS NULL')
         .getOne();
 
       return entity;
@@ -142,30 +130,30 @@ export class LineaPersistenceAdapter
     }
   }
 
-  async findByDenominacionWith(denominacion: string): Promise<Linea | null> {
+  async findByDenominacionWith(denominacion: string): Promise<SuperLinea | null> {
     this.logger.log(
-      `🔎 Buscando denominación (incluyendo borradas): ${denominacion}`,
+      `Buscando denominación (incluyendo borradas): ${denominacion}`,
     );
     try {
       const normalizada = denominacion.trim().toUpperCase();
 
       const entity = await this.repository
-        .createQueryBuilder('linea')
-        .withDeleted() //
-        .where('UPPER(linea.denominacion) = :denominacion', {
+        .createQueryBuilder('superLinea')
+        .withDeleted()
+        .where('UPPER(superLinea.denominacion) = :denominacion', {
           denominacion: normalizada,
         })
         .getOne();
 
       if (!entity) {
         this.logger.log(
-          ` No encontrada línea (ni activa ni eliminada): ${normalizada}`,
+          `No encontrada super línea (ni activa ni eliminada): ${normalizada}`,
         );
         return null;
       }
 
       this.logger.log(
-        `✅ Encontrada línea (puede estar activa o eliminada): ID=${entity.id}, denominación=${entity.denominacion}`,
+        `Encontrada super línea (puede estar activa o eliminada): ID=${entity.id}, denominación=${entity.denominacion}`,
       );
       return entity;
     } catch (error) {
@@ -178,9 +166,9 @@ export class LineaPersistenceAdapter
     skip = 0,
     take = 10,
     incluirEliminados = false,
-  ): Promise<{ data: Linea[]; total: number }> {
+  ): Promise<{ data: SuperLinea[]; total: number }> {
     try {
-      const query = this.baseQuery(incluirEliminados)
+      const query = this.baseQuery(incluirEliminados);
 
       if (denominacion) {
         query.andWhere(`UPPER(${this.ALIAS}.denominacion) LIKE :denominacion`, {
@@ -194,14 +182,14 @@ export class LineaPersistenceAdapter
       const [data, total] = await query.getManyAndCount();
       return { data, total };
     } catch (error) {
-      handleDatabaseError(this.logger, 'findBy', error);
+      handleDatabaseError(this.logger, 'findByDenominacionFiltered', error);
     }
   }
 
-  async findAllFor(denominacion: string): Promise<Linea[]> {
+  async findAllFor(denominacion: string): Promise<SuperLinea[]> {
     try {
-      const query = this.baseQuery()
-      query.andWhere('UPPER(linea.denominacion) LIKE :denominacion', {
+      const query = this.baseQuery();
+      query.andWhere('UPPER(superLinea.denominacion) LIKE :denominacion', {
         denominacion: `%${denominacion.toUpperCase()}%`,
       });
 
@@ -210,22 +198,21 @@ export class LineaPersistenceAdapter
     } catch (error) {
       handleDatabaseError(this.logger, 'findAllFor', error);
     }
-
   }
 
-  async findAllSinSistemaFor(denominacion: string): Promise<Linea[]> {
+  async findAllSinSistemaFor(denominacion: string): Promise<SuperLinea[]> {
     try {
       const query = this.repository
-        .createQueryBuilder('linea')
-        .where('linea.deletedAt IS NULL')
-        .andWhere('linea.sistema = :sistema', { sistema: 0 });
+        .createQueryBuilder('superLinea')
+        .where('superLinea.deletedAt IS NULL')
+        .andWhere('superLinea.sistema = :sistema', { sistema: 0 });
       if (denominacion && denominacion.trim() !== '') {
-        query.andWhere('UPPER(linea.denominacion) LIKE :denominacion', {
+        query.andWhere('UPPER(superLinea.denominacion) LIKE :denominacion', {
           denominacion: `%${denominacion.toUpperCase()}%`,
         });
       }
 
-      return await query.orderBy('linea.denominacion', 'ASC').getMany();
+      return await query.orderBy('superLinea.denominacion', 'ASC').getMany();
     } catch (error) {
       throw new DatabaseConnectionException(
         'Error al conectar con la base de datos.',
@@ -233,29 +220,9 @@ export class LineaPersistenceAdapter
     }
   }
 
-  async existsLineasActivasBySuperLinea(
-    superLineaId: number,
-  ): Promise<boolean> {
-    try {
-      const count = await this.repository
-        .createQueryBuilder('linea')
-        .where('linea.super_linea_id = :superLineaId', { superLineaId })
-        .andWhere('linea.deletedAt IS NULL')
-        .getCount();
-
-      return count > 0;
-    } catch (error) {
-      handleDatabaseError(
-        this.logger,
-        'existsLineasActivasBySuperLinea',
-        error,
-      );
-    }
-  }
-
   @Transactional()
-  async remove(entity: Linea, usuario: Usuario): Promise<Linea> {
-    const repo = this.uow.getRepository(Linea);
+  async remove(entity: SuperLinea, usuario: Usuario): Promise<SuperLinea> {
+    const repo = this.uow.getRepository(SuperLinea);
 
     entity.deletedAt = new Date();
     entity.usuarioDeletedId = usuario.id;
@@ -267,33 +234,33 @@ export class LineaPersistenceAdapter
   async findByIdConAuditoria(id: number): Promise<AuditoriaDto | null> {
     try {
       const raw = await this.repository
-        .createQueryBuilder('linea')
+        .createQueryBuilder('superLinea')
         .leftJoin(
           'usuario',
           'usuarioCreated',
-          'usuarioCreated.id = linea.usuarioCreatedId',
+          'usuarioCreated.id = superLinea.usuarioCreatedId',
         )
         .leftJoin(
           'usuario',
           'usuarioUpdated',
-          'usuarioUpdated.id = linea.usuarioUpdatedId',
+          'usuarioUpdated.id = superLinea.usuarioUpdatedId',
         )
         .leftJoin(
           'usuario',
           'usuarioDeleted',
-          'usuarioDeleted.id = linea.usuarioDeletedId',
+          'usuarioDeleted.id = superLinea.usuarioDeletedId',
         )
         .addSelect([
-          'linea.id as linea_id',
-          'linea.denominacion as linea_denominacion',
-          'linea.createdAt as linea_createdAt',
-          'linea.updatedAt as linea_updatedAt',
-          'linea.deletedAt as linea_deletedAt',
+          'superLinea.id as superlinea_id',
+          'superLinea.denominacion as superlinea_denominacion',
+          'superLinea.createdAt as superlinea_createdAt',
+          'superLinea.updatedAt as superlinea_updatedAt',
+          'superLinea.deletedAt as superlinea_deletedAt',
           'usuarioCreated.denominacion as usuarioCreated_nombre',
           'usuarioUpdated.denominacion as usuarioUpdated_nombre',
           'usuarioDeleted.denominacion as usuarioDeleted_nombre',
         ])
-        .where('linea.id = :id', { id })
+        .where('superLinea.id = :id', { id })
         .getRawOne();
 
       console.debug('RAW RESULTADO:', raw);
@@ -301,18 +268,18 @@ export class LineaPersistenceAdapter
       if (!raw) return null;
 
       return {
-        id: raw.linea_id ?? 0,
-        detalle: raw.linea_denominacion
-          ? `linea ${raw.linea_denominacion}`
-          : 'linea (sin denominación)',
-        createdAt: raw.linea_createdAt
-          ? FechaUtils.formatFechaHora(raw.linea_createdAt)
+        id: raw.superlinea_id ?? 0,
+        detalle: raw.superlinea_denominacion
+          ? `super línea ${raw.superlinea_denominacion}`
+          : 'super línea (sin denominación)',
+        createdAt: raw.superlinea_createdAt
+          ? FechaUtils.formatFechaHora(raw.superlinea_createdAt)
           : '',
-        updatedAt: raw.linea_updatedAt
-          ? FechaUtils.formatFechaHora(raw.linea_updatedAt)
+        updatedAt: raw.superlinea_updatedAt
+          ? FechaUtils.formatFechaHora(raw.superlinea_updatedAt)
           : '',
-        deletedAt: raw.linea_deletedAt
-          ? FechaUtils.formatFechaHora(raw.linea_deletedAt)
+        deletedAt: raw.superlinea_deletedAt
+          ? FechaUtils.formatFechaHora(raw.superlinea_deletedAt)
           : '',
         usuarioCreated: raw.usuarioCreated_nombre ?? '',
         usuarioUpdated: raw.usuarioUpdated_nombre ?? '',

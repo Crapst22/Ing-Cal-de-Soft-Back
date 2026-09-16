@@ -25,6 +25,15 @@ export class LineaDto {
   @IsInt()
   stockMinimo?: number;
 
+  @ApiProperty({
+    example: 1,
+    description: 'ID de la super línea a la que pertenece (null si no tiene)',
+    nullable: true,
+  })
+  @IsOptional()
+  @IsInt()
+  superLineaId?: number;
+
   @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()

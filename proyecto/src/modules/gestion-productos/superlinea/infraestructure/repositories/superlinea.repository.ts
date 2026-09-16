@@ -1,37 +1,33 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ILineaRepository } from '../../domain/interfaces/linea.repository.interface';
-import { CreateLineaDto } from '../../dto/create-linea.dto';
-import { Linea } from '../../domain/entities/linea.entity';
-import { UpdateLineaDto } from '../../dto/update-linea.dto';
+import { ISuperLineaRepository } from '../../domain/interfaces/superlinea.repository.interface';
+import { CreateSuperLineaDto } from '../../dto/create-superlinea.dto';
+import { SuperLinea } from '../../domain/entities/superlinea.entity';
+import { UpdateSuperLineaDto } from '../../dto/update-superlinea.dto';
 import { DatabaseConnectionException } from 'src/modules/common/exceptions/database-connection.exception';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { AuditoriaDto } from 'src/modules/gestion-sistema/auditoria/dto/auditoria.dto';
-import { LineaPersistenceAdapter } from './linea.persistence-adapter';
+import { SuperLineaPersistenceAdapter } from './superlinea.persistence-adapter';
 
 @Injectable()
-export class LineaRepository implements ILineaRepository {
-  constructor(private readonly persistenceService: LineaPersistenceAdapter) {}
+export class SuperLineaRepository implements ISuperLineaRepository {
+  constructor(private readonly persistenceService: SuperLineaPersistenceAdapter) {}
 
-  private readonly logger = new Logger(LineaRepository.name);
+  private readonly logger = new Logger(SuperLineaRepository.name);
 
-  private readonly ENTITY_NAME = 'Linea';
+  private readonly ENTITY_NAME = 'SuperLinea';
 
-  async create(data: CreateLineaDto): Promise<Linea> {
-    this.logger.log(`Creando un nuevo `);
+  async create(data: CreateSuperLineaDto): Promise<SuperLinea> {
+    this.logger.log(`Creando un nuevo ${this.ENTITY_NAME}`);
     try {
       return await this.persistenceService.create(data);
     } catch (error) {
-
       throw new DatabaseConnectionException(
         'No se pudo crear la entidad en la base de datos.',
       );
     }
   }
 
-  async update(
-    id: number,
-    data: UpdateLineaDto,
-  ): Promise<Linea> {
+  async update(id: number, data: UpdateSuperLineaDto): Promise<SuperLinea> {
     return this.persistenceService.update(id, data);
   }
 
@@ -39,10 +35,10 @@ export class LineaRepository implements ILineaRepository {
     denominacion: string,
     skip = 0,
     take = 10,
-    incluirEliminados=false,
-  ): Promise<{ data: Linea[]; total: number }> {
+    incluirEliminados = false,
+  ): Promise<{ data: SuperLinea[]; total: number }> {
     this.logger.log(
-      `Buscando 333o ${denominacion}  skip=${skip}, take=${take}`,
+      `Buscando ${this.ENTITY_NAME} ${denominacion} skip=${skip}, take=${take}`,
     );
     return this.persistenceService.findByDenominacionFiltered(
       denominacion,
@@ -52,21 +48,21 @@ export class LineaRepository implements ILineaRepository {
     );
   }
 
-  async findAllFor(denominacion: string): Promise<Linea[]> {
-    this.logger.log(`Buscando 333o `);
+  async findAllFor(denominacion: string): Promise<SuperLinea[]> {
+    this.logger.log(`Buscando todas las ${this.ENTITY_NAME}`);
     return this.persistenceService.findAllFor(denominacion);
   }
 
-  async findAllSinSistemaFor(denominacion: string): Promise<Linea[]> {
+  async findAllSinSistemaFor(denominacion: string): Promise<SuperLinea[]> {
     return this.persistenceService.findAllSinSistemaFor(denominacion);
   }
 
-  async findOne(id: number): Promise<Linea | null> {
+  async findOne(id: number): Promise<SuperLinea | null> {
     const entity = await this.persistenceService.findOne(id);
     return entity;
   }
 
-  async findByDenominacion(denominacion: string): Promise<Linea | null> {
+  async findByDenominacion(denominacion: string): Promise<SuperLinea | null> {
     const entity =
       await this.persistenceService.findByDenominacion(denominacion);
     if (!entity) {
@@ -78,13 +74,13 @@ export class LineaRepository implements ILineaRepository {
     return entity;
   }
 
-  async findByDenominacionWith(denominacion: string): Promise<Linea | null> {
+  async findByDenominacionWith(denominacion: string): Promise<SuperLinea | null> {
     const entity =
       await this.persistenceService.findByDenominacionWith(denominacion);
     return entity;
   }
 
-  async remove(data: Linea, usuario: Usuario): Promise<Linea> {
+  async remove(data: SuperLinea, usuario: Usuario): Promise<SuperLinea> {
     const entity = this.persistenceService.remove(data, usuario);
     return entity;
   }
@@ -94,16 +90,7 @@ export class LineaRepository implements ILineaRepository {
     return entity;
   }
 
-  async existsLineasActivasBySuperLinea(
-    superLineaId: number,
-  ): Promise<boolean> {
-    return this.persistenceService.existsLineasActivasBySuperLinea(
-      superLineaId,
-    );
-  }
-  
-  async findAllListado(): Promise<Linea[]>{
+  async findAllListado(): Promise<SuperLinea[]> {
     return this.persistenceService.findAllListado();
   }
-  
 }

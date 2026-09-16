@@ -21,6 +21,7 @@ export interface ILineaRepository {
   ): Promise<{ data: Linea[]; total: number } >;
 
   findByIdConAuditoria(id: number):  Promise<AuditoriaDto | null> ;
+  existsLineasActivasBySuperLinea(superLineaId: number): Promise<boolean>;
   update(
     id: number,
     data: UpdateLineaDto,

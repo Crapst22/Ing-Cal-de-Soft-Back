@@ -11,6 +11,7 @@ export class LineaMapper {
       id: entity.id,
       denominacion: entity.denominacion,
       stockMinimo: entity.stockMinimo,
+      superLineaId: entity.superLineaId,
       utilizaStockMinimo: entity.utilizaStockMinimo,
       observacion: entity.observacion ?? '',
       sistema: entity.sistema,
