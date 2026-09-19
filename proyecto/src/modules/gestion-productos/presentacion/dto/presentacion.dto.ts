@@ -1,28 +1,40 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsBoolean, IsDate, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import { TipoPresentacion } from '../utils/presentacion.util';
 
-
-export class MarcaDto  {
-  @ApiProperty({ example: 123, description: 'ID del la marca' })
-  @Type(() => Number)
+export class PresentacionDto {
+  @ApiProperty({ example: 1 })
   @IsInt()
   id: number;
 
-  @ApiProperty({ example: 'IVECO', description: 'Denominación o nombre del producto. Esta formado por la linea y la marca' })
+  @ApiProperty({ enum: ['volume', 'pack'] })
+  @IsString()
+  tipo: TipoPresentacion;
+
+  @ApiProperty({ example: 6, nullable: true })
+  @IsOptional()
+  @IsNumber()
+  quantity: number | null;
+
+  @ApiProperty({ example: 0.5, nullable: true })
+  @IsOptional()
+  @IsNumber()
+  volumen: number | null;
+
+  @ApiProperty({ example: 'L', nullable: true })
+  @IsOptional()
+  @IsString()
+  unidad: string | null;
+
+  @ApiProperty({ example: 'Pack x6 de 500ml' })
   @IsString()
   denominacion: string;
 
-  @ApiProperty({ example: '', description: 'Observaciones varias sobre la marca' })
-  @IsString()
-  observacion: string;
-
-  @ApiProperty({ example: 1, description: 'de sistema no se puede editar ni eliminar' })
-  @Type(() => Number)
+  @ApiProperty({ example: 1 })
   @IsInt()
   sistema: number;
 
-  @ApiProperty({ example: null, description: 'Fecha de eliminación (null si está activa)', nullable: true })
+  @ApiProperty({ example: null, nullable: true })
   @IsOptional()
   deletedAt: string | null;
 }

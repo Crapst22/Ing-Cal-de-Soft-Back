@@ -6,6 +6,7 @@ import { EntityNotFoundException } from 'src/modules/common/exceptions/entity-no
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Linea } from 'src/modules/gestion-productos/linea/domain/entities/linea.entity';
 import { Marca } from 'src/modules/gestion-productos/marca/domain/entities/marca.entity';
+import { Presentacion } from 'src/modules/gestion-productos/presentacion/domain/entities/presentacion.entity';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { Repository, IsNull, DataSource } from 'typeorm';
 import { Producto } from '../../domain/entities/producto.entity';
@@ -36,34 +37,22 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     linea: Linea,
     marca: Marca,
     usuario: Usuario,
+    presentacion: Presentacion | null,
   ): Promise<Producto> {
     const repo = this.uow.getRepository(Producto);
     this.logger.log(`Creando un nuevo p ${this.ENTITY_NAME}`);
 
     try {
-      // DEBUG: Loggear todos los datos que llegan
-      this.logger.debug('Data recibida:', JSON.stringify(data, null, 2));
-      // Verificar que todos los objetos relacionados existan
-      this.logger.debug('Linea:', linea);
-      this.logger.debug('Marca:', marca);
-      this.logger.debug('Usuario:', usuario);
-
       const nuevaEntity = repo.create({
         ...data,
         linea,
         marca,
+        presentacion: presentacion ?? undefined,
         usuarioCreated: usuario,
       });
 
-      this.logger.debug('Entity creada:', nuevaEntity);
-
       const entityGuardada = await repo.save(nuevaEntity);
       this.logger.log(`Entity guardada con ID: ${entityGuardada.id}`);
-
-      this.logger.log(
-        `${this.ENTITY_NAME} creado exitosamente con ID: ${entityGuardada.id}`,
-      );
-
 
       return entityGuardada;
     } catch (error) {
@@ -74,12 +63,14 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       );
     }
   }
+
   async findOne(id: number): Promise<Producto | null> {
     try {
       const entity = await this.repository
         .createQueryBuilder('producto')
         .leftJoinAndSelect('producto.linea', 'linea')
         .leftJoinAndSelect('producto.marca', 'marca')
+        .leftJoinAndSelect('producto.presentacion', 'presentacion')
         .where('producto.id = :id', { id })
         .andWhere('producto.deletedAt IS NULL')
         .getOne();
@@ -160,8 +151,8 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     data: UpdateProductoDto,
     linea: Linea,
     marca: Marca,
-
     usuario: Usuario,
+    presentacion: Presentacion | null,
   ): Promise<Producto> {
     const repo = this.uow.getRepository(Producto);
     try {
@@ -178,6 +169,7 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       Object.assign(entity, dataSinItems, {
         linea,
         marca,
+        presentacion: presentacion ?? null,
       });
 
       entity.usuarioUpdated = usuario; 
@@ -233,6 +225,7 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       .createQueryBuilder('producto')
       .leftJoinAndSelect('producto.marca', 'marca')
       .leftJoinAndSelect('producto.linea', 'linea')
+      .leftJoinAndSelect('producto.presentacion', 'presentacion')
 
     if (denominacion || codigoProveedor || codigoReferencia) {
       const condiciones: string[] = [];
@@ -307,6 +300,7 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       .leftJoinAndSelect('producto.marca', 'marca')
       .leftJoinAndSelect('producto.linea', 'linea')
       .leftJoinAndSelect('producto.proveedor', 'proveedor')
+      .leftJoinAndSelect('producto.presentacion', 'presentacion')
       .where('producto.deletedAt IS NULL');
 
 
@@ -433,6 +427,7 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
         .createQueryBuilder('producto')
         .leftJoinAndSelect('producto.marca', 'marca')
         .leftJoinAndSelect('producto.linea', 'linea')
+        .leftJoinAndSelect('producto.presentacion', 'presentacion')
 
       query.andWhere('producto.deletedAt IS NULL');
       query.orderBy('producto.denominacion', 'ASC');
@@ -466,6 +461,19 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       .where('producto.linea_id = :lineaId', { lineaId })
       .andWhere('producto.deletedAt IS NULL')
       .limit(1) // opcional, para optimizar
+      .getCount();
+
+    return count > 0;
+  }
+
+  async existsProductosActivosByPresentacion(
+    presentacionId: number,
+  ): Promise<boolean> {
+    const count = await this.repository
+      .createQueryBuilder('producto')
+      .where('producto.presentacion_id = :presentacionId', { presentacionId })
+      .andWhere('producto.deletedAt IS NULL')
+      .limit(1)
       .getCount();
 
     return count > 0;

@@ -1,25 +1,45 @@
-import { Transform } from "class-transformer";
-import { IsInt, IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from "class-validator";
+import { Transform, Type } from 'class-transformer';
+import {
+  IsIn,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+} from 'class-validator';
+import { TipoPresentacion } from '../utils/presentacion.util';
 
 export class CreatePresentacionDto {
+  @IsIn(['volume', 'pack'], { message: 'tipo debe ser "volume" o "pack".' })
+  @IsNotEmpty({ message: 'El tipo es obligatorio.' })
+  @Transform(({ value }) =>
+    typeof value === 'string' ? value.trim().toLowerCase() : value,
+  )
+  tipo: TipoPresentacion;
 
-    @Transform(({ value }) => value.trim().toLowerCase())
-    @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string
-    @IsNotEmpty({ message: 'La denominación no puede estar vacía.' }) // Valida que no esté vacía
-    @MaxLength(255, { message: 'La denominación no puede estar vacía.' })
-    @Matches(/^[A-Za-z0-9 áéíóúÁÉÍÓÚñÑ]+$/, {
-      message: 'La denominación solo puede contener letras, números y espacios.',
-    })
-    denominacion: string;
-  
-    @IsOptional()
-    @IsString()
-    observacion?: string;
-  
-    createdAt?: Date;
-   
-    @IsNotEmpty({ message: 'El usuarioCreatedId es obligatorio.' })
-    @IsInt({ message: 'El usuarioCreatedId debe ser un número entero.' })
-    usuarioCreatedId: number;
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt({ message: 'La cantidad debe ser un número entero.' })
+  @Min(1, { message: 'La cantidad debe ser mayor o igual a 1.' })
+  quantity?: number | null;
 
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber({}, { message: 'El volumen debe ser un número.' })
+  @Min(0, { message: 'El volumen no puede ser negativo.' })
+  volumen?: number | null;
+
+  @IsOptional()
+  @IsString({ message: 'La unidad debe ser un texto.' })
+  @MaxLength(20, { message: 'La unidad no puede superar 20 caracteres.' })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  unidad?: string | null;
+
+  createdAt?: Date;
+
+  @IsNotEmpty({ message: 'El usuarioCreatedId es obligatorio.' })
+  @IsInt({ message: 'El usuarioCreatedId debe ser un número entero.' })
+  usuarioCreatedId: number;
 }

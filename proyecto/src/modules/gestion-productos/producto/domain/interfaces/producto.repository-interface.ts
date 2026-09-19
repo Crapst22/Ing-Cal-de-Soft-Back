@@ -1,5 +1,6 @@
 import { Linea } from '../../../linea/domain/entities/linea.entity';
 import { Marca } from '../../../marca/domain/entities/marca.entity';
+import { Presentacion } from '../../../presentacion/domain/entities/presentacion.entity';
 import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { Producto } from '../entities/producto.entity';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
@@ -14,6 +15,7 @@ export interface IProductoRepository {
     linea: Linea,
     marca: Marca,
     usuario: Usuario,
+    presentacion: Presentacion | null,
   ): Promise<Producto>;
 
   findOne(id: number): Promise<Producto | null>;
@@ -49,6 +51,7 @@ export interface IProductoRepository {
     linea: Linea,
     marca: Marca,
     usuario: Usuario,
+    presentacion: Presentacion | null,
   ): Promise<Producto>;
 
   updateEntity(uow: IUnitOfWork, data: Producto): Promise<Producto>;
@@ -78,6 +81,7 @@ export interface IProductoRepository {
   existsByCodigoProveedor(codigoProveedor: string, excludeId: number): Promise<boolean>;
   existsProductosActivosByMarca(marcaId: number): Promise<boolean>;
   existsProductosActivosByLinea(lineaId: number): Promise<boolean>;
+  existsProductosActivosByPresentacion(presentacionId: number): Promise<boolean>;
 
   findByIds(ids: number[]): Promise<Producto[]>;
 }

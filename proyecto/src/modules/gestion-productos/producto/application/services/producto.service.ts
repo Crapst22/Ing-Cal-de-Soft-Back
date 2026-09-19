@@ -61,7 +61,7 @@ export class ProductoService {
     );
 
     // Orquestar todas las validaciones
-    const { marca, linea, usuario } =
+    const { marca, linea, presentacion, usuario } =
       await this.validarYPrepararCreacion(dto);
 
 
@@ -70,6 +70,7 @@ export class ProductoService {
       linea,
       marca,
       usuario,
+      presentacion ?? null,
     );
 
     return MessageFrontUtils.createSimple(
@@ -82,7 +83,7 @@ export class ProductoService {
   async update(id: number, dto: UpdateProductoDto) {
     this.logger.log(`Actualizandox  ${this.ENTITY_NAME} con ID: ${id}`);
 
-    const { marca, linea, usuario } =
+    const { marca, linea, presentacion, usuario } =
       await this.validarYPrepararActualizacion(id, dto);
 
     const entity = await this.repository.update(
@@ -90,8 +91,8 @@ export class ProductoService {
       dto,
       linea,
       marca,
-
       usuario,
+      presentacion ?? null,
     );
 
     return MessageFrontUtils.createSimple(
@@ -330,11 +331,11 @@ export class ProductoService {
       );
     }
     // 3 Validar entidades relacionadas existen (Infrastructure - DB)
-    const { marca, linea, } =
+    const { marca, linea, presentacion } =
       await this.relatedEntitiesValidator.validarYObtenerEntidadesRelacionadas(
         dto.marcaId,
         dto.lineaId,
-
+        dto.presentacionId,
       );
 
     //  Validar reglas de negocio sobre entidades (Domain)
@@ -350,7 +351,7 @@ export class ProductoService {
       dto.usuarioCreatedId,
     );
 
-    return { marca, linea, usuario };
+    return { marca, linea, presentacion, usuario };
   }
   /**
    * Orquesta todas las validaciones necesarias para actualizar un producto
@@ -392,11 +393,11 @@ export class ProductoService {
     }
 
     // Validar entidades relacionadas
-    const { marca, linea, } =
+    const { marca, linea, presentacion } =
       await this.relatedEntitiesValidator.validarYObtenerEntidadesRelacionadas(
         dto.marcaId ?? productoActual.marcaId,
         dto.lineaId ?? productoActual.lineaId,
-
+        dto.presentacionId ?? productoActual.presentacionId,
       );
 
     //  Validar reglas de negocio
@@ -411,7 +412,7 @@ export class ProductoService {
       dto.usuarioUpdatedId,
     );
 
-    return { marca, linea, usuario };
+    return { marca, linea, presentacion, usuario };
   }
 
 
