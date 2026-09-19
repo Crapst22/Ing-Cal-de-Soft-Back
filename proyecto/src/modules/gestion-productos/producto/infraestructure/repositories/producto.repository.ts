@@ -10,6 +10,7 @@ import { DatabaseConnectionException } from 'src/modules/common/exceptions/datab
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
+import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
 @Injectable()
 export class ProductoRepository implements IProductoRepository {
@@ -182,4 +183,19 @@ export class ProductoRepository implements IProductoRepository {
    return this.persistenceService.existsByCodigoProveedor(codigoProveedor, excludeId);
   }
 
+  async actualizarPreciosMasivo(
+    tipoAumento: TipoAumento,
+    valor: number,
+    usuario: Usuario,
+    lineaId?: number,
+  ): Promise<number> {
+    return this.persistenceService.actualizarPreciosMasivo(
+      tipoAumento,
+      valor,
+      usuario,
+      lineaId,
+    );
+  }
+
 }
+
