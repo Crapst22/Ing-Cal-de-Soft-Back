@@ -23,3 +23,6 @@ export class CreatePresentacionDto {
     usuarioCreatedId: number;
 
 }
+
+export { CreatePresentacionDto as CreateMarcaDto };
+
