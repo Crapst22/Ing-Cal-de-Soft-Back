@@ -1,4 +1,5 @@
 import { Linea } from "./modules/gestion-productos/linea/domain/entities/linea.entity";
+import { SuperLinea } from "./modules/gestion-productos/superlinea/domain/entities/superlinea.entity";
 import { Marca } from "./modules/gestion-productos/marca/domain/entities/marca.entity";
 import { ProductoOperacion } from "./modules/gestion-productos/producto-operacion/entities/producto-operacion.entity";
 import { Producto } from "./modules/gestion-productos/producto/domain/entities/producto.entity";
@@ -18,7 +19,8 @@ import { Proveedor } from "./modules/organizacion/proveedor/domain/entities/prov
 
 
 export const entities = [Marca,
-                        Linea, 
+                        Linea,
+                        SuperLinea,
                         Producto,
                         ProductoOperacion,
                         Auditoria,

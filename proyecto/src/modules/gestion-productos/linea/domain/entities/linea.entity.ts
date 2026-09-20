@@ -6,10 +6,13 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
   Index,
 } from 'typeorm';
 
 import { Producto } from '../../../producto/domain/entities/producto.entity';
+import { SuperLinea } from '../../../superlinea/domain/entities/superlinea.entity';
 import { CantidadColumn } from 'src/modules/common/decorators/cantidad-column.decorator';
 
 @Entity('linea')
@@ -26,7 +29,14 @@ export class Linea {
 
   @OneToMany(() => Producto, (producto) => producto.linea)
   productos: Producto[];
- 
+
+  @ManyToOne(() => SuperLinea, (superLinea) => superLinea.lineas)
+  @JoinColumn({ name: 'super_linea_id' })
+  superLinea?: SuperLinea;
+
+  @Column({ type: 'int', nullable: true })
+  superLineaId?: number;
+
   @Column('boolean', { default: false })
   utilizaStockMinimo: boolean;
 

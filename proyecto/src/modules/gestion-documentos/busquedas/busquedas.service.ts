@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 
 @Injectable()
@@ -21,7 +21,7 @@ export class BusquedasService {
   ) {
     const estrategia = this.estrategias[tipoDocumento];
     if (!estrategia) {
-      throw new Error('Tipo de documento no soportado aún');
+      throw new BadRequestException('Tipo de documento no soportado aún');
     }
 
     return estrategia(

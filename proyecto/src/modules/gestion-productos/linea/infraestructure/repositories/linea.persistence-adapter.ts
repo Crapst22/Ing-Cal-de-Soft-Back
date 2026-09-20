@@ -45,6 +45,7 @@ export class LineaPersistenceAdapter
         denominacion: data.denominacion,
         utilizaStockMinimo: data.utilizaStockMinimo,
         stockMinimo: data.stockMinimo,
+        superLineaId: data.superLineaId,
         usuarioCreatedId: data.usuarioCreatedId,
         observacion: data.observacion,
       });
@@ -80,6 +81,7 @@ export class LineaPersistenceAdapter
     entity.denominacion = data.denominacion ?? entity.denominacion;
     entity.utilizaStockMinimo = data.utilizaStockMinimo;
     entity.stockMinimo = data.stockMinimo ?? 0;
+    entity.superLineaId = data.superLineaId ?? entity.superLineaId;
     entity.usuarioCreatedId = data.usuarioCreatedId;
 
     // Guardar entidad antes de procesar sublíneas (opcional según lógica de negocio)
@@ -227,6 +229,26 @@ export class LineaPersistenceAdapter
     } catch (error) {
       throw new DatabaseConnectionException(
         'Error al conectar con la base de datos.',
+      );
+    }
+  }
+
+  async existsLineasActivasBySuperLinea(
+    superLineaId: number,
+  ): Promise<boolean> {
+    try {
+      const count = await this.repository
+        .createQueryBuilder('linea')
+        .where('linea.super_linea_id = :superLineaId', { superLineaId })
+        .andWhere('linea.deletedAt IS NULL')
+        .getCount();
+
+      return count > 0;
+    } catch (error) {
+      handleDatabaseError(
+        this.logger,
+        'existsLineasActivasBySuperLinea',
+        error,
       );
     }
   }

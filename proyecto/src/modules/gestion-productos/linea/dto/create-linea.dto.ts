@@ -25,6 +25,10 @@ export class CreateLineaDto {
   @IsInt()
   stockMinimo?: number;
 
+  @IsOptional()
+  @IsInt()
+  superLineaId?: number;
+
   @IsBoolean()
   utilizaStockMinimo: boolean;
 

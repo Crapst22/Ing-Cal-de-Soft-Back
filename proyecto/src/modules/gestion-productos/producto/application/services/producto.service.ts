@@ -66,12 +66,10 @@ export class ProductoService {
       await this.validarYPrepararCreacion(dto);
 
 
-
     const entity = await this.repository.create(
       dto,
       linea,
       marca,
-
       usuario,
     );
 

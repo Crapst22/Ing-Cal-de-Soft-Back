@@ -61,7 +61,7 @@ export class ClienteService {
     }
 
     this.logger.log(
-      `Creando un nuevo ${this.ENTITY_NAME} con loacliadad: ${dto.domicilio.localidadId}`,
+      `Creando un nuevo ${this.ENTITY_NAME} con localidad: ${dto.domicilio.localidadId}`,
     );
 
     const entity = await this.repository.create(

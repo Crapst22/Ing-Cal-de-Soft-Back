@@ -21,15 +21,7 @@ export class BusquedasController {
       take,
     } = paginationDto;
 
-    console.log('Parámetros extraídos:', {
-      fechaDesde,
-      fechaHasta,
-      empresaId,
-      operadorId,
-      tipoDocumento,
-      skip,
-      take,
-    });
+    
 
     return await this.service.findByFiltered(
       tipoDocumento,

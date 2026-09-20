@@ -93,6 +93,14 @@ export class LineaRepository implements ILineaRepository {
     const entity = await this.persistenceService.findByIdConAuditoria(id);
     return entity;
   }
+
+  async existsLineasActivasBySuperLinea(
+    superLineaId: number,
+  ): Promise<boolean> {
+    return this.persistenceService.existsLineasActivasBySuperLinea(
+      superLineaId,
+    );
+  }
   
   async findAllListado(): Promise<Linea[]>{
     return this.persistenceService.findAllListado();

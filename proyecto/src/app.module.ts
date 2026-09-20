@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MarcaModule } from './modules/gestion-productos/marca/marca.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LineaModule } from './modules/gestion-productos/linea/linea.module';
+import { SuperLineaModule } from './modules/gestion-productos/superlinea/superlinea.module';
 import { ProductoModule } from './modules/gestion-productos/producto/producto.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProveedorModule } from './modules/organizacion/proveedor/proveedor.module';
@@ -57,6 +58,7 @@ import { BusquedasModule } from './modules/gestion-documentos/busquedas/busqueda
 
     MarcaModule,
     LineaModule,
+    SuperLineaModule,
     ProductoModule,
     CondicionIvaModule,
     LocalidadModule,
