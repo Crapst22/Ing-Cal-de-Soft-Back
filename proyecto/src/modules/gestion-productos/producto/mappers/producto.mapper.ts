@@ -8,7 +8,7 @@ import { ProductoDto } from '../dto/producto.dto';
 import {
   toReferenciaDto,
 } from 'src/modules/common/utils/mappers/referencia.mapper';
-import { generarDenominacionPresentacion } from '../../presentacion/utils/presentacion.util';
+import { generarDenominacionPresentacion } from '../../presentacion/domain/value-objects/denominacion-presentacion';
 
 export class ProductoMapper {
  

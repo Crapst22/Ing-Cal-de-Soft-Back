@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
-import { TipoPresentacion } from '../utils/presentacion.util';
+import { TipoPresentacion } from '../domain/value-objects/denominacion-presentacion';
 
 export class PresentacionDto {
   @ApiProperty({ example: 1 })

@@ -153,7 +153,7 @@ describe('CreateProductoDto', () => {
       );
     });
 
-    it('debería fallar si denominacion no está presente', async () => {
+    it('debería ser válido si denominacion no está presente (se autogenera en el dominio)', async () => {
       const data = {
         utilizaStockMinimo: false,
         utilizaPack: false,
@@ -164,11 +164,7 @@ describe('CreateProductoDto', () => {
         usuarioCreatedId: 1,
       };
 
-      await DtoValidatorHelper.expectFieldError(
-        CreateProductoDto,
-        data,
-        'denominacion',
-      );
+      await DtoValidatorHelper.expectValidDto(CreateProductoDto, data);
     });
 
     it('debería fallar si denominacion no es un string', async () => {

@@ -1,3 +1,10 @@
+/**
+ * Regla de dominio: denominación visible de una presentación.
+ * La denominación no se persiste: es un Value Object calculado a partir de
+ * tipo/quantity/volumen/unidad (depende de cómo se agrupa el producto final).
+ * Vive en dominio porque es una regla de negocio del contexto presentación,
+ * consumida también por el contexto producto para la denominación automática.
+ */
 export type TipoPresentacion = 'volume' | 'pack';
 
 const UNIDADES_VALIDAS = new Set(['l', 'ml', 'lt', 'cm3', 'kg', 'g', 'gr', 'cc']);

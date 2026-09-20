@@ -14,7 +14,7 @@ import { CreatePresentacionDto } from '../../dto/create-presentacion.dto';
 import { UpdatePresentacionDto } from '../../dto/update-presentacion.dto';
 import { Presentacion } from '../../domain/entities/presentacion.entity';
 import { IPresentacionRepository } from '../../domain/interfaces/presentacion.repository.interface';
-import { generarDenominacionPresentacion } from '../../utils/presentacion.util';
+import { generarDenominacionPresentacion } from '../../domain/value-objects/denominacion-presentacion';
 
 @Injectable()
 export class PresentacionPersistenceAdapter

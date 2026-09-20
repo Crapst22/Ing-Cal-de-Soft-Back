@@ -1,6 +1,6 @@
 import { Presentacion } from '../domain/entities/presentacion.entity';
 import { PresentacionDto } from '../dto/presentacion.dto';
-import { generarDenominacionPresentacion } from '../utils/presentacion.util';
+import { generarDenominacionPresentacion } from '../domain/value-objects/denominacion-presentacion';
 
 export class PresentacionMapper {
   static toDto(entity: Presentacion): PresentacionDto {

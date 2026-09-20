@@ -20,7 +20,7 @@ import { Presentacion } from '../../domain/entities/presentacion.entity';
 import {
   TipoPresentacion,
   generarDenominacionPresentacion,
-} from '../../utils/presentacion.util';
+} from '../../domain/value-objects/denominacion-presentacion';
 
 @Injectable()
 export class PresentacionService {
