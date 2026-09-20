@@ -53,6 +53,21 @@ export class ProductoIntrinsicValidationService {
   }
 
   /**
+   * Regla de dominio CR-007: el nuevo precio de venta debe ser estrictamente > 0.
+   * Aplica al registrar un cambio de precio (historial de precios).
+   */
+  public validarPrecioNuevo(precioNuevo: number | undefined): void {
+    if (precioNuevo === undefined || precioNuevo === null) {
+      throw new BadRequestException('El precio nuevo es obligatorio');
+    }
+    if (precioNuevo <= 0) {
+      throw new BadRequestException(
+        'El precio nuevo debe ser mayor a 0',
+      );
+    }
+  }
+
+  /**
    * Valida la jerarquía de precios: Mayorista <= Cliente <= Ocasional
    */
   private validarPrecios(

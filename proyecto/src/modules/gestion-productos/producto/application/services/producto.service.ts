@@ -21,10 +21,10 @@ import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { ProductoMapper } from '../../mappers/producto.mapper';
 import { LineaService } from 'src/modules/gestion-productos/linea/application/services/linea.service';
 import { MarcaService } from 'src/modules/gestion-productos/marca/application/services/marca.service';
-import { ProductoIntrinsicValidationService } from '../../domain/services/producto-intrinsic-validation.service.ts';
-import { ProductoValidationService } from '../../domain/services/producto-validation.service.ts';
-import { ProductoRelatedEntitiesValidator } from '../../infraestructure/validators/producto-related-entities.validator.ts';
-import { ProductoUniquenessValidator } from '../../infraestructure/validators/producto-uniqueness.validator.ts';
+import { ProductoIntrinsicValidationService } from '../../domain/services/producto-intrinsic-validation.service';
+import { ProductoValidationService } from '../../domain/services/producto-validation.service';
+import { ProductoRelatedEntitiesValidator } from '../../infraestructure/validators/producto-related-entities.validator';
+import { ProductoUniquenessValidator } from '../../infraestructure/validators/producto-uniqueness.validator';
 import { UsuarioValidator } from 'src/modules/common/utils/validation/usuario-validator';
 import { ProductoDeletePolicy } from '../policies/producto-delete.policy';
 @Injectable()
