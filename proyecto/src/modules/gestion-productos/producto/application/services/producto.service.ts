@@ -227,6 +227,30 @@ export class ProductoService {
     return this.marcaService.findAllFor(denominacion);
   }
 
+  async obtenerSugerencias(texto: string, take: number) {
+    this.logger.log(
+      `  Sugerencias para "${texto}"  take=${take}`,
+    );
+    return this.repository.obtenerSugerencias(texto, take);
+  }
+
+  async buscarProductosPorTexto(
+    texto: string,
+    skip: number,
+    take: number,
+  ): Promise<{ data: GetProductoDto[]; total: number }> {
+    this.logger.log(
+      `  Buscando productos por texto "${texto}"  skip=${skip}, take=${take}`,
+    );
+    const result = await this.repository.buscarPorTexto(texto, skip, take);
+    return {
+      data: result.data.map((producto) =>
+        ProductoMapper.toBusquedaDto(producto),
+      ),
+      total: PaginacionUtils.totalItems(result.total),
+    };
+  }
+
   async findByDenominacionCodigoProveedorFiltered(
     denominacion: string,
     skip = 0,

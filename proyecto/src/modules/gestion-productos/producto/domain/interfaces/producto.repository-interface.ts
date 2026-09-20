@@ -40,6 +40,17 @@ export interface IProductoRepository {
     take: number,
   ): Promise<{ data: Producto[]; total: number }>;
 
+  obtenerSugerencias(
+    texto: string,
+    take: number,
+  ): Promise<Array<{ texto: string; tipo: string }>>;
+
+  buscarPorTexto(
+    texto: string,
+    skip: any,
+    take: number,
+  ): Promise<{ data: Producto[]; total: number }>;
+
 
   findByIdWithoutRelations(id: number): Promise<Producto | null> | undefined;
 
