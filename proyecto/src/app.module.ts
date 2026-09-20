@@ -49,11 +49,15 @@ import { BusquedasModule } from './modules/gestion-documentos/busquedas/busqueda
       // TypeOrmModule.forFeature([Entidad]) en tus módulos
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       // entities,
-      synchronize: false,  
+      synchronize: true,
       ssl: (() => {
         if (process.env.DB_SSL !== 'true') return false;
         const ca = process.env.DB_SSL_CA;
-        return { require: true, rejectUnauthorized: false, ...(ca ? { ca } : {}) };
+        return {
+          require: true,
+          rejectUnauthorized: false,
+          ...(ca ? { ca } : {}),
+        };
       })(),
     }),
 
@@ -88,4 +92,4 @@ import { BusquedasModule } from './modules/gestion-documentos/busquedas/busqueda
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
