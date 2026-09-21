@@ -2,13 +2,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { MarcaService } from '../../../marca/application/services/marca.service';
 import { LineaService } from '../../../linea/application/services/linea.service';
+import { PresentacionService } from '../../../presentacion/application/services/presentacion.service';
 
 @Injectable()
 export class ProductoRelatedEntitiesValidator {
   constructor(
     private readonly marcaService: MarcaService,
     private readonly lineaService: LineaService,
-
+    private readonly presentacionService: PresentacionService,
   ) {}
 
   /**
@@ -18,23 +19,27 @@ export class ProductoRelatedEntitiesValidator {
   async validarYObtenerEntidadesRelacionadas(
     marcaId: number,
     lineaId: number,
-
+    presentacionId?: number | null,
   ) {
-    let marca, linea;
+    let marca, linea, presentacion;
 
+    // Sin sublínea
+    [marca, linea] = await Promise.all([
+      this.marcaService.findEntityById(marcaId),
+      this.lineaService.findEntityById(lineaId),
+    ]);
 
-      // Sin sublínea
-      [marca, linea] = await Promise.all([
-        this.marcaService.findEntityById(marcaId),
-        this.lineaService.findEntityById(lineaId),
+    if (presentacionId != null) {
+      presentacion =
+        await this.presentacionService.findEntityById(presentacionId);
+      this.validarEntidadExiste(presentacion, 'Presentación', presentacionId);
+    }
 
-      ]);
-  
     // Validar que existen
     this.validarEntidadExiste(marca, 'Marca', marcaId);
     this.validarEntidadExiste(linea, 'Línea', lineaId);
 
-    return { marca, linea };
+    return { marca, linea, presentacion };
   }
 
   private validarEntidadExiste(

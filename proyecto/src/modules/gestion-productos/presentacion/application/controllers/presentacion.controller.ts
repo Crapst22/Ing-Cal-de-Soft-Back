@@ -5,44 +5,65 @@ import {
   Body,
   Param,
   Delete,
-  UsePipes,
   Logger,
   Query,
   Put,
   ParseIntPipe,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
-import { CreateMarcaDto } from '../../dto/create-presentacion.dto';
-import { UpdateMarcaDto } from '../../dto/update-presentacion.dto';
-import { NormalizeDenominacionPipe } from 'src/modules/common/pipes/normalize-denominations.pipe';
+import { CreatePresentacionDto } from '../../dto/create-presentacion.dto';
+import { UpdatePresentacionDto } from '../../dto/update-presentacion.dto';
+import { PresentacionDto } from '../../dto/presentacion.dto';
 import { PaginationWithDenominacionDto } from 'src/modules/common/dto/busquedas/pagination-with-denominacion.dto';
+import { DenominacionBusquedaDto } from 'src/modules/common/dto/denominacion-busqueda.dto';
+import { NormalizeDenominacionSearchPipe } from 'src/modules/common/pipes/normalize-denominations-search.pipe';
 import { Roles } from 'src/modules/gestion-usuario/auth/roles.decorator';
 import { AuthGuard } from 'src/modules/gestion-usuario/auth/auth.guard';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { MarcaDto } from '../../dto/presentacion.dto';
-import { NormalizeDenominacionSearchPipe } from 'src/modules/common/pipes/normalize-denominations-search.pipe';
 import { AuditoriaDto } from 'src/modules/gestion-sistema/auditoria/dto/auditoria.dto';
-import { MarcaService } from '../services/marca.service';
+import { PresentacionService } from '../services/presentacion.service';
 
 @ApiTags('Gestion Productos')
-@Controller('marca')
+@Controller('presentacion')
 @UseGuards(AuthGuard)
-export class MarcaController {
-  private readonly logger = new Logger(MarcaController.name);
-  constructor(private readonly service: MarcaService) {}
+export class PresentacionController {
+  private readonly logger = new Logger(PresentacionController.name);
+  constructor(private readonly service: PresentacionService) {}
 
-  private readonly ENTITY_NAME = 'Marca';
+  private readonly ENTITY_NAME = 'Presentación';
 
   @Post()
   @Roles('Root', 'Administrador', 'Empleado')
-  @UsePipes(NormalizeDenominacionPipe)
-  create(@Body() createDto: CreateMarcaDto) {
-    this.logger.log(`Creando un nuevo ${this.ENTITY_NAME}...`);
+  create(@Body() createDto: CreatePresentacionDto) {
+    this.logger.log(`Creando un nueva ${this.ENTITY_NAME}...`);
     return this.service.create(createDto);
   }
 
+  @Get('find-all-for-presentaciones/select')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Repartidor',
+    'Repositor',
+    'Vendedor',
+  )
+  @UsePipes(NormalizeDenominacionSearchPipe)
+  async findAllPresentacionesFor(@Query() dto: DenominacionBusquedaDto) {
+    const { denominacion = '' } = dto;
+    return this.service.findAllFor(denominacion);
+  }
+
   @Get('search-by')
-  @Roles('Root', 'Administrador', 'Empleado')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Vendedor',
+    'Repartidor',
+    'Repositor',
+  )
   @UsePipes(NormalizeDenominacionSearchPipe)
   findByDenominacionFiltered(
     @Query() paginationDto: PaginationWithDenominacionDto,
@@ -56,18 +77,17 @@ export class MarcaController {
 
   @Get(':id')
   @Roles('Root', 'Administrador', 'Empleado')
-  @ApiOkResponse({ type: MarcaDto })
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<MarcaDto> {
+  @ApiOkResponse({ type: PresentacionDto })
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<PresentacionDto> {
     this.logger.log(`Buscando ${this.ENTITY_NAME} con ID: ${id}`);
     return this.service.findDtoById(id);
   }
 
   @Put(':id')
   @Roles('Root', 'Administrador', 'Empleado')
-  @UsePipes(NormalizeDenominacionPipe)
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateDto: UpdateMarcaDto,
+    @Body() updateDto: UpdatePresentacionDto,
   ) {
     this.logger.log(`Actualizando  ${this.ENTITY_NAME} con ID: ${id}`);
     return this.service.update(id, updateDto);

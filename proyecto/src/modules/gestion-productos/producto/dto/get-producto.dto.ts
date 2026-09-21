@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
@@ -8,6 +8,7 @@ import {
   IsString,
   Min,
 } from 'class-validator';
+import { ReferenciaDto } from 'src/modules/common/dto/referencia.dto';
 /*
 Se Utiliza para la busqueda y llenado de la tabla
 */
@@ -131,5 +132,10 @@ export class GetProductoDto {
   @IsString()
   codigoReferencia: string;
 
+  @ApiPropertyOptional({
+    type: () => ReferenciaDto,
+    description: 'Presentación asociada al producto (si tiene)',
+  })
+  presentacion?: ReferenciaDto;
 
 }

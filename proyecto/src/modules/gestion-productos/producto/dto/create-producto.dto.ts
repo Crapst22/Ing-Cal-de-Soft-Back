@@ -97,6 +97,10 @@ export class CreateProductoDto {
   @IsInt({ message: 'La marca  debe ser un número entero.' })
   marcaId: number;
 
+  @IsOptional()
+  @IsInt({ message: 'La presentacion debe ser un número entero.' })
+  presentacionId?: number;
+
 
   @IsOptional()
   @IsNumber()

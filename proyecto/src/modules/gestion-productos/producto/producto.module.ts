@@ -6,6 +6,7 @@ import { Producto } from './domain/entities/producto.entity';
 import { ProductoRepository } from './infraestructure/repositories/producto.repository';
 import { LineaModule } from '../linea/linea.module';
 import { MarcaModule } from '../marca/marca.module';
+import { PresentacionModule } from '../presentacion/presentacion.module';
 import { TypeOrmUnitOfWork } from 'src/modules/common/unit-of-work/type-orm-unit-of-works1';
 import { DataSource } from 'typeorm';
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
@@ -27,6 +28,7 @@ import { ProductoDeletePolicy } from './application/policies/producto-delete.pol
     CommonModule,
     forwardRef(() => LineaModule),
     forwardRef(() => MarcaModule),
+    forwardRef(() => PresentacionModule),
     ProveedorModule,
     UsuarioModule,
   ],
