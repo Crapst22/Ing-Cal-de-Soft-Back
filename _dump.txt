@@ -1,3 +1,38 @@
+=== SPEC CONTENT (real) ===
+import { BadRequestException } from '@nestjs/common';
+import { ProductoIntrinsicValidationService } from './producto-intrinsic-validation.service';
+
+describe('ProductoIntrinsicValidationService (CR-007 - Regla de dominio precio > 0)', () => {
+  let service: ProductoIntrinsicValidationService;
+
+  beforeEach(() => {
+    service = new ProductoIntrinsicValidationService();
+  });
+
+  it('debe rechazar un precio nuevo <= 0 (cero o negativo)', () => {
+    const preciosInvalidos = [0, -0.01, -1, -100];
+
+    for (const precio of preciosInvalidos) {
+      expect(() => service.validarPrecioNuevo(precio)).toThrow(
+        BadRequestException,
+      );
+    }
+  });
+
+  it('debe aceptar un precio nuevo estrictamente mayor a 0', () => {
+    const preciosValidos = [0.01, 1, 100.5, 2500];
+
+    for (const precio of preciosValidos) {
+      expect(() => service.validarPrecioNuevo(precio)).not.toThrow();
+    }
+  });
+});
+
+
+=== SINGLE .ts? ===
+ts-exists=False
+ts.ts-exists=True
+=== CONTENT of .ts.ts (the git-tracked one) ===
 // domain/services/producto-intrinsic-validation.service.ts
 import { Injectable, BadRequestException } from '@nestjs/common';
 
@@ -32,10 +67,6 @@ export class ProductoIntrinsicValidationService {
     if (!denominacion || denominacion.trim().length === 0) {
       throw new BadRequestException('La denominación es obligatoria');
     }
-    // Límite unificado en 255 caracteres (DTO + frontend + dominio).
-    if (denominacion.length > 255) {
-      throw new BadRequestException(
-        'La denominación no puede superar 255 caracteres',
     if (denominacion.length > 200) {
       throw new BadRequestException(
         'La denominación no puede superar 200 caracteres',
@@ -119,10 +150,58 @@ export class ProductoIntrinsicValidationService {
     }
   }
 
+  /**
+   * Regla de dominio CR-007: el precio nuevo de venta debe ser estrictamente
+   * mayor a 0. Rechaza precios <= 0 (cero o negativos).
+   * Se aplica al registrar un cambio de precio nuevo en el historial.
+   */
+  public validarPrecioNuevo(precioNuevo: number | undefined): void {
+    if (precioNuevo === undefined || precioNuevo === null) {
+      throw new BadRequestException('El precio nuevo es obligatorio');
+    }
+    if (precioNuevo <= 0) {
+      throw new BadRequestException(
+        'El precio nuevo debe ser mayor a 0',
+      );
+    }
+  }
+
   private validarAlicuotaIva(alicuotaIva: number): void {
     if (alicuotaIva < 0 || alicuotaIva > 100) {
       throw new BadRequestException(
         'La alícuota IVA debe estar entre 0 y 100',
+      );
+    }
+  }
+}
+=== validation.service.ts.ts ===
+// domain/services/producto-validation.service.ts
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { Linea } from 'src/modules/gestion-productos/linea/domain/entities/linea.entity';
+import { Marca } from 'src/modules/gestion-productos/marca/domain/entities/marca.entity';
+
+@Injectable()
+export class ProductoValidationService {
+  /**
+   * Valida que las entidades relacionadas sean compatibles entre sí
+   */
+  validarEntidadesRelacionadas(
+    marca: Marca,
+    linea: Linea,
+
+  ): void {
+    this.validarEntidadNoEsDeSistema(marca, 'Marca');
+    this.validarEntidadNoEsDeSistema(linea, 'Línea');
+
+  }
+
+  private validarEntidadNoEsDeSistema(
+    entidad: { id: number; sistema?: number },
+    tipo: string,
+  ): void {
+    if (entidad.sistema === 1) {
+      throw new BadRequestException(
+        `${tipo} ${entidad.id} está marcada como del sistema y no puede usarse`,
       );
     }
   }

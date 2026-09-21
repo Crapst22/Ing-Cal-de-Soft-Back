@@ -50,6 +50,13 @@ export class ProductoController {
     this.logger.log(`Creando un nuevo ${this.ENTITY_NAME}...`);
     return this.service.create(createDto);
   }
+
+  @Put('actualizar-precios-masivo')
+  @Roles('Root', 'Administrador')
+  async actualizarPreciosMasivo(@Body() dto: ActualizarPreciosMasivoDto) {
+    this.logger.log(`Actualizando precios masivamente...`);
+    return this.service.actualizarPreciosMasivo(dto);
+  }
   
   @Get('find-all-for-marcas/select')
   @Roles(
@@ -110,6 +117,34 @@ export class ProductoController {
   async searchRapido(@Query() dto: SearchProductoRapidoDto) {
     const { exacto, codigo, skip, take } = dto;
     return this.service.findByRapido(codigo, exacto, skip, take);
+  }
+
+  @Get('search-sugerencias')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Vendedor',
+    'Repartidor',
+    'Repositor',
+  )
+  async searchSugerencias(@Query() dto: SearchProductoSugerenciasDto) {
+    const { texto = '', take } = dto;
+    return this.service.obtenerSugerencias(texto, take);
+  }
+
+  @Get('search-texto')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Vendedor',
+    'Repartidor',
+    'Repositor',
+  )
+  async searchTexto(@Query() dto: SearchProductoTextoDto) {
+    const { texto = '', skip, take } = dto;
+    return this.service.buscarProductosPorTexto(texto, skip, take);
   }
 
   @Get('search-by')
