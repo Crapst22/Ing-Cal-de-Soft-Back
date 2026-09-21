@@ -1,7 +1,7 @@
 import { Transform } from "class-transformer";
 import { IsInt, IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from "class-validator";
 
-export class CreatePresentacionDto {
+export class CreateMarcaDto {
 
     @Transform(({ value }) => value.trim().toLowerCase())
     @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string

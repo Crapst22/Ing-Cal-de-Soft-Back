@@ -30,7 +30,6 @@ import { AuditoriaDto } from 'src/modules/gestion-sistema/auditoria/dto/auditori
 import { NormalizeDenominacionSearchPipe } from 'src/modules/common/pipes/normalize-denominations-search.pipe';
 import { DenominacionBusquedaDto } from 'src/modules/common/dto/denominacion-busqueda.dto';
 import { SearchProductoRapidoDto } from '../../dto/search-producto-rapido.dto';
-import { ActualizarPreciosMasivoDto } from '../../dto/actualizar-precios-masivo.dto';
 import { ProductoService } from '../services/producto.service';
 
 
@@ -103,6 +102,34 @@ export class ProductoController {
   async searchRapido(@Query() dto: SearchProductoRapidoDto) {
     const { exacto, codigo, skip, take } = dto;
     return this.service.findByRapido(codigo, exacto, skip, take);
+  }
+
+  @Get('search-sugerencias')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Vendedor',
+    'Repartidor',
+    'Repositor',
+  )
+  async searchSugerencias(@Query() dto: SearchProductoSugerenciasDto) {
+    const { texto = '', take } = dto;
+    return this.service.obtenerSugerencias(texto, take);
+  }
+
+  @Get('search-texto')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Vendedor',
+    'Repartidor',
+    'Repositor',
+  )
+  async searchTexto(@Query() dto: SearchProductoTextoDto) {
+    const { texto = '', skip, take } = dto;
+    return this.service.buscarProductosPorTexto(texto, skip, take);
   }
 
   @Get('search-by')
