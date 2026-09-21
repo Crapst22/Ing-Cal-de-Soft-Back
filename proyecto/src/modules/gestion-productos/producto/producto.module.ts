@@ -15,10 +15,11 @@ import { UsuarioModule } from 'src/modules/gestion-usuario/usuario/usuario.modul
 import { CommonModule } from 'src/modules/common/common.module';
 import { ProductoService } from './application/services/producto.service';
 import { ProductoPersistenceAdapter } from './infraestructure/repositories/producto.persistence-adapters';
-import { ProductoUniquenessValidator } from './infraestructure/validators/producto-uniqueness.validator.ts';
-import { ProductoRelatedEntitiesValidator } from './infraestructure/validators/producto-related-entities.validator.ts';
-import { ProductoValidationService } from './domain/services/producto-validation.service.ts';
-import { ProductoIntrinsicValidationService } from './domain/services/producto-intrinsic-validation.service.ts';
+import { ProductoUniquenessValidator } from './infraestructure/validators/producto-uniqueness.validator';
+import { ProductoRelatedEntitiesValidator } from './infraestructure/validators/producto-related-entities.validator';
+import { ProductoValidationService } from './domain/services/producto-validation.service';
+import { ProductoIntrinsicValidationService } from './domain/services/producto-intrinsic-validation.service';
+import { ProductoDenominacionService } from './domain/services/producto-denominacion.service';
 import { ProductoDeletePolicy } from './application/policies/producto-delete.policy';
 
 
@@ -39,6 +40,7 @@ import { ProductoDeletePolicy } from './application/policies/producto-delete.pol
     ProductoService,
     ProductoIntrinsicValidationService,
     ProductoValidationService,
+    ProductoDenominacionService,
     ProductoRelatedEntitiesValidator,
     ProductoUniquenessValidator,
     ProductoDeletePolicy,

@@ -32,6 +32,10 @@ export class ProductoIntrinsicValidationService {
     if (!denominacion || denominacion.trim().length === 0) {
       throw new BadRequestException('La denominación es obligatoria');
     }
+    // Límite unificado en 255 caracteres (DTO + frontend + dominio).
+    if (denominacion.length > 255) {
+      throw new BadRequestException(
+        'La denominación no puede superar 255 caracteres',
     if (denominacion.length > 200) {
       throw new BadRequestException(
         'La denominación no puede superar 200 caracteres',

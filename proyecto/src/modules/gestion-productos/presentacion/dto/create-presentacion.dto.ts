@@ -9,7 +9,7 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
-import { TipoPresentacion } from '../utils/presentacion.util';
+import { TipoPresentacion } from '../domain/value-objects/denominacion-presentacion';
 
 export class CreatePresentacionDto {
   @IsIn(['volume', 'pack'], { message: 'tipo debe ser "volume" o "pack".' })
