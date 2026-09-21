@@ -43,3 +43,7 @@ export class CreatePresentacionDto {
   @IsInt({ message: 'El usuarioCreatedId debe ser un número entero.' })
   usuarioCreatedId: number;
 }
+
+
+export { CreatePresentacionDto as CreateMarcaDto };
+
