@@ -18,6 +18,7 @@ import { IProductoRepository } from '../../domain/interfaces/producto.repository
 import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { GetProductoDto } from '../../dto/get-producto.dto';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
+import { ActualizarPreciosMasivoDto } from '../../dto/actualizar-precios-masivo.dto';
 import { ProductoMapper } from '../../mappers/producto.mapper';
 import { LineaService } from 'src/modules/gestion-productos/linea/application/services/linea.service';
 import { MarcaService } from 'src/modules/gestion-productos/marca/application/services/marca.service';
@@ -98,6 +99,40 @@ export class ProductoService {
       `${this.ENTITY_NAME}`,
       entity.denominacion,
       'editada',
+    );
+  }
+
+  async actualizarPreciosMasivo(dto: ActualizarPreciosMasivoDto) {
+    this.logger.log(
+      `Iniciando actualización masiva de precios - Tipo: ${dto.tipoAumento}, Valor: ${dto.valor}, Línea: ${dto.lineaId ?? 'GLOBAL'}`,
+    );
+
+    // 1. Validar existencia del usuario
+    const usuario = await this.usuarioValidator.validarUsuarioExiste(
+      dto.usuarioId,
+    );
+
+    // 2. Si se especificó lineaId, validar que exista
+    let denominacionDestino = 'Todos los productos';
+    if (dto.lineaId) {
+      const linea = await this.lineaService.findEntityById(dto.lineaId);
+      denominacionDestino = `Línea '${linea.denominacion}'`;
+    }
+
+    // 3. Ejecutar la actualización en el repositorio
+    const totalActualizados = await this.repository.actualizarPreciosMasivo(
+      dto.tipoAumento,
+      dto.valor,
+      usuario,
+      dto.lineaId,
+    );
+
+    this.logger.log(
+      `Actualización masiva completada: ${totalActualizados} productos modificados en ${denominacionDestino}`,
+    );
+
+    return MessageFrontUtils.createActualizacionPrecioMasiva(
+      `${denominacionDestino} (${totalActualizados} productos actualizados)`,
     );
   }
 
@@ -225,6 +260,30 @@ export class ProductoService {
 
   async findAllForMarcas(denominacion: string) {
     return this.marcaService.findAllFor(denominacion);
+  }
+
+  async obtenerSugerencias(texto: string, take: number) {
+    this.logger.log(
+      `  Sugerencias para "${texto}"  take=${take}`,
+    );
+    return this.repository.obtenerSugerencias(texto, take);
+  }
+
+  async buscarProductosPorTexto(
+    texto: string,
+    skip: number,
+    take: number,
+  ): Promise<{ data: GetProductoDto[]; total: number }> {
+    this.logger.log(
+      `  Buscando productos por texto "${texto}"  skip=${skip}, take=${take}`,
+    );
+    const result = await this.repository.buscarPorTexto(texto, skip, take);
+    return {
+      data: result.data.map((producto) =>
+        ProductoMapper.toBusquedaDto(producto),
+      ),
+      total: PaginacionUtils.totalItems(result.total),
+    };
   }
 
   async findByDenominacionCodigoProveedorFiltered(

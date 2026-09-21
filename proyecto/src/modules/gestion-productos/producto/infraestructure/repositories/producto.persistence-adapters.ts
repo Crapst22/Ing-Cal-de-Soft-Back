@@ -14,6 +14,8 @@ import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { ProductoMapper } from '../../mappers/producto.mapper';
+import { SuperLinea } from 'src/modules/gestion-productos/superlinea/domain/entities/superlinea.entity';
+import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
 
 @Injectable()
@@ -340,6 +342,102 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     return { data, total };
   }
 
+  async obtenerSugerencias(
+    texto: string,
+    take: number = 5,
+  ): Promise<Array<{ texto: string; tipo: string }>> {
+    const term = texto?.trim();
+    if (!term) {
+      return [];
+    }
+
+    const parametro = `%${term}%`;
+    const sugerencias: Array<{ texto: string; tipo: string }> = [];
+
+    const productos = await this.repository
+      .createQueryBuilder('producto')
+      .select('producto.denominacion', 'texto')
+      .where('producto.deletedAt IS NULL')
+      .andWhere('UPPER(producto.denominacion) LIKE UPPER(:parametro)', {
+        parametro,
+      })
+      .orderBy('producto.denominacion', 'ASC')
+      .limit(take)
+      .getRawMany<{ texto: string }>();
+
+    productos.forEach((producto) =>
+      sugerencias.push({ texto: producto.texto, tipo: 'denominacion' }),
+    );
+
+    const lineas = await this.dataSource
+      .getRepository(Linea)
+      .createQueryBuilder('linea')
+      .select('linea.denominacion', 'texto')
+      .where('linea.deletedAt IS NULL')
+      .andWhere('UPPER(linea.denominacion) LIKE UPPER(:parametro)', {
+        parametro,
+      })
+      .orderBy('linea.denominacion', 'ASC')
+      .limit(take)
+      .getRawMany<{ texto: string }>();
+
+    lineas.forEach((linea) =>
+      sugerencias.push({ texto: linea.texto, tipo: 'linea' }),
+    );
+      //Modulo para obtener sugerencias de superLinea
+     const superlineas = await this.dataSource
+      .getRepository(SuperLinea)
+      .createQueryBuilder('superLinea')
+      .select('superLinea.denominacion', 'texto')
+      .where('superLinea.deletedAt IS NULL')
+      .andWhere('UPPER(superLinea.denominacion) LIKE UPPER(:parametro)', {
+        parametro,
+      })
+      .orderBy('superLinea.denominacion', 'ASC')
+      .limit(take)
+      .getRawMany<{ texto: string }>();
+
+    superlineas.forEach((superlinea) =>
+      sugerencias.push({ texto: superlinea.texto, tipo: 'superlinea' }),
+    );
+
+    return sugerencias;
+  }
+// Se amplio la cantidad de filtros(denominacion, linea, superLinea)
+  async buscarPorTexto(
+    texto: string,
+    skip: any,
+    take: number,
+  ): Promise<{ data: Producto[]; total: number }> {
+    const query = this.repository
+      .createQueryBuilder('producto')
+      .leftJoinAndSelect('producto.marca', 'marca')
+      .leftJoinAndSelect('producto.linea', 'linea')
+      .leftJoinAndSelect('producto.proveedor', 'proveedor')
+      .leftJoinAndSelect('linea.superLinea', 'superLinea')
+      .where('producto.deletedAt IS NULL');
+
+    if (texto) {
+      query.andWhere(
+        `(
+          producto.codigoProveedor LIKE :texto OR
+          producto.codigoReferencia LIKE :texto OR
+          producto.denominacion LIKE :texto OR
+          linea.denominacion LIKE :texto OR
+          superLinea.denominacion LIKE :texto
+      )`,
+        { texto: `%${texto}%` },
+      );
+    }
+
+    query.orderBy('producto.denominacion', 'ASC');
+    query.skip(skip).take(take);
+
+    const [data, total] = await query.getManyAndCount();
+
+    return { data, total };
+  }
+
   async isCodigoProveedorDuplicado(
     codigoProveedor: string | null,
     id?: number,
@@ -510,5 +608,53 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     }
   }
 
+  @Transactional()
+  async actualizarPreciosMasivo(
+    tipoAumento: TipoAumento,
+    valor: number,
+    usuario: Usuario,
+    lineaId?: number,
+  ): Promise<number> {
+    const repo = this.uow.getRepository(Producto);
+    try {
+      const qb = repo
+        .createQueryBuilder()
+        .update(Producto);
+
+      if (Number(tipoAumento) === TipoAumento.PORCENTAJE) {
+        qb.set({
+          precio: () => 'ROUND(precio * (1 + :valor / 100), 5)',
+          usuarioUpdated: usuario,
+          updatedAt: () => 'CURRENT_TIMESTAMP',
+        });
+      } else {
+        qb.set({
+          precio: () => 'ROUND(precio + :valor, 5)',
+          usuarioUpdated: usuario,
+          updatedAt: () => 'CURRENT_TIMESTAMP',
+        });
+      }
+
+      qb.setParameters({ valor: Number(valor) });
+      qb.where('deletedAt IS NULL');
+
+      if (lineaId) {
+        qb.andWhere('linea_id = :lineaId', { lineaId });
+      }
+
+      const result = await qb.execute();
+      this.logger.log(
+        `Actualización masiva de precios realizada: ${result.affected ?? 0} productos modificados`,
+      );
+      return result.affected ?? 0;
+    } catch (error) {
+      this.logger.error('Error al actualizar precios masivamente:', error);
+      throw new DatabaseConnectionException(
+        'Error al actualizar los precios en la base de datos.',
+      );
+    }
+  }
+
 }
+
 

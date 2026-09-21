@@ -45,7 +45,7 @@ export class LineaPersistenceAdapter
         denominacion: data.denominacion,
         utilizaStockMinimo: data.utilizaStockMinimo,
         stockMinimo: data.stockMinimo,
-        superLineaId: data.superLineaId,
+        superLinea: data.superLineaId ? { id: data.superLineaId } : undefined,
         usuarioCreatedId: data.usuarioCreatedId,
         observacion: data.observacion,
       });
@@ -81,7 +81,10 @@ export class LineaPersistenceAdapter
     entity.denominacion = data.denominacion ?? entity.denominacion;
     entity.utilizaStockMinimo = data.utilizaStockMinimo;
     entity.stockMinimo = data.stockMinimo ?? 0;
-    entity.superLineaId = data.superLineaId ?? entity.superLineaId;
+    //entity.superLineaId = data.superLineaId ?? entity.superLineaId;
+    if (data.superLineaId !== undefined) {
+      entity.superLinea = data.superLineaId ? ({ id: data.superLineaId } as any) : undefined;
+    }
     entity.usuarioCreatedId = data.usuarioCreatedId;
 
     // Guardar entidad antes de procesar sublíneas (opcional según lógica de negocio)
