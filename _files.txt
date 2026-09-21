@@ -1,0 +1,31 @@
+﻿=== git ls-files ABSOLUTE service/mapper/entity/spec (gestion-productos/producto) ===
+proyecto/src/modules/gestion-productos/producto/application/controllers/producto.controller.spec.ts
+proyecto/src/modules/gestion-productos/producto/application/controllers/producto.controller.ts
+proyecto/src/modules/gestion-productos/producto/application/policies/producto-delete.policy.ts
+proyecto/src/modules/gestion-productos/producto/application/services/producto.service.spec.ts
+proyecto/src/modules/gestion-productos/producto/application/services/producto.service.ts
+proyecto/src/modules/gestion-productos/producto/domain/entities/producto.entity.ts
+proyecto/src/modules/gestion-productos/producto/domain/helpers/producto-validator.helper.ts
+proyecto/src/modules/gestion-productos/producto/domain/interfaces/base-producto.interface.ts
+proyecto/src/modules/gestion-productos/producto/domain/interfaces/producto.repository-interface.ts
+proyecto/src/modules/gestion-productos/producto/domain/services/producto-intrinsic-validation.service.ts.ts
+proyecto/src/modules/gestion-productos/producto/domain/services/producto-validation.service.ts.ts
+proyecto/src/modules/gestion-productos/producto/dto/__tests__/create-producto.dto.spec.ts
+proyecto/src/modules/gestion-productos/producto/dto/create-producto.dto.ts
+proyecto/src/modules/gestion-productos/producto/dto/get-producto.dto.ts
+proyecto/src/modules/gestion-productos/producto/dto/producto.dto.ts
+proyecto/src/modules/gestion-productos/producto/dto/seach-informacion-producto.dto.ts
+proyecto/src/modules/gestion-productos/producto/dto/search-producto-pagination-with.dto.ts
+proyecto/src/modules/gestion-productos/producto/dto/search-producto-rapido.dto.ts
+proyecto/src/modules/gestion-productos/producto/dto/update-precio.dto.ts
+proyecto/src/modules/gestion-productos/producto/dto/update-producto.dto.ts
+proyecto/src/modules/gestion-productos/producto/enums/tipo-producto.enum.ts
+proyecto/src/modules/gestion-productos/producto/infraestructure/repositories/producto.persistence-adapters.ts
+proyecto/src/modules/gestion-productos/producto/infraestructure/repositories/producto.repository.ts
+proyecto/src/modules/gestion-productos/producto/infraestructure/validators/producto-related-entities.validator.ts.ts
+proyecto/src/modules/gestion-productos/producto/infraestructure/validators/producto-uniqueness.validator.ts.ts
+proyecto/src/modules/gestion-productos/producto/mappers/producto.mapper.ts
+proyecto/src/modules/gestion-productos/producto/producto.module.ts
+
+=== Any 'historial' or 'intrinsic' files tracked, full list ===
+proyecto/src/modules/gestion-productos/producto/domain/services/producto-intrinsic-validation.service.ts.ts
