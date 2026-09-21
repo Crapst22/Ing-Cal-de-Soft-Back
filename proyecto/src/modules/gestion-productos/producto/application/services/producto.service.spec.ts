@@ -1,4 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import {
+  ForbiddenException,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ProductoService } from './producto.service';
 import { ProductoIntrinsicValidationService } from '../../domain/services/producto-intrinsic-validation.service';
 import { ProductoValidationService } from '../../domain/services/producto-validation.service';
@@ -189,6 +194,232 @@ describe('ProductoService', () => {
         ],
         total: 2,
       });
+    });
+  });
+
+  describe('update', () => {
+    it('actualiza un producto existente', async () => {
+      mockRepository.findOne.mockResolvedValue({
+        id: 1,
+        denominacion: 'producto viejo',
+        lineaId: 1,
+        marcaId: 1,
+        alicuotaIva: 21,
+        presentacionId: null,
+      });
+      mockRepository.update.mockResolvedValue({
+        id: 1,
+        denominacion: 'Aceite nuevo',
+      });
+
+      const dto: any = {
+        denominacion: 'Aceite nuevo',
+        marcaId: 1,
+        lineaId: 1,
+        usuarioUpdatedId: 1,
+      };
+
+      const result = await service.update(1, dto);
+
+      expect(mockRepository.update).toHaveBeenCalledTimes(1);
+      expect(result).toEqual({
+        mensaje: 'Producto editada con éxito con denominacion: Aceite nuevo',
+      });
+    });
+
+    it('lanza NotFound si el producto no existe', async () => {
+      mockRepository.findOne.mockResolvedValue(null);
+
+      await expect(
+        service.update(99, { usuarioUpdatedId: 1 } as any),
+      ).rejects.toThrow(NotFoundException);
+    });
+
+    it('lanza InternalServerError si el producto está en estado inválido', async () => {
+      mockRepository.findOne.mockResolvedValue({
+        id: 1,
+        denominacion: 'x',
+        lineaId: null,
+        marcaId: 1,
+      });
+
+      await expect(
+        service.update(1, { usuarioUpdatedId: 1 } as any),
+      ).rejects.toThrow(InternalServerErrorException);
+    });
+  });
+
+  describe('findDtoById / findEntityById', () => {
+    it('mapea a DTO cuando existe', async () => {
+      mockRepository.findOne.mockResolvedValue({
+        id: 1,
+        denominacion: 'producto',
+        linea: { id: 1, denominacion: 'Aceites' },
+        marca: { id: 1, denominacion: 'Caroyense' },
+        presentacion: null,
+      });
+
+      const dto = await service.findDtoById(1);
+
+      expect(dto.id).toBe(1);
+      expect(dto.denominacion).toBe('producto');
+    });
+
+    it('lanza NotFound si no existe', async () => {
+      mockRepository.findOne.mockResolvedValue(null);
+
+      await expect(service.findDtoById(1)).rejects.toThrow(NotFoundException);
+      await expect(service.findEntityById(1)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('búsquedas', () => {
+    const productoMinimo = {
+      id: 1,
+      denominacion: 'x',
+      codigoProveedor: 'P',
+      stock: 1,
+    };
+
+    it('mapea findByRapido', async () => {
+      mockRepository.findByRapido.mockResolvedValue({
+        data: [productoMinimo],
+        total: 1,
+      });
+
+      const result = await service.findByRapido('x', false, 0, 10);
+
+      expect(result.data).toHaveLength(1);
+      expect(result.total).toBe(1);
+    });
+
+    it('mapea findBy', async () => {
+      mockRepository.findBy.mockResolvedValue({
+        data: [productoMinimo],
+        total: 5,
+      });
+
+      const result = await service.findBy(
+        'x',
+        '',
+        false,
+        '',
+        0,
+        0,
+        0,
+        false,
+        0,
+        10,
+      );
+
+      expect(result.total).toBe(5);
+    });
+
+    it('mapea findByDenominacionCodigoProveedorFiltered', async () => {
+      mockRepository.findByDenominacionCodigoProveedorFiltered.mockResolvedValue({
+        data: [productoMinimo],
+        total: 1,
+      });
+
+      const result = await service.findByDenominacionCodigoProveedorFiltered('x');
+
+      expect(result.data).toHaveLength(1);
+      expect(result.total).toBe(1);
+    });
+  });
+
+  describe('remove', () => {
+    it('no permite eliminar productos del sistema', async () => {
+      mockRepository.findOne.mockResolvedValue({
+        id: 1,
+        denominacion: 'x',
+        sistema: 1,
+      });
+
+      await expect(service.remove(1, 1)).rejects.toThrow(ForbiddenException);
+    });
+
+    it('lanza NotFound si el usuario no existe', async () => {
+      mockRepository.findOne.mockResolvedValue({
+        id: 1,
+        denominacion: 'x',
+        sistema: 0,
+      });
+      mockUsuarioService.findOne.mockResolvedValue(null);
+
+      await expect(service.remove(1, 1)).rejects.toThrow(NotFoundException);
+    });
+
+    it('elimina y devuelve el mensaje', async () => {
+      mockRepository.findOne.mockResolvedValue({
+        id: 1,
+        denominacion: 'Aceite',
+        sistema: 0,
+      });
+      mockUsuarioService.findOne.mockResolvedValue({ id: 1 });
+      mockRepository.remove.mockResolvedValue({ id: 1 });
+
+      const result = await service.remove(1, 1);
+
+      expect(mockRepository.remove).toHaveBeenCalledTimes(1);
+      expect(result).toEqual({
+        mensaje: 'Producto eliminada con éxito con denominacion: Aceite',
+      });
+    });
+  });
+
+  describe('delegaciones y stock', () => {
+    it('busca marca y línea desde el producto', async () => {
+      mockMarcaService.findEntityById.mockResolvedValue({ id: 1 });
+      mockLineaService.findEntityById.mockResolvedValue({ id: 2 });
+
+      expect(await service.buscarMarcaDesdeProducto(1)).toEqual({ id: 1 });
+      expect(await service.buscarLineaDesdeProducto(2)).toEqual({ id: 2 });
+    });
+
+    it('delega findAllForMarcas y findAllForLineas', async () => {
+      mockMarcaService.findAllFor.mockResolvedValue([]);
+      mockLineaService.findAllFor.mockResolvedValue([]);
+
+      await service.findAllForMarcas('m');
+      await service.findAllForLineas('l');
+
+      expect(mockMarcaService.findAllFor).toHaveBeenCalledWith('m');
+      expect(mockLineaService.findAllFor).toHaveBeenCalledWith('l');
+    });
+
+    it('delega existsProductosActivos y findByIds', async () => {
+      mockRepository.existsProductosActivosByMarca.mockResolvedValue(true);
+      mockRepository.existsProductosActivosByLinea.mockResolvedValue(false);
+      mockRepository.findByIds.mockResolvedValue([{ id: 1 }]);
+
+      expect(await service.existsProductosActivosByMarca(1)).toBe(true);
+      expect(await service.existsProductosActivosByLinea(1)).toBe(false);
+      expect(await service.findByIds([1])).toEqual([{ id: 1 }]);
+    });
+
+    it('incrementa y decrementa stock', async () => {
+      mockRepository.findOne.mockImplementation(() => ({ id: 1, stock: 5 }));
+      mockRepository.updateEntity.mockResolvedValue({});
+
+      expect(await service.incrementarStock({} as any, 1, 3)).toBe(8);
+      expect(await service.decrementarStock({} as any, 1, 2)).toBe(3);
+    });
+
+    it('lanza error al ajustar stock de un producto inexistente', async () => {
+      mockRepository.findOne.mockResolvedValue(null);
+
+      await expect(service.incrementarStock({} as any, 1, 3)).rejects.toThrow(
+        'no encontrado',
+      );
+    });
+
+    it('lanza NotFound en findByIdConAuditoria si no existe', async () => {
+      mockRepository.findByIdConAuditoria.mockResolvedValue(null);
+
+      await expect(service.findByIdConAuditoria(1)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });
