@@ -15,6 +15,7 @@ import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { ProductoMapper } from '../../mappers/producto.mapper';
 import { SuperLinea } from 'src/modules/gestion-productos/superlinea/domain/entities/superlinea.entity';
+import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
 
 @Injectable()
@@ -607,5 +608,53 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     }
   }
 
+  @Transactional()
+  async actualizarPreciosMasivo(
+    tipoAumento: TipoAumento,
+    valor: number,
+    usuario: Usuario,
+    lineaId?: number,
+  ): Promise<number> {
+    const repo = this.uow.getRepository(Producto);
+    try {
+      const qb = repo
+        .createQueryBuilder()
+        .update(Producto);
+
+      if (Number(tipoAumento) === TipoAumento.PORCENTAJE) {
+        qb.set({
+          precio: () => 'ROUND(precio * (1 + :valor / 100), 5)',
+          usuarioUpdated: usuario,
+          updatedAt: () => 'CURRENT_TIMESTAMP',
+        });
+      } else {
+        qb.set({
+          precio: () => 'ROUND(precio + :valor, 5)',
+          usuarioUpdated: usuario,
+          updatedAt: () => 'CURRENT_TIMESTAMP',
+        });
+      }
+
+      qb.setParameters({ valor: Number(valor) });
+      qb.where('deletedAt IS NULL');
+
+      if (lineaId) {
+        qb.andWhere('linea_id = :lineaId', { lineaId });
+      }
+
+      const result = await qb.execute();
+      this.logger.log(
+        `Actualización masiva de precios realizada: ${result.affected ?? 0} productos modificados`,
+      );
+      return result.affected ?? 0;
+    } catch (error) {
+      this.logger.error('Error al actualizar precios masivamente:', error);
+      throw new DatabaseConnectionException(
+        'Error al actualizar los precios en la base de datos.',
+      );
+    }
+  }
+
 }
+
 

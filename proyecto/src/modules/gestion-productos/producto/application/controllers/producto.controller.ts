@@ -30,8 +30,6 @@ import { AuditoriaDto } from 'src/modules/gestion-sistema/auditoria/dto/auditori
 import { NormalizeDenominacionSearchPipe } from 'src/modules/common/pipes/normalize-denominations-search.pipe';
 import { DenominacionBusquedaDto } from 'src/modules/common/dto/denominacion-busqueda.dto';
 import { SearchProductoRapidoDto } from '../../dto/search-producto-rapido.dto';
-import { SearchProductoSugerenciasDto } from '../../dto/search-producto-sugerencias.dto';
-import { SearchProductoTextoDto } from '../../dto/search-producto-texto.dto';
 import { ProductoService } from '../services/producto.service';
 
 
@@ -51,6 +49,13 @@ export class ProductoController {
   create(@Body() createDto: CreateProductoDto) {
     this.logger.log(`Creando un nuevo ${this.ENTITY_NAME}...`);
     return this.service.create(createDto);
+  }
+
+  @Put('actualizar-precios-masivo')
+  @Roles('Root', 'Administrador')
+  async actualizarPreciosMasivo(@Body() dto: ActualizarPreciosMasivoDto) {
+    this.logger.log(`Actualizando precios masivamente...`);
+    return this.service.actualizarPreciosMasivo(dto);
   }
   
   @Get('find-all-for-marcas/select')

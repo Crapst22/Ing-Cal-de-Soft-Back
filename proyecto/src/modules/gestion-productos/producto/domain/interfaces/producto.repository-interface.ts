@@ -6,6 +6,7 @@ import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
+import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
 export interface IProductoRepository {
 
@@ -91,4 +92,11 @@ export interface IProductoRepository {
   existsProductosActivosByLinea(lineaId: number): Promise<boolean>;
 
   findByIds(ids: number[]): Promise<Producto[]>;
+
+  actualizarPreciosMasivo(
+    tipoAumento: TipoAumento,
+    valor: number,
+    usuario: Usuario,
+    lineaId?: number,
+  ): Promise<number>;
 }
