@@ -8,14 +8,9 @@ export class ProductoValidationService {
   /**
    * Valida que las entidades relacionadas sean compatibles entre sí
    */
-  validarEntidadesRelacionadas(
-    marca: Marca,
-    linea: Linea,
-
-  ): void {
+  validarEntidadesRelacionadas(marca: Marca, linea: Linea): void {
     this.validarEntidadNoEsDeSistema(marca, 'Marca');
     this.validarEntidadNoEsDeSistema(linea, 'Línea');
-
   }
 
   private validarEntidadNoEsDeSistema(

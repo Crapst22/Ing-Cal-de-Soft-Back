@@ -270,6 +270,8 @@ export class ProductoService {
 
   async findAllForPresentaciones(denominacion: string) {
     return this.presentacionService.findAllFor(denominacion);
+  }
+  
   async obtenerSugerencias(texto: string, take: number) {
     this.logger.log(
       `  Sugerencias para "${texto}"  take=${take}`,
@@ -389,11 +391,7 @@ export class ProductoService {
       );
 
     // 2. Validar reglas de negocio sobre entidades (Domain)
-    this.validationService.validarEntidadesRelacionadas(
-      marca,
-      linea,
-
-    );
+    this.validationService.validarEntidadesRelacionadas(marca, linea);
 
     // 3. Denominación: regla de negocio (Domain).
     // Si no viene explícita se autogenera "Marca + Línea + Presentación".
@@ -479,11 +477,7 @@ export class ProductoService {
       );
 
     //  Validar reglas de negocio
-    this.validationService.validarEntidadesRelacionadas(
-      marca,
-      linea,
-
-    );
+    this.validationService.validarEntidadesRelacionadas(marca, linea);
 
     // 5 Validar usuario
     const usuario = await this.usuarioValidator.validarUsuarioExiste(
