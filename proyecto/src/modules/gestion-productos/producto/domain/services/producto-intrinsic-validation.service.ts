@@ -36,9 +36,6 @@ export class ProductoIntrinsicValidationService {
     if (denominacion.length > 255) {
       throw new BadRequestException(
         'La denominación no puede superar 255 caracteres',
-    if (denominacion.length > 200) {
-      throw new BadRequestException(
-        'La denominación no puede superar 200 caracteres',
       );
     }
   }
