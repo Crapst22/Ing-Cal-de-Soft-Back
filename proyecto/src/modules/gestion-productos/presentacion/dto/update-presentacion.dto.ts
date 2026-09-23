@@ -1,5 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { CreatePresentacionDto } from './create-presentacion.dto';
 
 export class UpdatePresentacionDto extends PartialType(CreatePresentacionDto) {
@@ -11,6 +17,7 @@ export class UpdatePresentacionDto extends PartialType(CreatePresentacionDto) {
 
   @IsOptional()
   @IsString()
+  @MaxLength(20, { message: 'La unidad no puede superar 20 caracteres.' })
   unidad?: string | null;
 
   updatedAt: Date;
