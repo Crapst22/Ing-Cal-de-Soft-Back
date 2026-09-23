@@ -30,6 +30,9 @@ import { AuditoriaDto } from 'src/modules/gestion-sistema/auditoria/dto/auditori
 import { NormalizeDenominacionSearchPipe } from 'src/modules/common/pipes/normalize-denominations-search.pipe';
 import { DenominacionBusquedaDto } from 'src/modules/common/dto/denominacion-busqueda.dto';
 import { SearchProductoRapidoDto } from '../../dto/search-producto-rapido.dto';
+import { ActualizarPreciosMasivoDto } from '../../dto/actualizar-precios-masivo.dto';
+import { SearchProductoSugerenciasDto } from '../../dto/search-producto-sugerencias.dto';
+import { SearchProductoTextoDto } from '../../dto/search-producto-texto.dto';
 import { ProductoService } from '../services/producto.service';
 
 
@@ -87,6 +90,21 @@ export class ProductoController {
   async findAllLineasFor(@Query() dto: DenominacionBusquedaDto) {
     const { denominacion = '' } = dto;
     return this.service.findAllForLineas(denominacion);
+  }
+
+  @Get('find-all-for-presentaciones/select')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Repartidor',
+    'Repositor',
+    'Vendedor',
+  )
+  @UsePipes(NormalizeDenominacionSearchPipe)
+  async findAllPresentacionesFor(@Query() dto: DenominacionBusquedaDto) {
+    const { denominacion = '' } = dto;
+    return this.service.findAllForPresentaciones(denominacion);
   }
 
   @Get('search-by-rapido')

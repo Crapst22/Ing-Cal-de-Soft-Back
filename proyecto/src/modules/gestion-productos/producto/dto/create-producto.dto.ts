@@ -13,18 +13,20 @@ import {
 import { AlicuotaIva } from 'src/modules/organizacion/enums/alicuota-iva.enum';
 
 export class CreateProductoDto {
-  @Transform(({ value }) => value.trim().toLowerCase())
+  // Opcional: si no se envía, el dominio autogenera "Marca + Línea + Presentación".
+  @Transform(({ value }) =>
+    typeof value === 'string' ? value.trim().toLowerCase() : value,
+  )
+  @IsOptional()
   @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string
   @IsNotEmpty({ message: 'La denominación no puede estar vacía.' }) // Valida que no esté vacía
-  @MaxLength(255, { message: 'La denominación no puede estar vacía.' })
-  /*  @Matches(/^[A-Za-z0-9 áéíóúÁÉÍÓÚñÑ.\-/]+$/, {
-    message:
-      'La denominación solo puede contener letras, números, espacios, puntos, guiones y barras.',
-  }) */
+  @MaxLength(255, {
+    message: 'La denominación no puede superar los 255 caracteres.',
+  })
   @Matches(/^[\w áéíóúÁÉÍÓÚñÑ.\-/%]+$/, {
     message: 'La denominación contiene caracteres inválidos ',
   })
-  denominacion: string;
+  denominacion?: string;
 
   @IsOptional()
   @IsString()
@@ -96,6 +98,10 @@ export class CreateProductoDto {
   @IsNotEmpty({ message: 'La marca es obligatoria.' })
   @IsInt({ message: 'La marca  debe ser un número entero.' })
   marcaId: number;
+
+  @IsOptional()
+  @IsInt({ message: 'La presentacion debe ser un número entero.' })
+  presentacionId?: number;
 
 
   @IsOptional()

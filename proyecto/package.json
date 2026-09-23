@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:dtos": "jest --testPathPattern=\"dto.*spec\" --verbose",
     "test:dtos:cov": "jest --testPathPattern=\"dto.*spec\" --coverage",
+    "test:cr002": "jest src/modules/gestion-productos/presentacion --coverage --collectCoverageFrom=\"src/modules/gestion-productos/presentacion/**/*.ts\" --coverageReporters=text-summary",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:generate": "npm run typeorm -- migration:generate -d orm.config.ts",
     "migration:run": "npm run typeorm -- migration:run -d orm.config.ts",

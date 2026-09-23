@@ -4,6 +4,11 @@ import { UpdateSuperLineaDto } from '../../dto/update-superlinea.dto';
 import { SuperLinea } from '../entities/superlinea.entity';
 import { AuditoriaDto } from 'src/modules/gestion-sistema/auditoria/dto/auditoria.dto';
 
+export interface SelectLineaDto {
+  id: number;
+  denominacion: string;
+}
+
 export interface ISuperLineaRepository {
   create(data: CreateSuperLineaDto): Promise<SuperLinea>;
   findAllFor(denominacion: string): Promise<SuperLinea[]>;
@@ -22,4 +27,6 @@ export interface ISuperLineaRepository {
   findByIdConAuditoria(id: number): Promise<AuditoriaDto | null>;
   update(id: number, data: UpdateSuperLineaDto): Promise<SuperLinea>;
   remove(data: SuperLinea, usuario: Usuario): Promise<SuperLinea>;
+  sincronizarLineas(superLineaId: number, lineaIds: number[]): Promise<void>;
+  findLineasPorSuperLinea(superLineaId: number): Promise<SelectLineaDto[]>;
 }

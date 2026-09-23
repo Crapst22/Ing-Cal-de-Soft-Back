@@ -6,6 +6,7 @@ import { IProductoRepository } from '../../domain/interfaces/producto.repository
 import { ProductoPersistenceAdapter } from './producto.persistence-adapters';
 import { Linea } from '../../../linea/domain/entities/linea.entity';
 import { Marca } from '../../../marca/domain/entities/marca.entity';
+import { Presentacion } from '../../../presentacion/domain/entities/presentacion.entity';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { DatabaseConnectionException } from 'src/modules/common/exceptions/database-connection.exception';
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
@@ -41,6 +42,7 @@ export class ProductoRepository implements IProductoRepository {
     linea: Linea,
     marca: Marca,
     usuario: Usuario,
+    presentacion: Presentacion | null,
   ): Promise<Producto> {
     this.logger.log(`Creando un nuevo `);
     try {
@@ -49,6 +51,7 @@ export class ProductoRepository implements IProductoRepository {
         linea,
         marca,
         usuario,
+        presentacion,
       );
     } catch (error) {
       this.logger.error(`Error al crear ${this.ENTITY_NAME}: `);
@@ -63,16 +66,16 @@ export class ProductoRepository implements IProductoRepository {
     data: UpdateProductoDto,
     linea: Linea,
     marca: Marca,
-
     usuario: Usuario,
+    presentacion: Presentacion | null,
   ): Promise<Producto> {
     return this.persistenceService.update(
       id,
       data,
       linea,
       marca,
-
       usuario,
+      presentacion,
     );
   }
 
@@ -193,6 +196,13 @@ export class ProductoRepository implements IProductoRepository {
   }
   async existsProductosActivosByLinea(lineaId: number): Promise<boolean> {
     return this.persistenceService.existsProductosActivosByLinea(lineaId);
+  }
+  async existsProductosActivosByPresentacion(
+    presentacionId: number,
+  ): Promise<boolean> {
+    return this.persistenceService.existsProductosActivosByPresentacion(
+      presentacionId,
+    );
   }
 
 

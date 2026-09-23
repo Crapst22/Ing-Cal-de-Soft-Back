@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LineaModule } from './modules/gestion-productos/linea/linea.module';
 import { SuperLineaModule } from './modules/gestion-productos/superlinea/superlinea.module';
 import { ProductoModule } from './modules/gestion-productos/producto/producto.module';
+import { PresentacionModule } from './modules/gestion-productos/presentacion/presentacion.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProveedorModule } from './modules/organizacion/proveedor/proveedor.module';
 import { PersonalModule } from './modules/organizacion/personal/personal.module';
@@ -48,11 +49,15 @@ import { BusquedasModule } from './modules/gestion-documentos/busquedas/busqueda
       // TypeOrmModule.forFeature([Entidad]) en tus módulos
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       // entities,
-      synchronize: false,  
+      synchronize: true,
       ssl: (() => {
         if (process.env.DB_SSL !== 'true') return false;
         const ca = process.env.DB_SSL_CA;
-        return { require: true, rejectUnauthorized: false, ...(ca ? { ca } : {}) };
+        return {
+          require: true,
+          rejectUnauthorized: false,
+          ...(ca ? { ca } : {}),
+        };
       })(),
     }),
 
@@ -60,6 +65,7 @@ import { BusquedasModule } from './modules/gestion-documentos/busquedas/busqueda
     LineaModule,
     SuperLineaModule,
     ProductoModule,
+    PresentacionModule,
     CondicionIvaModule,
     LocalidadModule,
     ProvinciaModule,
@@ -86,4 +92,4 @@ import { BusquedasModule } from './modules/gestion-documentos/busquedas/busqueda
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

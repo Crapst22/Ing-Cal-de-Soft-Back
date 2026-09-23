@@ -24,11 +24,13 @@ import { LineaService } from 'src/modules/gestion-productos/linea/application/se
 import { MarcaService } from 'src/modules/gestion-productos/marca/application/services/marca.service';
 import { ProductoIntrinsicValidationService } from '../../domain/services/producto-intrinsic-validation.service';
 import { ProductoValidationService } from '../../domain/services/producto-validation.service';
+import { ProductoDenominacionService } from '../../domain/services/producto-denominacion.service';
 import { ProductoRelatedEntitiesValidator } from '../../infraestructure/validators/producto-related-entities.validator';
 import { ProductoUniquenessValidator } from '../../infraestructure/validators/producto-uniqueness.validator';
 import { UsuarioValidator } from 'src/modules/common/utils/validation/usuario-validator';
 import { ProductoDeletePolicy } from '../policies/producto-delete.policy';
 import { HistorialPrecioMapper } from '../../mappers/historial-precio.mapper';
+import { PresentacionService } from '../../../presentacion/application/services/presentacion.service';
 @Injectable()
 export class ProductoService {
   private readonly logger = new Logger(ProductoService.name);
@@ -45,6 +47,7 @@ export class ProductoService {
     //  Domain Services
     private readonly intrinsicValidationService: ProductoIntrinsicValidationService,
     private readonly validationService: ProductoValidationService,
+    private readonly denominacionService: ProductoDenominacionService,
 
     // Infrastructure Validators
     private readonly relatedEntitiesValidator: ProductoRelatedEntitiesValidator,
@@ -52,6 +55,8 @@ export class ProductoService {
     private readonly usuarioValidator: UsuarioValidator,
 
     private readonly productoDeletePolicy: ProductoDeletePolicy,
+
+    private readonly presentacionService: PresentacionService,
 
   ) { }
 
@@ -63,7 +68,7 @@ export class ProductoService {
     );
 
     // Orquestar todas las validaciones
-    const { marca, linea, usuario } =
+    const { marca, linea, presentacion, usuario } =
       await this.validarYPrepararCreacion(dto);
 
 
@@ -72,6 +77,7 @@ export class ProductoService {
       linea,
       marca,
       usuario,
+      presentacion ?? null,
     );
 
     return MessageFrontUtils.createSimple(
@@ -84,7 +90,7 @@ export class ProductoService {
   async update(id: number, dto: UpdateProductoDto) {
     this.logger.log(`Actualizandox  ${this.ENTITY_NAME} con ID: ${id}`);
 
-    const { marca, linea, usuario } =
+    const { marca, linea, presentacion, usuario } =
       await this.validarYPrepararActualizacion(id, dto);
 
     const entity = await this.repository.update(
@@ -92,8 +98,8 @@ export class ProductoService {
       dto,
       linea,
       marca,
-
       usuario,
+      presentacion ?? null,
     );
 
     return MessageFrontUtils.createSimple(
@@ -277,6 +283,10 @@ export class ProductoService {
     return this.marcaService.findAllFor(denominacion);
   }
 
+  async findAllForPresentaciones(denominacion: string) {
+    return this.presentacionService.findAllFor(denominacion);
+  }
+  
   async obtenerSugerencias(texto: string, take: number) {
     this.logger.log(
       `  Sugerencias para "${texto}"  take=${take}`,
@@ -386,16 +396,39 @@ export class ProductoService {
    * @private
    */
   private async validarYPrepararCreacion(dto: CreateProductoDto) {
-    // Validar datos  (Domain - sin DB)
+    // 1. Validar entidades relacionadas existen (Infrastructure - DB).
+    // Se cargan primero porque la denominación automática depende de Marca + Línea + Presentación.
+    const { marca, linea, presentacion } =
+      await this.relatedEntitiesValidator.validarYObtenerEntidadesRelacionadas(
+        dto.marcaId,
+        dto.lineaId,
+        dto.presentacionId,
+      );
+
+    // 2. Validar reglas de negocio sobre entidades (Domain)
+    this.validationService.validarEntidadesRelacionadas(marca, linea);
+
+    // 3. Denominación: regla de negocio (Domain).
+    // Si no viene explícita se autogenera "Marca + Línea + Presentación".
+    // Las validaciones siguientes se aplican sobre el valor final resuelto.
+    const denominacion = this.denominacionService.resolverDenominacion({
+      manual: dto.denominacion,
+      marca,
+      linea,
+      presentacion,
+    });
+    dto.denominacion = denominacion;
+
+    // 4. Validar datos intrínsecos (Domain - sin DB)
     this.intrinsicValidationService.validarDatosBasicos({
-      denominacion: dto.denominacion,
+      denominacion,
       marcaId: dto.marcaId,
       lineaId: dto.lineaId,
       alicuotaIva: dto.alicuotaIva,
     });
 
-    // Validar unicidad (Infrastructure - DB)
-    await this.uniquenessValidator.validarDenominacionUnica(dto.denominacion);
+    // 5. Validar unicidad (Infrastructure - DB)
+    await this.uniquenessValidator.validarDenominacionUnica(denominacion);
 
     if (dto.codigoProveedor) {
       await this.uniquenessValidator.validarCodigoProveedorUnico(
@@ -403,28 +436,13 @@ export class ProductoService {
         0,
       );
     }
-    // 3 Validar entidades relacionadas existen (Infrastructure - DB)
-    const { marca, linea, } =
-      await this.relatedEntitiesValidator.validarYObtenerEntidadesRelacionadas(
-        dto.marcaId,
-        dto.lineaId,
 
-      );
-
-    //  Validar reglas de negocio sobre entidades (Domain)
-    this.validationService.validarEntidadesRelacionadas(
-      marca,
-      linea,
-
-    );
-
-
-    //  Validar usuario existe (Infrastructure)
+    // 6. Validar usuario existe (Infrastructure)
     const usuario = await this.usuarioValidator.validarUsuarioExiste(
       dto.usuarioCreatedId,
     );
 
-    return { marca, linea, usuario };
+    return { marca, linea, presentacion, usuario };
   }
   /**
    * Orquesta todas las validaciones necesarias para actualizar un producto
@@ -466,26 +484,22 @@ export class ProductoService {
     }
 
     // Validar entidades relacionadas
-    const { marca, linea, } =
+    const { marca, linea, presentacion } =
       await this.relatedEntitiesValidator.validarYObtenerEntidadesRelacionadas(
         dto.marcaId ?? productoActual.marcaId,
         dto.lineaId ?? productoActual.lineaId,
-
+        dto.presentacionId ?? productoActual.presentacionId,
       );
 
     //  Validar reglas de negocio
-    this.validationService.validarEntidadesRelacionadas(
-      marca,
-      linea,
-
-    );
+    this.validationService.validarEntidadesRelacionadas(marca, linea);
 
     // 5 Validar usuario
     const usuario = await this.usuarioValidator.validarUsuarioExiste(
       dto.usuarioUpdatedId,
     );
 
-    return { marca, linea, usuario };
+    return { marca, linea, presentacion, usuario };
   }
 
 

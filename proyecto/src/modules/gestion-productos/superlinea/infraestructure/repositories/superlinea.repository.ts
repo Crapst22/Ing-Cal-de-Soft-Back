@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ISuperLineaRepository } from '../../domain/interfaces/superlinea.repository.interface';
+import { ISuperLineaRepository, SelectLineaDto } from '../../domain/interfaces/superlinea.repository.interface';
 import { CreateSuperLineaDto } from '../../dto/create-superlinea.dto';
 import { SuperLinea } from '../../domain/entities/superlinea.entity';
 import { UpdateSuperLineaDto } from '../../dto/update-superlinea.dto';
@@ -92,5 +92,13 @@ export class SuperLineaRepository implements ISuperLineaRepository {
 
   async findAllListado(): Promise<SuperLinea[]> {
     return this.persistenceService.findAllListado();
+  }
+
+  async sincronizarLineas(superLineaId: number, lineaIds: number[]): Promise<void> {
+    return await this.persistenceService.sincronizarLineas(superLineaId, lineaIds);
+  }
+
+  async findLineasPorSuperLinea(superLineaId: number): Promise<SelectLineaDto[]> {
+    return this.persistenceService.findLineasPorSuperLinea(superLineaId);
   }
 }

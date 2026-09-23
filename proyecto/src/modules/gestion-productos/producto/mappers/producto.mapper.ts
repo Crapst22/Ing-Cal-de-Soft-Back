@@ -8,6 +8,7 @@ import { ProductoDto } from '../dto/producto.dto';
 import {
   toReferenciaDto,
 } from 'src/modules/common/utils/mappers/referencia.mapper';
+import { generarDenominacionPresentacion } from '../../presentacion/domain/value-objects/denominacion-presentacion';
 
 export class ProductoMapper {
  
@@ -44,6 +45,17 @@ export class ProductoMapper {
       sistema: entity.sistema,
       codigoReferencia: entity.codigoReferencia ?? '',
 
+      presentacion: entity.presentacion
+        ? {
+            id: entity.presentacion.id,
+            denominacion: generarDenominacionPresentacion(
+              entity.presentacion.tipo,
+              entity.presentacion.quantity,
+              entity.presentacion.volumen,
+              entity.presentacion.unidad,
+            ),
+          }
+        : undefined,
     };
   }
 
@@ -89,6 +101,17 @@ export class ProductoMapper {
       envioGratis: entity.envioGratis ?? false,
       linea: toReferenciaDto(entity.linea),
       marca: toReferenciaDto(entity.marca),
+      presentacion: entity.presentacion
+        ? {
+            id: entity.presentacion.id,
+            denominacion: generarDenominacionPresentacion(
+              entity.presentacion.tipo,
+              entity.presentacion.quantity,
+              entity.presentacion.volumen,
+              entity.presentacion.unidad,
+            ),
+          }
+        : undefined,
       alicuotaIva: entity.alicuotaIva,
       ubicacion: entity.ubicacion ?? '',
       utilizaStockMinimo: entity.utilizaStockMinimo ?? false,
