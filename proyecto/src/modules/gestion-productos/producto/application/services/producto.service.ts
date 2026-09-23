@@ -29,6 +29,7 @@ import { ProductoRelatedEntitiesValidator } from '../../infraestructure/validato
 import { ProductoUniquenessValidator } from '../../infraestructure/validators/producto-uniqueness.validator';
 import { UsuarioValidator } from 'src/modules/common/utils/validation/usuario-validator';
 import { ProductoDeletePolicy } from '../policies/producto-delete.policy';
+import { HistorialPrecioMapper } from '../../mappers/historial-precio.mapper';
 import { PresentacionService } from '../../../presentacion/application/services/presentacion.service';
 @Injectable()
 export class ProductoService {
@@ -223,6 +224,20 @@ export class ProductoService {
       );
     this.logger.log(`b1x`);
     return ProductoMapper.toDto(entity);
+  }
+
+  async findHistorialPrecios(skip = 0, take = 100, productoId?: number) {
+    const result = await this.repository.findHistorialPrecios(
+      skip,
+      take,
+      productoId,
+    );
+    return {
+      data: result.data.map((historial) =>
+        HistorialPrecioMapper.toDto(historial),
+      ),
+      total: PaginacionUtils.totalItems(result.total),
+    };
   }
 
   async findEntityById(id: number) {
