@@ -5,6 +5,7 @@ import { EntityNotFoundException } from 'src/modules/common/exceptions/entity-no
 import { Repository, DataSource } from 'typeorm';
 import { CreateSuperLineaDto } from '../../dto/create-superlinea.dto';
 import { SuperLinea } from '../../domain/entities/superlinea.entity';
+import { Linea } from '../../../linea/domain/entities/linea.entity';
 import { ISuperLineaRepository } from '../../domain/interfaces/superlinea.repository.interface';
 import { UpdateSuperLineaDto } from '../../dto/update-superlinea.dto';
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
@@ -48,6 +49,10 @@ export class SuperLineaPersistenceAdapter
 
       const entityGuardada = await repo.save(nuevaEntity);
 
+      if (data.lineaIds) {
+        await this.sincronizarLineas(entityGuardada.id, data.lineaIds);
+      }
+
       return entityGuardada;
     } catch (error) {
       this.logger.error(`Error al conectar con la base de datos: ${error}`);
@@ -72,10 +77,75 @@ export class SuperLineaPersistenceAdapter
     entity.denominacion = data.denominacion ?? entity.denominacion;
     entity.observacion = data.observacion ?? entity.observacion;
     entity.usuarioCreatedId = data.usuarioCreatedId;
+    entity.usuarioUpdatedId = data.usuarioUpdatedId ?? entity.usuarioUpdatedId;
 
     const entityActualizada = await repo.save(entity);
 
+    if (data.lineaIds) {
+      await this.sincronizarLineas(id, data.lineaIds);
+    }
+
     return entityActualizada;
+  }
+
+  async sincronizarLineas(superLineaId: number, lineaIds: number[]): Promise<void> {
+    const lineaRepo = this.uow.getRepository(Linea);
+
+    try {
+      await lineaRepo
+        .createQueryBuilder()
+        .update(Linea)
+        .set({ superLineaId: () => 'NULL' })
+        .where('superLineaId = :superLineaId', { superLineaId })
+        .execute();
+
+      const idsUnicos = [...new Set(lineaIds)];
+
+      if (idsUnicos.length > 0) {
+        await lineaRepo
+          .createQueryBuilder()
+          .update(Linea)
+          .set({ superLineaId })
+          .where('id IN (:...ids)', { ids: idsUnicos })
+          .andWhere('deletedAt IS NULL')
+          .execute();
+      }
+    } catch (error) {
+      this.logger.error(
+        `Error al sincronizar las líneas de la super línea: ${error}`,
+      );
+      throw new DatabaseConnectionException(
+        'Error al asociar las líneas a la super línea.',
+      );
+    }
+  }
+
+  async findLineasPorSuperLinea(
+    superLineaId: number,
+  ): Promise<{ id: number; denominacion: string }[]> {
+    try {
+      const entity = await this.repository
+        .createQueryBuilder('superLinea')
+        .leftJoinAndSelect('superLinea.lineas', 'linea')
+        .where('superLinea.id = :superLineaId', { superLineaId })
+        .andWhere('superLinea.deletedAt IS NULL')
+        .getOne();
+
+      if (!entity || !entity.lineas) {
+        return [];
+      }
+
+      return entity.lineas
+        .filter((linea) => !linea.deletedAt)
+        .map((linea) => ({ id: linea.id, denominacion: linea.denominacion }));
+    } catch (error) {
+      this.logger.error(
+        `Error al obtener las líneas de la super línea ${superLineaId}: ${error}`,
+      );
+      throw new DatabaseConnectionException(
+        'Error al consultar las líneas de la super línea.',
+      );
+    }
   }
 
   async findOne(id: number): Promise<SuperLinea | null> {

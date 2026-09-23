@@ -183,4 +183,9 @@ export class SuperLineaService {
 
     return entity;
   }
+
+  async findLineasPorSuperLinea(id: number) {
+    await this.findEntityById(id);
+    return this.repository.findLineasPorSuperLinea(id);
+  }
 }
