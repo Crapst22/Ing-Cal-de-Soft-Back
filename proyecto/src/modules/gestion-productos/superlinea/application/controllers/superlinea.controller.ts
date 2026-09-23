@@ -101,4 +101,15 @@ export class SuperLineaController {
   ): Promise<AuditoriaDto> {
     return this.service.findByIdConAuditoria(id);
   }
+
+  @Get(':id/lineas')
+  @Roles('Root', 'Administrador', 'Empleado')
+  @ApiOkResponse({
+    description: 'Lineas asociadas a la super linea',
+    type: [SuperLineaDto],
+  })
+  findLineasPorSuperLinea(@Param('id', ParseIntPipe) id: number) {
+    this.logger.warn(`Buscando lineas de super linea con ID: ${id}`);
+    return this.service.findLineasPorSuperLinea(id);
+  }
 }

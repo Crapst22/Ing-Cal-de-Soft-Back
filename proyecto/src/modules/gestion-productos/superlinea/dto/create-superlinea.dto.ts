@@ -6,6 +6,7 @@ import {
   Matches,
   IsOptional,
   IsInt,
+  IsArray,
 } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
@@ -23,6 +24,17 @@ export class CreateSuperLineaDto {
   @IsOptional()
   @IsString()
   observacion?: string;
+
+  @ApiProperty({
+    example: [1, 2, 3],
+    description: 'IDs de las líneas que se asocian a esta superlínea',
+    type: [Number],
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Las líneas deben enviarse como un listado de ids.' })
+  @IsInt({ each: true, message: 'Cada línea debe ser un id numérico.' })
+  lineaIds?: number[];
 
   createdAt?: Date;
 
