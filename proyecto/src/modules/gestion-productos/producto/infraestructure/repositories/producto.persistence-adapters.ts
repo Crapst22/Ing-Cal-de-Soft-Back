@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transactional } from 'src/modules/common/decorators/transactional.decoratos';
 import { DatabaseConnectionException } from 'src/modules/common/exceptions/database-connection.exception';
@@ -16,6 +16,7 @@ import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { ProductoMapper } from '../../mappers/producto.mapper';
+import { HistorialPrecioMapper } from '../../mappers/historial-precio.mapper';
 import { SuperLinea } from 'src/modules/gestion-productos/superlinea/domain/entities/superlinea.entity';
 import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
@@ -198,6 +199,12 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
         ...dataSinItems
       } = data;
 
+      const precioAnterior = entity.precio ?? null;
+
+      if (data.precio !== undefined && data.precio !== null) {
+        this.validarPrecioNuevo(data.precio);
+      }
+
       Object.assign(entity, dataSinItems, {
         linea,
         marca,
@@ -207,6 +214,21 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       entity.usuarioUpdated = usuario; 
       const entityActualizada = await repo.save(entity);
 
+      if (
+        data.precio !== undefined &&
+        data.precio !== null &&
+        precioAnterior !== data.precio
+      ) {
+        const historial = HistorialPrecioMapper.toEntity({
+          producto: entityActualizada,
+          precioAnterior: precioAnterior ?? 0,
+          precioNuevo: data.precio,
+          fecha: new Date(),
+          motivo: data.motivo,
+          usuario,
+        });
+        await this.uow.getRepository(HistorialPrecio).save(historial);
+      }
 
       return entityActualizada;
     } catch (error) {
@@ -500,10 +522,25 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       throw new NotFoundException('Producto no encontrado');
     }
 
+    this.validarPrecioNuevo(dto.precio);
+
+    const precioAnterior = entity.precio ?? 0;
+
     ProductoMapper.mapPrecios(entity, dto, usuario);
 
     await repo.save(entity);
 
+    if (precioAnterior !== dto.precio) {
+      const historial = HistorialPrecioMapper.toEntity({
+        producto: entity,
+        precioAnterior,
+        precioNuevo: dto.precio,
+        fecha: new Date(),
+        motivo: dto.motivo,
+        usuario,
+      });
+      await this.uow.getRepository(HistorialPrecio).save(historial);
+    }
   }
 
   async findByDenominacion(denominacion: string): Promise<Producto | null> {
@@ -656,31 +693,81 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     const repo = this.uow.getRepository(Producto);
     try {
       const qb = repo
+        .createQueryBuilder('producto')
+        .select('producto.id', 'id')
+        .addSelect('producto.precio', 'precio')
+        .where('producto.deletedAt IS NULL');
+
+      if (lineaId) {
+        qb.andWhere('producto.linea_id = :lineaId', { lineaId });
+      }
+
+      const productos = await qb.getRawMany<{
+        id: number;
+        precio: number | null;
+      }>();
+
+      const fecha = new Date();
+      const historiales: HistorialPrecio[] = [];
+
+      for (const producto of productos) {
+        if (producto.precio === null || producto.precio === undefined) {
+          continue;
+        }
+
+        const precioAnterior = producto.precio;
+        let precioNuevo: number;
+
+        if (Number(tipoAumento) === TipoAumento.PORCENTAJE) {
+          precioNuevo = Number(
+            (precioAnterior * (1 + Number(valor) / 100)).toFixed(5),
+          );
+        } else {
+          precioNuevo = Number((precioAnterior + Number(valor)).toFixed(5));
+        }
+
+        this.validarPrecioNuevo(precioNuevo);
+
+        const historial = new HistorialPrecio();
+        historial.productoId = producto.id;
+        historial.precioAnterior = precioAnterior;
+        historial.precioNuevo = precioNuevo;
+        historial.fecha = fecha;
+        historial.motivo = `Actualización masiva de precios`;
+        historial.usuarioCreated = usuario;
+        historiales.push(historial);
+      }
+
+      if (historiales.length > 0) {
+        await this.uow.getRepository(HistorialPrecio).save(historiales);
+      }
+
+      const updateQb = repo
         .createQueryBuilder()
         .update(Producto);
 
       if (Number(tipoAumento) === TipoAumento.PORCENTAJE) {
-        qb.set({
+        updateQb.set({
           precio: () => 'ROUND(precio * (1 + :valor / 100), 5)',
           usuarioUpdated: usuario,
           updatedAt: () => 'CURRENT_TIMESTAMP',
         });
       } else {
-        qb.set({
+        updateQb.set({
           precio: () => 'ROUND(precio + :valor, 5)',
           usuarioUpdated: usuario,
           updatedAt: () => 'CURRENT_TIMESTAMP',
         });
       }
 
-      qb.setParameters({ valor: Number(valor) });
-      qb.where('deletedAt IS NULL');
+      updateQb.setParameters({ valor: Number(valor) });
+      updateQb.where('deletedAt IS NULL');
 
       if (lineaId) {
-        qb.andWhere('linea_id = :lineaId', { lineaId });
+        updateQb.andWhere('linea_id = :lineaId', { lineaId });
       }
 
-      const result = await qb.execute();
+      const result = await updateQb.execute();
       this.logger.log(
         `Actualización masiva de precios realizada: ${result.affected ?? 0} productos modificados`,
       );
@@ -690,6 +777,15 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       throw new DatabaseConnectionException(
         'Error al actualizar los precios en la base de datos.',
       );
+    }
+  }
+
+  private validarPrecioNuevo(precioNuevo: number | undefined): void {
+    if (precioNuevo === undefined || precioNuevo === null) {
+      throw new BadRequestException('El precio nuevo es obligatorio');
+    }
+    if (precioNuevo <= 0) {
+      throw new BadRequestException('El precio nuevo debe ser mayor a 0');
     }
   }
 

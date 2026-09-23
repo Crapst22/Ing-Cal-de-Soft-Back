@@ -65,9 +65,21 @@ export class ProductoMapper {
     dto: UpdatePrecioDto,
     usuario: Usuario,
   ): void {
-    entity.costo = dto.costo;
-    entity.costoDolar = dto.costoDolar;
-    entity.cotizacionDolar = dto.cotizacionDolar;
+    if (dto.costo !== undefined) {
+      entity.costo = dto.costo;
+    }
+    if (dto.costoDolar !== undefined) {
+      entity.costoDolar = dto.costoDolar;
+    }
+    if (dto.cotizacionDolar !== undefined) {
+      entity.cotizacionDolar = dto.cotizacionDolar;
+    }
+    if (dto.precio !== undefined) {
+      entity.precio = dto.precio;
+    }
+    if (dto.porcentaje !== undefined) {
+      entity.porcentaje = dto.porcentaje;
+    }
 
     entity.fechaCostoDolar = new Date();
     entity.fechaCosto = new Date();
