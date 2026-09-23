@@ -11,6 +11,7 @@ import { DatabaseConnectionException } from 'src/modules/common/exceptions/datab
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
+import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
 @Injectable()
 export class ProductoRepository implements IProductoRepository {
@@ -116,6 +117,21 @@ export class ProductoRepository implements IProductoRepository {
     return this.persistenceService.findByRapido(codigo, exacto, skip, take); //codigoProveedor, codProveedorExacto, codigoReferencia, codReferenciaExacto, skip, take);
   }
 
+  async obtenerSugerencias(
+    texto: string,
+    take: number,
+  ): Promise<Array<{ texto: string; tipo: string }>> {
+    return this.persistenceService.obtenerSugerencias(texto, take);
+  }
+
+  async buscarPorTexto(
+    texto: string,
+    skip: number,
+    take: number,
+  ): Promise<{ data: Producto[]; total: number }> {
+    return this.persistenceService.buscarPorTexto(texto, skip, take);
+  }
+
 
   async findOne(id: number): Promise<Producto | null> {
     const entity = await this.persistenceService.findOne(id);
@@ -192,4 +208,19 @@ export class ProductoRepository implements IProductoRepository {
    return this.persistenceService.existsByCodigoProveedor(codigoProveedor, excludeId);
   }
 
+  async actualizarPreciosMasivo(
+    tipoAumento: TipoAumento,
+    valor: number,
+    usuario: Usuario,
+    lineaId?: number,
+  ): Promise<number> {
+    return this.persistenceService.actualizarPreciosMasivo(
+      tipoAumento,
+      valor,
+      usuario,
+      lineaId,
+    );
+  }
+
 }
+

@@ -7,6 +7,7 @@ import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
+import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
 export interface IProductoRepository {
 
@@ -43,6 +44,17 @@ export interface IProductoRepository {
   findByRapido(
     codigo: string,
     exacto: boolean,
+    skip: any,
+    take: number,
+  ): Promise<{ data: Producto[]; total: number }>;
+
+  obtenerSugerencias(
+    texto: string,
+    take: number,
+  ): Promise<Array<{ texto: string; tipo: string }>>;
+
+  buscarPorTexto(
+    texto: string,
     skip: any,
     take: number,
   ): Promise<{ data: Producto[]; total: number }>;
@@ -87,4 +99,11 @@ export interface IProductoRepository {
   existsProductosActivosByLinea(lineaId: number): Promise<boolean>;
 
   findByIds(ids: number[]): Promise<Producto[]>;
+
+  actualizarPreciosMasivo(
+    tipoAumento: TipoAumento,
+    valor: number,
+    usuario: Usuario,
+    lineaId?: number,
+  ): Promise<number>;
 }
