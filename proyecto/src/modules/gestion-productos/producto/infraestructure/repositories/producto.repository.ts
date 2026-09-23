@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { Producto } from '../../domain/entities/producto.entity';
+import { HistorialPrecio } from '../../domain/entities/historial-precio.entity';
 import { IProductoRepository } from '../../domain/interfaces/producto.repository-interface';
 import { ProductoPersistenceAdapter } from './producto.persistence-adapters';
 import { Linea } from '../../../linea/domain/entities/linea.entity';
@@ -18,6 +19,15 @@ export class ProductoRepository implements IProductoRepository {
   constructor(
     private readonly persistenceService: ProductoPersistenceAdapter,
   ) {}
+
+  async findHistorialPrecios(
+    skip: number,
+    take: number,
+    productoId?: number,
+  ): Promise<{ data: HistorialPrecio[]; total: number }> {
+    return this.persistenceService.findHistorialPrecios(skip, take, productoId);
+  }
+
   findByIds(ids: number[]): Promise<Producto[]> {
     throw new Error('Method not implemented.');
   }

@@ -2,12 +2,19 @@ import { Linea } from '../../../linea/domain/entities/linea.entity';
 import { Marca } from '../../../marca/domain/entities/marca.entity';
 import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { Producto } from '../entities/producto.entity';
+import { HistorialPrecio } from '../entities/historial-precio.entity';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 
 export interface IProductoRepository {
+
+  findHistorialPrecios(
+    skip: number,
+    take: number,
+    productoId?: number,
+  ): Promise<{ data: HistorialPrecio[]; total: number }>;
 
   create(
     data: CreateProductoDto,

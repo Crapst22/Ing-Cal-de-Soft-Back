@@ -147,6 +147,27 @@ export class ProductoController {
     return this.service.buscarLineaDesdeProducto(id);
   }
 
+  @Get('historial-precios')
+  @Roles(
+    'Root',
+    'Administrador',
+    'Empleado',
+    'Vendedor',
+    'Repartidor',
+    'Repositor',
+  )
+  async historialPrecios(
+    @Query('skip') skip?: string,
+    @Query('take') take?: string,
+    @Query('productoId') productoId?: string,
+  ) {
+    return this.service.findHistorialPrecios(
+      skip ? parseInt(skip, 10) : 0,
+      take ? parseInt(take, 10) : 100,
+      productoId ? parseInt(productoId, 10) : undefined,
+    );
+  }
+
   @Get(':id')
   @Roles('Root', 'Administrador', 'Empleado')
   @ApiOkResponse({ type: ProductoDto })

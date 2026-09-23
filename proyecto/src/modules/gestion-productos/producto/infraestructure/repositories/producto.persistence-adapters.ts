@@ -9,6 +9,7 @@ import { Marca } from 'src/modules/gestion-productos/marca/domain/entities/marca
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { Repository, IsNull, DataSource } from 'typeorm';
 import { Producto } from '../../domain/entities/producto.entity';
+import { HistorialPrecio } from '../../domain/entities/historial-precio.entity';
 import { IProductoRepository } from '../../domain/interfaces/producto.repository-interface';
 import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
@@ -25,6 +26,8 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
   constructor(
     @InjectRepository(Producto)
     private readonly repository: Repository<Producto>,
+    @InjectRepository(HistorialPrecio)
+    private readonly historialRepository: Repository<HistorialPrecio>,
     private readonly dataSource: DataSource,
     @Inject('UnitOfWork') public readonly uow: IUnitOfWork,
   ) { }
@@ -148,6 +151,33 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
         throw error;
       }
 
+      throw new DatabaseConnectionException(
+        'Error al conectar con la base de datos.',
+      );
+    }
+  }
+
+  async findHistorialPrecios(
+    skip: number,
+    take: number,
+    productoId?: number,
+  ): Promise<{ data: HistorialPrecio[]; total: number }> {
+    try {
+      const query = this.historialRepository
+        .createQueryBuilder('historial')
+        .leftJoinAndSelect('historial.producto', 'producto')
+        .where('historial.deletedAt IS NULL');
+
+      if (productoId) {
+        query.andWhere('historial.productoId = :productoId', { productoId });
+      }
+
+      query.orderBy('historial.fecha', 'DESC').addOrderBy('historial.id', 'DESC');
+      query.skip(skip).take(take);
+
+      const [data, total] = await query.getManyAndCount();
+      return { data, total };
+    } catch (error) {
       throw new DatabaseConnectionException(
         'Error al conectar con la base de datos.',
       );
