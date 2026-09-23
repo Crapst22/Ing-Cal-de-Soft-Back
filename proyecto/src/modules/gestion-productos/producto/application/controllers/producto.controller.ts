@@ -8,6 +8,7 @@ import {
   Logger,
   ParseIntPipe,
   Put,
+  Patch,
   Query,
   UsePipes,
   UseGuards,
@@ -15,6 +16,7 @@ import {
 
 import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
+import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 import { NormalizeDenominacionPipe } from 'src/modules/common/pipes/normalize-denominations.pipe';
 import { AuthGuard } from 'src/modules/gestion-usuario/auth/auth.guard';
 import { Roles } from 'src/modules/gestion-usuario/auth/roles.decorator';
@@ -59,6 +61,16 @@ export class ProductoController {
   async actualizarPreciosMasivo(@Body() dto: ActualizarPreciosMasivoDto) {
     this.logger.log(`Actualizando precios masivamente...`);
     return this.service.actualizarPreciosMasivo(dto);
+  }
+
+  @Patch(':id/precios')
+  @Roles('Root', 'Administrador', 'Empleado')
+  async actualizarPrecio(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdatePrecioDto,
+  ) {
+    this.logger.log(`Actualizando precio del producto con ID: ${id}`);
+    return this.service.actualizarPrecio(id, dto);
   }
   
   @Get('find-all-for-marcas/select')
