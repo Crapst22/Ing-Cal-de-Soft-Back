@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthGuard } from 'src/modules/gestion-usuario/auth/auth.guard';
-import { LineaController } from './linea.controller';
-import { LineaService } from '../services/linea.service';
-import { CreateLineaDto } from '../../dto/create-linea.dto';
-import { UpdateLineaDto } from '../../dto/update-linea.dto';
+import { SuperLineaController } from './superlinea.controller';
+import { SuperLineaService } from '../services/superlinea.service';
+import { CreateSuperLineaDto } from '../../dto/create-superlinea.dto';
+import { UpdateSuperLineaDto } from '../../dto/update-superlinea.dto';
 import { PaginationWithDenominacionDto } from 'src/modules/common/dto/busquedas/pagination-with-denominacion.dto';
 
-describe('LineaController', () => {
-  let controller: LineaController;
+describe('SuperLineaController', () => {
+  let controller: SuperLineaController;
   let service: { [key: string]: jest.Mock };
 
   const serviceMock = {
@@ -23,9 +23,9 @@ describe('LineaController', () => {
     jest.clearAllMocks();
 
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [LineaController],
+      controllers: [SuperLineaController],
       providers: [
-        { provide: LineaService, useValue: serviceMock },
+        { provide: SuperLineaService, useValue: serviceMock },
         { provide: AuthGuard, useValue: { canActivate: async () => true } },
       ],
     })
@@ -33,8 +33,8 @@ describe('LineaController', () => {
       .useValue({ canActivate: async () => true })
       .compile();
 
-    controller = module.get<LineaController>(LineaController);
-    service = module.get(LineaService);
+    controller = module.get<SuperLineaController>(SuperLineaController);
+    service = module.get(SuperLineaService);
   });
 
   it('should be defined', () => {
@@ -43,19 +43,17 @@ describe('LineaController', () => {
 
   describe('create', () => {
     it('debería delegar la creación al servicio', () => {
-      const dto: CreateLineaDto = {
+      const dto: CreateSuperLineaDto = {
         denominacion: 'Aceites',
-        superLineaId: 3,
-        utilizaStockMinimo: false,
         usuarioCreatedId: 1,
-      } as CreateLineaDto;
+      } as CreateSuperLineaDto;
 
-      service.create.mockReturnValue({ mensaje: 'Linea creada' });
+      service.create.mockReturnValue({ mensaje: 'SuperLinea creada' });
 
       const result = controller.create(dto);
 
       expect(service.create).toHaveBeenCalledWith(dto);
-      expect(result).toEqual({ mensaje: 'Linea creada' });
+      expect(result).toEqual({ mensaje: 'SuperLinea creada' });
     });
   });
 
@@ -109,41 +107,42 @@ describe('LineaController', () => {
 
   describe('update', () => {
     it('debería delegar la edición al servicio', () => {
-      const dto: UpdateLineaDto = {
+      const dto: UpdateSuperLineaDto = {
         denominacion: 'Bazar',
-        superLineaId: 4,
-        utilizaStockMinimo: false,
         usuarioUpdatedId: 2,
-      } as UpdateLineaDto;
+      } as UpdateSuperLineaDto;
 
-      service.update.mockReturnValue({ mensaje: 'Linea editada' });
+      service.update.mockReturnValue({ mensaje: 'SuperLinea editada' });
 
       const result = controller.update(1, dto);
 
       expect(service.update).toHaveBeenCalledWith(1, dto);
-      expect(result).toEqual({ mensaje: 'Linea editada' });
+      expect(result).toEqual({ mensaje: 'SuperLinea editada' });
     });
   });
 
   describe('remove', () => {
     it('debería delegar la eliminación al servicio', () => {
-      service.remove.mockReturnValue({ mensaje: 'Linea eliminada' });
+      service.remove.mockReturnValue({ mensaje: 'SuperLinea eliminada' });
 
       const result = controller.remove(1, 1);
 
       expect(service.remove).toHaveBeenCalledWith(1, 1);
-      expect(result).toEqual({ mensaje: 'Linea eliminada' });
+      expect(result).toEqual({ mensaje: 'SuperLinea eliminada' });
     });
   });
 
   describe('findByIdConAuditoria', () => {
     it('debería delegar la consulta de auditoría', async () => {
-      service.findByIdConAuditoria.mockReturnValue({ id: 1, detalle: 'línea' });
+      service.findByIdConAuditoria.mockReturnValue({
+        id: 1,
+        detalle: 'super línea Aceites',
+      });
 
       const result = await controller.findByIdConAuditoria(1);
 
       expect(service.findByIdConAuditoria).toHaveBeenCalledWith(1);
-      expect(result).toEqual({ id: 1, detalle: 'línea' });
+      expect(result).toEqual({ id: 1, detalle: 'super línea Aceites' });
     });
   });
 });
