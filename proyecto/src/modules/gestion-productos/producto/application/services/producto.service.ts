@@ -133,6 +133,7 @@ export class ProductoService {
       dto.valor,
       usuario,
       dto.lineaId,
+      dto.motivo,
     );
 
     this.logger.log(

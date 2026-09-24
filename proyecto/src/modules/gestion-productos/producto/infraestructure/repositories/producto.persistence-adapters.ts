@@ -689,6 +689,7 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     valor: number,
     usuario: Usuario,
     lineaId?: number,
+    motivo?: string,
   ): Promise<number> {
     const repo = this.uow.getRepository(Producto);
     try {
@@ -728,13 +729,17 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
 
         this.validarPrecioNuevo(precioNuevo);
 
-        const historial = new HistorialPrecio();
-        historial.productoId = producto.id;
-        historial.precioAnterior = precioAnterior;
-        historial.precioNuevo = precioNuevo;
-        historial.fecha = fecha;
-        historial.motivo = `Actualización masiva de precios`;
-        historial.usuarioCreated = usuario;
+        const productoRef = new Producto();
+        productoRef.id = producto.id;
+
+        const historial = HistorialPrecioMapper.toEntity({
+          producto: productoRef,
+          precioAnterior,
+          precioNuevo,
+          fecha,
+          motivo: motivo?.trim() || 'Actualización masiva de precios',
+          usuario,
+        });
         historiales.push(historial);
       }
 

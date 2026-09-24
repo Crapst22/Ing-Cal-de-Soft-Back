@@ -109,5 +109,6 @@ export interface IProductoRepository {
     valor: number,
     usuario: Usuario,
     lineaId?: number,
+    motivo?: string,
   ): Promise<number>;
 }
