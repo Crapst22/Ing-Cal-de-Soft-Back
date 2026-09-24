@@ -4,17 +4,12 @@ import {
   IsNotEmpty,
   IsInt,
   IsString,
-  IsOptional,
   MaxLength,
   Matches,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class UpdateProductoDto extends PartialType(CreateProductoDto) {
-  @IsOptional()
-  @IsString({ message: 'El motivo debe ser una cadena de texto.' })
-  motivo?: string;
-
   @Transform(({ value }) => value.trim().toLowerCase())
   @IsString({ message: 'La denominación debe ser una cadena de texto.' }) // Valida que sea string
   @IsNotEmpty({ message: 'La denominación no puede estar vacía.' }) // Valida que no esté vacía

@@ -19,7 +19,6 @@ import { CreateProductoDto } from '../../dto/create-producto.dto';
 import { GetProductoDto } from '../../dto/get-producto.dto';
 import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { ActualizarPreciosMasivoDto } from '../../dto/actualizar-precios-masivo.dto';
-import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 import { ProductoMapper } from '../../mappers/producto.mapper';
 import { LineaService } from 'src/modules/gestion-productos/linea/application/services/linea.service';
 import { MarcaService } from 'src/modules/gestion-productos/marca/application/services/marca.service';
@@ -142,18 +141,6 @@ export class ProductoService {
     return MessageFrontUtils.createActualizacionPrecioMasiva(
       `${denominacionDestino} (${totalActualizados} productos actualizados)`,
     );
-  }
-
-  async actualizarPrecio(id: number, dto: UpdatePrecioDto) {
-    this.intrinsicValidationService.validarPrecioNuevo(dto.precio);
-
-    const usuario = await this.usuarioValidator.validarUsuarioExiste(
-      dto.usuarioId,
-    );
-
-    await this.repository.actualizarPrecio(id, dto, usuario);
-
-    return MessageFrontUtils.create('Precio del producto actualizado con éxito');
   }
 
   async findByRapido(
