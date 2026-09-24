@@ -223,12 +223,14 @@ export class ProductoRepository implements IProductoRepository {
     valor: number,
     usuario: Usuario,
     lineaId?: number,
+    motivo?: string,
   ): Promise<number> {
     return this.persistenceService.actualizarPreciosMasivo(
       tipoAumento,
       valor,
       usuario,
       lineaId,
+      motivo,
     );
   }
 
