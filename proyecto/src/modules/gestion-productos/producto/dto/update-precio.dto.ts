@@ -1,13 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  IsDefined,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsPositive,
-  IsString,
-  Min,
-} from "class-validator";
+import { IsDefined, IsNumber, IsOptional, IsPositive, IsString, Min } from "class-validator";
 
 export class UpdatePrecioDto {
 
@@ -17,14 +9,10 @@ export class UpdatePrecioDto {
   @IsPositive({ message: 'El precio nuevo debe ser mayor a 0' })
   precio: number;
 
-  @ApiProperty({
-    example: 'Aumento por inflación',
-    description: 'Motivo del cambio de precio',
-  })
-  @IsDefined({ message: 'El motivo es obligatorio' })
-  @IsNotEmpty({ message: 'El motivo no puede estar vacío' })
+  @ApiPropertyOptional({ example: 'Aumento por inflación', description: 'Motivo del cambio de precio' })
+  @IsOptional()
   @IsString({ message: 'El motivo debe ser una cadena de texto' })
-  motivo: string;
+  motivo?: string;
 
   @ApiProperty({ example: 100.5, description: 'Costo en moneda local' })
   @IsOptional()
