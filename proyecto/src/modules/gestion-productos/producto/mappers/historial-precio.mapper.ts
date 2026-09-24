@@ -1,7 +1,6 @@
 import { HistorialPrecio } from '../domain/entities/historial-precio.entity';
 import { Producto } from '../domain/entities/producto.entity';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
-import { GetHistorialPrecioDto } from '../dto/get-historial-precio.dto';
 
 export class HistorialPrecioMapper {
   /**
@@ -26,17 +25,5 @@ export class HistorialPrecioMapper {
     historial.motivo = datos.motivo;
     historial.usuarioCreated = datos.usuario;
     return historial;
-  }
-
-  static toDto(entity: HistorialPrecio): GetHistorialPrecioDto {
-    const dto = new GetHistorialPrecioDto();
-    dto.id = entity.id;
-    dto.productoId = entity.productoId;
-    dto.denominacion = entity.producto?.denominacion;
-    dto.precioAnterior = entity.precioAnterior;
-    dto.precioNuevo = entity.precioNuevo;
-    dto.fecha = entity.fecha;
-    dto.motivo = entity.motivo;
-    return dto;
   }
 }
