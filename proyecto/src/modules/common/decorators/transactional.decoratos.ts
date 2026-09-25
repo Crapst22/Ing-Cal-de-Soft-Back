@@ -14,6 +14,7 @@ export function Transactional() {
         throw new Error('dataSource no definido en el servicio');
       }
 
+      const previousUow = this.uow; // uow inyectado originalmente por Nest
       const uow: IUnitOfWork = new TypeOrmUnitOfWork(this.dataSource);
       this.uow = uow; // se inyecta solo
 
@@ -27,7 +28,7 @@ export function Transactional() {
         throw error;
       } finally {
         await uow.release();
-        this.uow = null;
+        this.uow = previousUow; // restauramos, no lo dejamos en null
       }
     };
 
