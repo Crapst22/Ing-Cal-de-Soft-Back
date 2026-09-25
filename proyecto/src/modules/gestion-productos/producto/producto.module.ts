@@ -21,11 +21,12 @@ import { ProductoValidationService } from './domain/services/producto-validation
 import { ProductoIntrinsicValidationService } from './domain/services/producto-intrinsic-validation.service';
 import { ProductoDenominacionService } from './domain/services/producto-denominacion.service';
 import { ProductoDeletePolicy } from './application/policies/producto-delete.policy';
+import { HistorialPrecio } from './domain/entities/historial-precio.entity';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Producto]),
+    TypeOrmModule.forFeature([Producto, HistorialPrecio]),
     CommonModule,
     forwardRef(() => LineaModule),
     forwardRef(() => MarcaModule),

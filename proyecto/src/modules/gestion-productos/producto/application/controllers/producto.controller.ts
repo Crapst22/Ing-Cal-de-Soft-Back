@@ -11,6 +11,7 @@ import {
   Query,
   UsePipes,
   UseGuards,
+  DefaultValuePipe,
 } from '@nestjs/common';
 
 import { CreateProductoDto } from '../../dto/create-producto.dto';
@@ -198,6 +199,15 @@ export class ProductoController {
   @Roles('Root', 'Administrador', 'Empleado')
   async geLineaDelProducto(@Param('id', ParseIntPipe) id: number) {
     return this.service.buscarLineaDesdeProducto(id);
+  }
+
+  @Get('historial-precios')
+  @Roles('Root', 'Administrador', 'Empleado')
+  async findHistorialPrecios(
+    @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,
+    @Query('take', new DefaultValuePipe(50), ParseIntPipe) take: number,
+  ) {
+    return this.service.findHistorialPrecios(Math.max(0, skip), Math.min(200, Math.max(1, take)));
   }
 
   @Get(':id')

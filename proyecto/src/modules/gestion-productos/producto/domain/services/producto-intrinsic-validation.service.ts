@@ -61,7 +61,7 @@ export class ProductoIntrinsicValidationService {
     if (precioNuevo === undefined || precioNuevo === null) {
       throw new BadRequestException('El precio nuevo es obligatorio');
     }
-    if (precioNuevo <= 0) {
+    if (!Number.isFinite(precioNuevo) || precioNuevo <= 0) {
       throw new BadRequestException(
         'El precio nuevo debe ser mayor a 0',
       );

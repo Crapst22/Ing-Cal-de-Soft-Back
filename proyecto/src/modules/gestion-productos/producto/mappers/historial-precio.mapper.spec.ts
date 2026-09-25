@@ -1,5 +1,6 @@
 import { HistorialPrecioMapper } from './historial-precio.mapper';
-import { HistorialPrecio } from '../domain/entities/historial-precio.entity';
+import { describe, expect, it, beforeEach, jest } from '@jest/globals';
+import { HistorialPrecio, TipoCambioPrecio } from '../domain/entities/historial-precio.entity';
 import { Producto } from '../domain/entities/producto.entity';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 
@@ -31,6 +32,7 @@ describe('HistorialPrecioMapper (CR-007 Historial de precios)', () => {
       fecha,
       motivo: 'Aumento por inflación',
       usuario,
+      tipoCambio: TipoCambioPrecio.INDIVIDUAL,
     });
 
     expect(historial).toBeInstanceOf(HistorialPrecio);
@@ -41,6 +43,7 @@ describe('HistorialPrecioMapper (CR-007 Historial de precios)', () => {
     expect(historial.producto).toBe(producto);
     expect(historial.productoId).toBe(7);
     expect(historial.usuarioCreated).toBe(usuario);
+    expect(historial.tipoCambio).toBe(TipoCambioPrecio.INDIVIDUAL);
   });
 
   it('debe funcionar con motivo opcional (sin motivo)', () => {
@@ -53,10 +56,12 @@ describe('HistorialPrecioMapper (CR-007 Historial de precios)', () => {
       precioNuevo: 80,
       fecha: new Date('2025-03-01T00:00:00.000Z'),
       usuario,
+      tipoCambio: TipoCambioPrecio.MASIVO,
     });
 
     expect(historial.motivo).toBeUndefined();
     expect(historial.precioAnterior).toBe(80);
     expect(historial.precioNuevo).toBe(80);
+    expect(historial.tipoCambio).toBe(TipoCambioPrecio.MASIVO);
   });
 });

@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, Min } from 'class-validator';
+import { IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, Min } from 'class-validator';
 import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
 
 export class ActualizarPreciosMasivoDto {
@@ -50,4 +50,10 @@ export class ActualizarPreciosMasivoDto {
   @Type(() => Number)
   @IsInt({ message: 'El ID del usuario debe ser un número entero' })
   usuarioId: number;
+
+  @ApiProperty({ description: 'Motivo ingresado para el ajuste masivo' })
+  @IsString({ message: 'El motivo debe ser texto' })
+  @IsNotEmpty({ message: 'El motivo es obligatorio' })
+  @MaxLength(500, { message: 'El motivo no puede superar 500 caracteres' })
+  motivo: string;
 }

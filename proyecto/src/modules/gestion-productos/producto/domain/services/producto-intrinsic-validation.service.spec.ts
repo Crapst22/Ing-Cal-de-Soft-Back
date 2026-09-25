@@ -131,7 +131,7 @@ describe('ProductoIntrinsicValidationService (CR-007 - Regla de dominio precio >
   });
 
   it('debe rechazar un precio nuevo <= 0 (cero o negativo)', () => {
-    const preciosInvalidos = [0, -0.01, -1, -100];
+    const preciosInvalidos = [0, -0.01, -1, -100, Number.NaN, Number.POSITIVE_INFINITY];
 
     for (const precio of preciosInvalidos) {
       expect(() => service.validarPrecioNuevo(precio)).toThrow(

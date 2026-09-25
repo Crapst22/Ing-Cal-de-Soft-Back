@@ -1,4 +1,7 @@
-import { HistorialPrecio } from '../domain/entities/historial-precio.entity';
+import {
+  HistorialPrecio,
+  TipoCambioPrecio,
+} from '../domain/entities/historial-precio.entity';
 import { Producto } from '../domain/entities/producto.entity';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 
@@ -15,6 +18,7 @@ export class HistorialPrecioMapper {
     fecha?: Date;
     motivo?: string;
     usuario: Usuario;
+    tipoCambio: TipoCambioPrecio;
   }): HistorialPrecio {
     const historial = new HistorialPrecio();
     historial.producto = datos.producto;
@@ -23,6 +27,7 @@ export class HistorialPrecioMapper {
     historial.precioNuevo = datos.precioNuevo;
     historial.fecha = datos.fecha ?? new Date();
     historial.motivo = datos.motivo;
+    historial.tipoCambio = datos.tipoCambio;
     historial.usuarioCreated = datos.usuario;
     return historial;
   }
