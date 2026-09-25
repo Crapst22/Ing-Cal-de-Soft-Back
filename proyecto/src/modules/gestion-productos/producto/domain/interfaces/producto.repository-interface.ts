@@ -8,6 +8,7 @@ import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
+import { HistorialPrecio } from '../entities/historial-precio.entity';
 
 export interface IProductoRepository {
 
@@ -64,6 +65,7 @@ export interface IProductoRepository {
     marca: Marca,
     usuario: Usuario,
     presentacion: Presentacion | null,
+    motivo?: string,
   ): Promise<Producto>;
 
   updateEntity(uow: IUnitOfWork, data: Producto): Promise<Producto>;
@@ -102,5 +104,8 @@ export interface IProductoRepository {
     valor: number,
     usuario: Usuario,
     lineaId?: number,
+    motivo?: string,
   ): Promise<number>;
+
+  findHistorialPrecios(skip: number, take: number): Promise<{ data: HistorialPrecio[]; total: number }>;
 }

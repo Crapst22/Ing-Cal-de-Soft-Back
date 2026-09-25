@@ -14,6 +14,11 @@ import { MonetarioColumn } from 'src/modules/common/decorators/monetario-column.
 import { Producto } from './producto.entity';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 
+export enum TipoCambioPrecio {
+  INDIVIDUAL = 'INDIVIDUAL',
+  MASIVO = 'MASIVO',
+}
+
 @Entity('historial_precio')
 export class HistorialPrecio {
   @ApiProperty()
@@ -36,12 +41,16 @@ export class HistorialPrecio {
   @Column({ type: 'text', nullable: true })
   motivo?: string;
 
+  @ApiProperty({ enum: TipoCambioPrecio })
+  @Column({ type: 'varchar', length: 12 })
+  tipoCambio: TipoCambioPrecio;
+
   @ManyToOne(() => Producto, (producto) => producto.historialesPrecio)
   @JoinColumn({ name: 'producto_id' })
   @Index()
   producto: Producto;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', name: 'producto_id' })
   productoId: number;
 
   @CreateDateColumn()

@@ -12,6 +12,7 @@ import { IUnitOfWork } from 'src/modules/common/unit-of-work/iunit-of-work.';
 import { Usuario } from 'src/modules/gestion-usuario/usuario/domain/entities/usuario.entity';
 import { UpdatePrecioDto } from '../../dto/update-precio.dto';
 import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
+import { HistorialPrecio } from '../../domain/entities/historial-precio.entity';
 
 @Injectable()
 export class ProductoRepository implements IProductoRepository {
@@ -58,6 +59,7 @@ export class ProductoRepository implements IProductoRepository {
     marca: Marca,
     usuario: Usuario,
     presentacion: Presentacion | null,
+    motivo?: string,
   ): Promise<Producto> {
     return this.persistenceService.update(
       id,
@@ -66,6 +68,7 @@ export class ProductoRepository implements IProductoRepository {
       marca,
       usuario,
       presentacion,
+      motivo,
     );
   }
 
@@ -213,13 +216,19 @@ export class ProductoRepository implements IProductoRepository {
     valor: number,
     usuario: Usuario,
     lineaId?: number,
+    motivo?: string,
   ): Promise<number> {
     return this.persistenceService.actualizarPreciosMasivo(
       tipoAumento,
       valor,
       usuario,
       lineaId,
+      motivo,
     );
+  }
+
+  async findHistorialPrecios(skip: number, take: number): Promise<{ data: HistorialPrecio[]; total: number }> {
+    return this.persistenceService.findHistorialPrecios(skip, take);
   }
 
 }

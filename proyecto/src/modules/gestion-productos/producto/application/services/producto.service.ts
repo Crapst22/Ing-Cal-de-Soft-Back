@@ -99,6 +99,7 @@ export class ProductoService {
       marca,
       usuario,
       presentacion ?? null,
+      dto.motivo,
     );
 
     return MessageFrontUtils.createSimple(
@@ -131,6 +132,7 @@ export class ProductoService {
       dto.valor,
       usuario,
       dto.lineaId,
+      dto.motivo,
     );
 
     this.logger.log(
@@ -324,6 +326,23 @@ export class ProductoService {
   }
   async existsProductosActivosByLinea(lineaId: number): Promise<boolean> {
     return this.repository.existsProductosActivosByLinea(lineaId);
+  }
+
+  async findHistorialPrecios(skip: number, take: number) {
+    const result = await this.repository.findHistorialPrecios(skip, take);
+    return {
+      data: result.data.map((historial) => ({
+        id: historial.id,
+        productoId: historial.productoId,
+        producto: historial.producto?.denominacion ?? `Producto ${historial.productoId}`,
+        tipoCambio: historial.tipoCambio,
+        precioAnterior: historial.precioAnterior,
+        precioNuevo: historial.precioNuevo,
+        fecha: historial.fecha,
+        motivo: historial.motivo ?? '',
+      })),
+      total: result.total,
+    };
   }
 
 

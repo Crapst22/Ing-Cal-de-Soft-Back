@@ -9,6 +9,7 @@ describe('ActualizarPreciosMasivoDto', () => {
         tipoAumento: TipoAumento.PORCENTAJE,
         valor: 15.5,
         usuarioId: 1,
+        motivo: 'Actualización anual',
       };
 
       await DtoValidatorHelper.expectValidDto(ActualizarPreciosMasivoDto, data);
@@ -20,6 +21,7 @@ describe('ActualizarPreciosMasivoDto', () => {
         valor: 500,
         lineaId: 2,
         usuarioId: 1,
+        motivo: 'Ajuste por costos',
       };
 
       await DtoValidatorHelper.expectValidDto(ActualizarPreciosMasivoDto, data);
@@ -27,6 +29,10 @@ describe('ActualizarPreciosMasivoDto', () => {
   });
 
   describe('Validación de errores', () => {
+    it('debería fallar si falta el motivo', async () => {
+      const data = { tipoAumento: TipoAumento.PORCENTAJE, valor: 10, usuarioId: 1 };
+      await DtoValidatorHelper.expectFieldError(ActualizarPreciosMasivoDto, data, 'motivo');
+    });
     it('debería fallar si falta tipoAumento', async () => {
       const data = {
         valor: 10,

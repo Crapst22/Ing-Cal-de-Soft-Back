@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transactional } from 'src/modules/common/decorators/transactional.decoratos';
 import { DatabaseConnectionException } from 'src/modules/common/exceptions/database-connection.exception';
@@ -17,6 +17,9 @@ import { UpdateProductoDto } from '../../dto/update-producto.dto';
 import { ProductoMapper } from '../../mappers/producto.mapper';
 import { SuperLinea } from 'src/modules/gestion-productos/superlinea/domain/entities/superlinea.entity';
 import { TipoAumento } from 'src/modules/common/enums/tipo-aumento.emun';
+import { HistorialPrecio, TipoCambioPrecio } from '../../domain/entities/historial-precio.entity';
+import { HistorialPrecioMapper } from '../../mappers/historial-precio.mapper';
+import { ProductoIntrinsicValidationService } from '../../domain/services/producto-intrinsic-validation.service';
 
 
 @Injectable()
@@ -30,6 +33,7 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     private readonly repository: Repository<Producto>,
     private readonly dataSource: DataSource,
     @Inject('UnitOfWork') public readonly uow: IUnitOfWork,
+    private readonly intrinsicValidationService: ProductoIntrinsicValidationService,
   ) { }
 
 
@@ -155,18 +159,32 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     marca: Marca,
     usuario: Usuario,
     presentacion: Presentacion | null,
+    motivo?: string,
   ): Promise<Producto> {
     const repo = this.uow.getRepository(Producto);
+    const historialRepo = this.uow.getRepository(HistorialPrecio);
     try {
-      const entity = await this.findOne(id);
+      const entity = await repo
+        .createQueryBuilder('producto')
+        .leftJoinAndSelect('producto.linea', 'linea')
+        .leftJoinAndSelect('producto.marca', 'marca')
+        .leftJoinAndSelect('producto.presentacion', 'presentacion')
+        .where('producto.id = :id', { id })
+        .andWhere('producto.deletedAt IS NULL')
+        .setLock('pessimistic_write')
+        .getOne();
 
       if (!entity) {
         throw new NotFoundException(`EL prodcuto con ID ${id} no encontrada`);
       }
-      const {
+      const precioAnterior = Number(entity.precio ?? 0);
+      const cambioPrecio = data.precio !== undefined && Number(data.precio) !== precioAnterior;
+      if (cambioPrecio) {
+        this.intrinsicValidationService.validarPrecioNuevo(Number(data.precio));
+        if (!motivo?.trim()) throw new BadRequestException('El motivo del cambio de precio es obligatorio');
+      }
 
-        ...dataSinItems
-      } = data;
+      const { motivo: _motivo, ...dataSinItems } = data;
 
       Object.assign(entity, dataSinItems, {
         linea,
@@ -177,9 +195,23 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       entity.usuarioUpdated = usuario; 
       const entityActualizada = await repo.save(entity);
 
+      if (cambioPrecio) {
+        await historialRepo.save(
+          HistorialPrecioMapper.toEntity({
+            producto: entityActualizada,
+            precioAnterior,
+            precioNuevo: Number(entityActualizada.precio),
+            motivo,
+            usuario,
+            tipoCambio: TipoCambioPrecio.INDIVIDUAL,
+          }),
+        );
+      }
+
 
       return entityActualizada;
     } catch (error) {
+      if (error instanceof BadRequestException || error instanceof NotFoundException) throw error;
       this.logger.warn(`Items para eliminar: )}`);
 
       throw new DatabaseConnectionException(error);
@@ -622,9 +654,21 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
     valor: number,
     usuario: Usuario,
     lineaId?: number,
+    motivo?: string,
   ): Promise<number> {
     const repo = this.uow.getRepository(Producto);
+    const historialRepo = this.uow.getRepository(HistorialPrecio);
     try {
+      if (!motivo?.trim()) throw new BadRequestException('El motivo del ajuste masivo es obligatorio');
+      const anterioresQuery = repo
+        .createQueryBuilder('producto')
+        .select(['producto.id', 'producto.precio'])
+        .where('producto.deletedAt IS NULL');
+      if (lineaId) anterioresQuery.andWhere('producto.linea_id = :lineaId', { lineaId });
+      const productosAnteriores = await anterioresQuery
+        .setLock('pessimistic_write')
+        .getMany();
+
       const qb = repo
         .createQueryBuilder()
         .update(Producto);
@@ -651,16 +695,54 @@ export class ProductoPersistenceAdapter implements IProductoRepository {
       }
 
       const result = await qb.execute();
+
+      if (productosAnteriores.length) {
+        const productosActualizados = await repo.find({
+          where: productosAnteriores.map(({ id }) => ({ id })),
+          select: { id: true, precio: true },
+        });
+        const anterioresPorId = new Map(
+          productosAnteriores.map((producto) => [producto.id, Number(producto.precio ?? 0)]),
+        );
+        const historiales = productosActualizados.flatMap((producto) => {
+          const precioAnterior = anterioresPorId.get(producto.id);
+          const precioNuevo = Number(producto.precio ?? 0);
+          if (precioAnterior === undefined || precioNuevo === precioAnterior) return [];
+          this.intrinsicValidationService.validarPrecioNuevo(precioNuevo);
+          return [HistorialPrecioMapper.toEntity({
+            producto: { id: producto.id } as Producto,
+            precioAnterior,
+            precioNuevo,
+            motivo,
+            usuario,
+            tipoCambio: TipoCambioPrecio.MASIVO,
+          })];
+        });
+        if (historiales.length) await historialRepo.save(historiales);
+      }
       this.logger.log(
         `Actualización masiva de precios realizada: ${result.affected ?? 0} productos modificados`,
       );
       return result.affected ?? 0;
     } catch (error) {
+      if (error instanceof BadRequestException) throw error;
       this.logger.error('Error al actualizar precios masivamente:', error);
       throw new DatabaseConnectionException(
         'Error al actualizar los precios en la base de datos.',
       );
     }
+  }
+
+  async findHistorialPrecios(skip: number, take: number): Promise<{ data: HistorialPrecio[]; total: number }> {
+    const historialRepo = this.uow.getRepository(HistorialPrecio);
+    const [data, total] = await historialRepo.findAndCount({
+      relations: { producto: true },
+      where: { deletedAt: IsNull() },
+      order: { fecha: 'DESC', id: 'DESC' },
+      skip,
+      take,
+    });
+    return { data, total };
   }
 
 }

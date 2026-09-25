@@ -15,6 +15,7 @@
     },
     "incremental": true,
     "skipLibCheck": true,
+    "types": ["jest"],
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
