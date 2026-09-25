@@ -17,6 +17,8 @@ export class UpdatePresentacionDto extends PartialType(CreatePresentacionDto) {
 
   @IsOptional()
   @IsString()
+  @IsInt({ message: 'La cantidad debe ser un número entero.' })
+  @Min(1, { message: 'La cantidad debe ser mayor o igual a 1.' })
   @MaxLength(20, { message: 'La unidad no puede superar 20 caracteres.' })
   unidad?: string | null;
 
